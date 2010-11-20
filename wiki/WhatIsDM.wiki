@@ -4,6 +4,10 @@
 
 The axiom of DM is that the structure of the code of your model should reflect the structure of your thoughts about the functionality of your application. This may seem obvious or even implied by the word “model”, yet in practice it is often forgotten or simply ignored.
 
+<img src="https://lh4.googleusercontent.com/V9vXWqJvAqf4nW9KKM4peRuPjdZC9uvG0YlDdgNBUIWWReMIsZbSq7fDJcDWyCdFBpblEhIWitxA6o6tz-OSb4MB8HKRUvca9EF-tGOeD6sT0Y2Btg"></img>
+
+
+
 Typical models in the java world consist of classes containing private fields with corresponding dumb getters and setters. Usually they are stripped of any and all logic, which is “conveniently” placed in controllers or similar containers of “glue” code. This is not in the spirit of a “model” though. It is not in the spirit of Object Orientation either.
 
 Object Orientation differentiates itself from other methodologies by emphasizing Objects with encapsulated state AND behaviour. A JavaBean that simply stores some fields does not have any interesting behaviour to reuse.
