@@ -7,9 +7,7 @@ When people describe the behaviour of a wizard or form, they often talk about th
  * “The notification date shows an error message.”
  * “For a one-way flight, the return date is not shown.”
 
-This is an indication that the underlying mental model is one where those fields have state and behaviour.
-
-In code it would mean that properties get behaviour. Unfortunately, JavaBean conventions does not allow that
+This is an indication that the underlying mental model is one where those fields have state and behaviour. In code it would mean that properties get behaviour. Unfortunately, JavaBean conventions does not allow that
 
 Of course you could extend the naming convention to add more possibilities. For example for a property named “prop” you could have methods:
  * getProp()
