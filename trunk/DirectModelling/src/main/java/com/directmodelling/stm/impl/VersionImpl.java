@@ -61,10 +61,10 @@ public class VersionImpl implements Version, Serializable {
 	}
 
 	@Override
-	public <T> void set(final Value.Mutable<T> v, final T val) {
-		System.err.println(v.hashCode() + " := " + val);
-		values.put(v, val);
-		Updates.tracker.aValueChanged(v);
+	public <T> void set(final Value.Mutable<T> m, final T val) {
+		System.err.println(m.hashCode() + " := " + val);
+		values.put(m, val);
+		Updates.tracker.aValueChanged(m);
 	}
 
 	// @Override
