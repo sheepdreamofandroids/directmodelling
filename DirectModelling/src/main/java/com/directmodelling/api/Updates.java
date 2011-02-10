@@ -27,8 +27,8 @@ public abstract class Updates {
 	/** IMplemented by receivers of notifications. */
 	public interface Receiver {
 		/**
-		 * One or more values, changed. These are not necessarily ones that you
-		 * are interested in.
+		 * One or more values, changed. These are not necessarily ones that you are
+		 * interested in.
 		 */
 		void valuesChanged();
 	}
@@ -51,6 +51,7 @@ public abstract class Updates {
 		public void runUpdates();
 	}
 
+	// static proxy methods for the current tracker
 	public static final void aValueChanged(final Value<?> v) {
 		// Tracker.it.it()
 		Updates.tracker.aValueChanged(v);
