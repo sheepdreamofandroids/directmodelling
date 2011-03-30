@@ -21,7 +21,6 @@ import com.directmodelling.demo.gwt.client.GreetingService.MakeSerializable;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
-import com.google.gwt.inject.client.Ginjector;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 
@@ -34,11 +33,11 @@ public class DirectDemo implements EntryPoint {
 	 * returns an error.
 	 */
 	private static final String SERVER_ERROR = "An error occurred while "
-					+ "attempting to contact the server. Please check your network " + "connection and try again.";
+		+ "attempting to contact the server. Please check your network "
+		+ "connection and try again.";
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting
-	 * service.
+	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
@@ -69,7 +68,7 @@ public class DirectDemo implements EntryPoint {
 
 			@Override
 			public void onSuccess(final Init result) {
-				final MyGinjector ginjector = GWT.create(MyGinjector.class);
+				// final MyGinjector ginjector = GWT.create(MyGinjector.class);
 				final DemoPanel demoPanel = new DemoPanel(result.model, system);
 				RootPanel.get().add(demoPanel);
 				system.initializeValues(result.storage);
@@ -92,9 +91,5 @@ public class DirectDemo implements EntryPoint {
 				GWT.log("", caught);
 			}
 		});
-	}
-
-	public static interface MyGinjector extends Ginjector {
-		// DemoPanel demoPanel();
 	}
 }

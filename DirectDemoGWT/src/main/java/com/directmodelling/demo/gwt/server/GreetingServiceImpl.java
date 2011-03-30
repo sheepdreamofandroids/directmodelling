@@ -16,7 +16,6 @@
  *******************************************************************************/
 package com.directmodelling.demo.gwt.server;
 
-
 import com.directmodelling.api.Updates;
 import com.directmodelling.demo.gwt.client.GreetingService;
 import com.directmodelling.demo.shared.DemoModel;

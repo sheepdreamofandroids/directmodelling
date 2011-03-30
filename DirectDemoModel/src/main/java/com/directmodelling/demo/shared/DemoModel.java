@@ -5,13 +5,13 @@ package com.directmodelling.demo.shared;
 
 import java.io.Serializable;
 
+import com.directmodelling.api.ListValue.Modifiable;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.ListVar;
 import com.directmodelling.impl.ObjectVar;
 import com.directmodelling.impl.Variable;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
-
 
 public class DemoModel implements IDemoModel, Serializable {
 
@@ -43,9 +43,12 @@ public class DemoModel implements IDemoModel, Serializable {
 	ObjectVar<String> var = new ObjectVar<String>();
 	DemoModel.MyDoubleVar doub = new MyDoubleVar();
 	ListVar<IPerson> persons = new ListVar<IPerson>();
+
 	{
 		doub.set(5.3);
 		var.set("initial");
+		for (int i = 10; i > 0; i--)
+			persons.add(new Person());
 	}
 
 	@Override
@@ -58,7 +61,13 @@ public class DemoModel implements IDemoModel, Serializable {
 		return doub;
 	}
 
+	@Override
 	public DoubleVar getDoubleVar() {
 		return doub;
+	}
+
+	@Override
+	public Modifiable<IPerson> persons() {
+		return persons;
 	}
 }

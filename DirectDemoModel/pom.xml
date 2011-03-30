@@ -57,7 +57,7 @@
 <!--		</dependency>-->
 		<dependency>
 			<groupId>com.directmodelling</groupId>
-			<artifactId>Reaction</artifactId>
+			<artifactId>DirectModelling</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>

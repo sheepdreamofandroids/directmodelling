@@ -27,7 +27,7 @@ import com.directmodelling.stm.impl.VersionImpl;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-
+/** Bits and pieces I don't have a good place for yet. */
 public class System {
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
@@ -38,48 +38,42 @@ public class System {
 	}
 	final TransactionImpl changes = new TransactionImpl(baseValues);
 
-	public Command commit() {
-		return new Command() {
+	private final Command commit = new Command() {
+		@Override
+		public void run() {
+			greetingService.update(changes, new AsyncCallback<Void>() {
+			
+				@Override
+				public void onFailure(final Throwable e) {
+					// show error?
+					changes.reset();
+					GWT.log("", e);
+				}
+			
+				@Override
+				public void onSuccess(final Void arg0) {
+					GWT.log("Committing " + changes);
+					changes.commitTo(baseValues);
+					changes.reset();
+				}
+			});
+		}
+	};
 
-			@Override
-			public void run() {
-				commit(baseValues, changes);
-			}
-		};
+	public Command commit() {
+		return commit;
 	}
+
+	private final Command restore = new Command() {
+		@Override
+		public void run() {
+			changes.reset();
+			Updates.tracker.runUpdates();
+		}
+	};
 
 	public Command restore() {
-		return new Command() {
-
-			@Override
-			public void run() {
-				changes.reset();
-				Updates.tracker.runUpdates();
-			}
-		};
-	}
-
-	/**
-	 * @param baseValues
-	 * @param changes
-	 */
-	public void commit(final VersionImpl baseValues, final TransactionImpl changes) {
-		greetingService.update(changes, new AsyncCallback<Void>() {
-
-			@Override
-			public void onFailure(final Throwable e) {
-				// show error?
-				changes.reset();
-				GWT.log("", e);
-			}
-
-			@Override
-			public void onSuccess(final Void arg0) {
-				GWT.log("Committing " + changes);
-				changes.commitTo(baseValues);
-				changes.reset();
-			}
-		});
+		return restore;
 	}
 
 	public void doneInitializing() {
