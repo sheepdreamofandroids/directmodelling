@@ -16,6 +16,7 @@
  *******************************************************************************/
 package com.directmodelling.demo.shared;
 
+import com.directmodelling.api.ListValue;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.Variable;
 
@@ -26,5 +27,7 @@ public interface IDemoModel {
 	public DoubleVar doub();
 
 	public DoubleVar getDoubleVar();
+
+	public ListValue.Modifiable<IPerson> persons();
 
 }
