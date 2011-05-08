@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
+import com.directmodelling.stm.Storage.AbstractStorage;
 import com.directmodelling.stm.Version;
 
 /**
@@ -31,7 +32,7 @@ import com.directmodelling.stm.Version;
  * @author guus
  * 
  */
-public class VersionImpl implements Version, Serializable {
+public class VersionImpl extends AbstractStorage implements Version, Serializable {
 	protected transient VersionImpl parent;
 	protected HashMap<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
 
@@ -107,7 +108,8 @@ public class VersionImpl implements Version, Serializable {
 	// }
 	//
 	// @Override
-	// public void set(final com.directmodelling.api.IntValue.Modifiable v, final
+	// public void set(final com.directmodelling.api.IntValue.Modifiable v,
+	// final
 	// int val) {
 	// values.put(v, val);
 	// Updates.tracker.aValueChanged(v);
@@ -128,7 +130,7 @@ public class VersionImpl implements Version, Serializable {
 		values.clear();
 	}
 
-	private Date token = new Date();
+	private final Date token = new Date();
 
 	@Override
 	public String toString() {

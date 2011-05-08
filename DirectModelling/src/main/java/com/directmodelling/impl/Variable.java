@@ -16,15 +16,24 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
+import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Status;
+import com.directmodelling.api.Status.HasStatus;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
-import com.directmodelling.api.Status.HasStatus;
+import com.directmodelling.stm.Storage;
+import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
 
-public class Variable<T> implements Value.Mutable<T>, HasStatus {
+public abstract class Variable<T> implements Value.Mutable<T>, HasStatus, HasKey, HasStorage {
 	public Variable() {
 		super();
+	}
+
+	public Variable(Applicable<Object> as[]) {
+		for (Applicable<Object> applicable : as) {
+			applicable.applyTo(this);
+		}
 	}
 
 	@Override
@@ -34,18 +43,19 @@ public class Variable<T> implements Value.Mutable<T>, HasStatus {
 
 	@Override
 	public T getValue() {
-		return Util.current.it().get(this);
+		return storage.get(this);
 	}
 
 	@Override
 	public void setValue(final T value) {
-		Util.current.it().set(this, value);
+		storage.set(this, value);
 		Updates.aValueChanged(this);
 	}
 
 	// Make sure (de-)serialized vars refer to the same values
 	private int hash = 0;
 	private static int uniqueHash = 0;
+	private Storage storage = Util.current.it();
 
 	@Override
 	public int hashCode() {
@@ -61,4 +71,18 @@ public class Variable<T> implements Value.Mutable<T>, HasStatus {
 		return super.equals(obj);
 	}
 
+	@Override
+	public String getKey() {
+		return Registry.get(this);
+	}
+
+	@Override
+	public void setStorage(Storage s) {
+		this.storage = s;
+	}
+
+	@Override
+	public Storage getStorage() {
+		return storage;
+	}
 }

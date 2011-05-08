@@ -22,18 +22,23 @@ package com.directmodelling.api;
  * </p>
  * <p>
  * Injection only works when the correct service can be determined during
- * creation of the client. Otherwise a proxy service has to be used.
+ * creation of the client and doesn't change during it's lifetime. This is quite
+ * an assumption to build into the client. Otherwise a proxy service has to be
+ * used.
  * </p>
  * <p>
  * Often there is exactly one service of a given kind and there is no good
  * reason to ever have more than one. In that case it makes the code a lot
- * clearer when you simply refer to 'the global one'.
+ * clearer when you simply refer to 'the global one'. This is what Spring does
+ * with @Autowired or Guice with bind().toInstance().
  * </p>
  * <p>
  * On the other hand, code can run in different environments (Swing, GWT,
  * Webserver etc.) which sometimes means that services are bound to some kind of
- * session. In GWT or Swing there would be exactly one locale, but in a
- * webserver the locale would depend on the settings in the browser.
+ * session. In GWT or Swing there would be exactly one locale during the full
+ * runtime of the program, but in a webserver the locale would depend on the
+ * settings in the browser. Now what do you do with code shared between a
+ * webserver and GWT?
  * </p>
  * <p>
  * Business logic doesn't want to know about such details and simply wants the
@@ -65,7 +70,8 @@ public interface Context<T> {
 		/**
 		 * init ASAP after program start.
 		 */
-		// public static void initialize(final Context<? extends Initializer> ini) {
+		// public static void initialize(final Context<? extends Initializer>
+		// ini) {
 		// It.it = ini;
 		// }
 

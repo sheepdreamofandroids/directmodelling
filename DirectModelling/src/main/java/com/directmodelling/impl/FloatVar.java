@@ -19,22 +19,42 @@
  */
 package com.directmodelling.impl;
 
-import com.directmodelling.api.DoubleValue;
+import com.directmodelling.api.FloatValue;
 
-public class DoubleVar extends Variable<Double> implements DoubleValue.Modifiable {
+public class FloatVar extends Variable<Float> implements FloatValue.Mutable {
 
 	@Override
-	public void set(final double value) {
+	public void set(final float value) {
 		setValue(value);
 	}
 
 	@Override
-	public double get() {
+	public float get() {
 		return getValue();
 	}
 
 	@Override
 	public Type type() {
-		return Type.tDouble;
+		return Type.tFloat;
 	}
+
+	public FloatVar _(Applicable<? super FloatVar> a) {
+		a.applyTo(this);
+		return this;
+	}
+
+	// public FloatVar _(Applicable<? super FloatVar> a, Applicable<? super
+	// FloatVar> b) {
+	// a.applyTo(this);
+	// b.applyTo(this);
+	// return this;
+	// }
+
+	// public FloatVar() {
+	// }
+
+	public FloatVar(Applicable<? super FloatVar>... as) {
+		super((Applicable<Object>[]) as);
+	}
+
 }
