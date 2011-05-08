@@ -20,6 +20,9 @@ import java.util.List;
 
 import roboguice.application.RoboApplication;
 
+import com.directmodelling.impl.SimpleContext;
+import com.directmodelling.stm.Storage;
+import com.directmodelling.stm.impl.VersionImpl;
 import com.google.inject.Module;
 
 /**
@@ -29,8 +32,14 @@ import com.google.inject.Module;
 public class DirectAndroidApplication extends RoboApplication {
 	@Override
 	protected void addApplicationModules(final List<Module> modules) {
+		Storage.Util.current = new SimpleContext<Storage>(new VersionImpl());// FIXME
 		modules.add(new AndroidModule());
 		super.addApplicationModules(modules);
 	}
+
+	@Override
+	protected com.google.inject.Injector createInjector() {
+		return super.createInjector();
+	};
 
 }
