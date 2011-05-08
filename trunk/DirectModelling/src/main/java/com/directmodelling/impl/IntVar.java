@@ -32,4 +32,21 @@ public class IntVar extends Variable<Integer> implements IntValue.Modifiable {
 	public int get() {
 		return getValue();
 	}
+
+	@Override
+	public Type type() {
+		return Type.tInteger;
+	}
+
+	public IntVar _(Applicable<? super IntVar> a) {
+		a.applyTo(this);
+		return this;
+	}
+
+	public IntVar() {
+	}
+
+	public IntVar(Applicable<? super IntVar> as[]) {
+		super((Applicable<Object>[]) as);
+	}
 }

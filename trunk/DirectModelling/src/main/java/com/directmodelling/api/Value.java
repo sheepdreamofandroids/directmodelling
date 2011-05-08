@@ -21,7 +21,11 @@ import java.io.Serializable;
 public interface Value<T> extends Serializable {
 	T getValue();
 
-	// a getter
+	Type type();
+
+	enum Type {
+		tBoolean, tByte, tShort, tInteger, tLong, tCharacter, tFloat, tDouble, tObject
+	}
 
 	public interface Mutable<T> extends Value<T> {
 		void setValue(T value);

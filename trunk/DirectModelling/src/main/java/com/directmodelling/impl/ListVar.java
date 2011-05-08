@@ -24,7 +24,6 @@ import com.directmodelling.api.ListValue;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Updates;
 
-
 public class ListVar<T> extends ArrayList<T> implements ListValue.UserValue<T> {
 
 	private static final long serialVersionUID = 1L;
@@ -131,6 +130,11 @@ public class ListVar<T> extends ArrayList<T> implements ListValue.UserValue<T> {
 	@Override
 	public List<T> getValue() {
 		return this;
+	}
+
+	@Override
+	public Type type() {
+		return Type.tObject; // TODO have a tCollection?
 	}
 
 }

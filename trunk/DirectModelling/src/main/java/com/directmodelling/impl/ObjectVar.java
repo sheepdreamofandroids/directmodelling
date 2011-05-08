@@ -32,4 +32,9 @@ public class ObjectVar<T> extends Variable<T> implements ObjectValue.Mutable<T> 
 	public void set(final T val) {
 		setValue(val);
 	}
+
+	@Override
+	public Type type() {
+		return Type.tObject;
+	}
 }

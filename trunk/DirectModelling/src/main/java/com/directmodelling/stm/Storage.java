@@ -18,21 +18,40 @@ package com.directmodelling.stm;
 
 import java.io.Serializable;
 
-
 import com.directmodelling.api.Context;
 import com.directmodelling.api.Value;
+import com.directmodelling.impl.EntityInfo;
+import com.directmodelling.impl.SimpleContext;
 import com.google.inject.Inject;
 
 public interface Storage extends Serializable {
 	public static abstract class Util {
 
 		@Inject
-		public static Context<Storage> current = null;
+		public static Context<Storage> current = new SimpleContext<Storage>(null);
 	}
 
 	<T> T get(Value<T> v);
 
 	<T> void set(Value.Mutable<T> v, T val);
+
+	public abstract void bind(Object bean);
+
+	public interface HasStorage {
+		Storage getStorage();
+
+		void setStorage(Storage s);
+	}
+
+	public abstract class AbstractStorage implements Storage {
+		@Override
+		public void bind(Object bean) {
+			for (Value<?> value : EntityInfo.allProperties(bean)) {
+				if (value instanceof HasStorage)
+					((HasStorage) value).setStorage(this);
+			}
+		}
+	}
 
 	// boolean get(BooleanValue.Modifiable v);
 	//
