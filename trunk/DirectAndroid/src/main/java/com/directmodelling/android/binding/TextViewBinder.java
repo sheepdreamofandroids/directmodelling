@@ -16,26 +16,21 @@
  *******************************************************************************/
 package com.directmodelling.android.binding;
 
-import com.directmodelling.api.Converter;
-import com.directmodelling.api.Updates.Receiver;
-import com.directmodelling.api.Value.Mutable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.TextView;
 
-public final class TextViewBinder<T> extends Binder<TextView, T, String>
-	implements
-	Receiver,
-	TextWatcher,
-	OnFocusChangeListener {
+import com.directmodelling.api.Converter;
+import com.directmodelling.api.Updates.Receiver;
+import com.directmodelling.api.Value.Mutable;
 
-	public TextViewBinder(
-		final Mutable<T> m,
-		final TextView s,
-		final Converter<T, String> toInt,
-		final Converter<String, T> fromInt) {
+public final class TextViewBinder<T> extends Binder<TextView, T, String> implements Receiver, TextWatcher,
+				OnFocusChangeListener {
+
+	public TextViewBinder(final Mutable<T> m, final TextView s, final Converter<T, String> toInt,
+					final Converter<String, T> fromInt) {
 		super(m, s, toInt, fromInt);
 		s.addTextChangedListener(this);
 		s.setOnFocusChangeListener(this);
@@ -72,5 +67,11 @@ public final class TextViewBinder<T> extends Binder<TextView, T, String>
 	@Override
 	protected String getViewValue() {
 		return view.getText().toString();
+	}
+
+	@Override
+	public void unbind() {
+		view.removeTextChangedListener(this);
+		view.setOnFocusChangeListener(null);
 	}
 }
