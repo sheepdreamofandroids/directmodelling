@@ -16,19 +16,17 @@
  *******************************************************************************/
 package com.directmodelling.android.binding;
 
-import com.directmodelling.api.Converter;
-import com.directmodelling.api.Updates.Receiver;
-import com.directmodelling.api.Value.Mutable;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
+import com.directmodelling.api.Converter;
+import com.directmodelling.api.Updates.Receiver;
+import com.directmodelling.api.Value.Mutable;
+
 public final class SeekBarBinder<T> extends Binder<SeekBar, T, Integer> implements OnSeekBarChangeListener, Receiver {
 
-	SeekBarBinder(
-		final Mutable<T> m,
-		final SeekBar s,
-		final Converter<T, Integer> toInt,
-		final Converter<Integer, T> fromInt) {
+	SeekBarBinder(final Mutable<T> m, final SeekBar s, final Converter<T, Integer> toInt,
+					final Converter<Integer, T> fromInt) {
 		super(m, s, toInt, fromInt);
 		s.setOnSeekBarChangeListener(this);
 	}
@@ -58,5 +56,10 @@ public final class SeekBarBinder<T> extends Binder<SeekBar, T, Integer> implemen
 	@Override
 	protected Integer getViewValue() {
 		return view.getProgress();
+	}
+
+	@Override
+	public void unbind() {
+		view.setOnSeekBarChangeListener(null);
 	}
 }

@@ -11,6 +11,7 @@ public interface HasDefaultValue<T> {
 	T getDefaultValue();
 
 	public static class Registry {
+		// TODO make this a generic repository of metadata?
 		private static final Map<Value<?>, Object> defaults = new HashMap<Value<?>, Object>();
 
 		public static <S> void setDefaultValue(Value<S> v, S dflt) {
