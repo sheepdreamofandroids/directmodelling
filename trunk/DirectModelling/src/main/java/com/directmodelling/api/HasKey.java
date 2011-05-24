@@ -1,17 +1,22 @@
 package com.directmodelling.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.directmodelling.impl.Applicable;
 
 public interface HasKey {
 	String getKey();
 
 	public class Registry {
-		public static <T> T register(T o, String name) {
-			return o;
+		private static final Map<Object, String> names = new HashMap<Object, String>();
+
+		public static void register(Object o, String name) {
+			names.put(o, name);
 		}
 
 		public static String get(Object o) {
-			return null;
+			return names.get(o);
 		}
 
 		public static Applicable<Object> named(final String name) {

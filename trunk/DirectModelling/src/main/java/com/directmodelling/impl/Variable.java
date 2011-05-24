@@ -85,4 +85,9 @@ public abstract class Variable<T> implements Value.Mutable<T>, HasStatus, HasKey
 	public Storage getStorage() {
 		return storage;
 	}
+
+	@Override
+	public String toString() {
+		return "(Var '" + getKey() + /* "' = " + storage.get(this) + */")";
+	}
 }

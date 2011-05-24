@@ -19,15 +19,15 @@
  */
 package com.directmodelling.impl;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import com.directmodelling.api.Updates;
-import com.directmodelling.api.Value;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Updates.Tracker;
-
+import com.directmodelling.api.Value;
 
 public abstract class SingleThreadedUpdateTracker implements Tracker {
 
@@ -35,8 +35,8 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 	private boolean running;
 
 	/**
-	 * Trigger a limited set of updates. At this time 'limited' means '10'. Maybe
-	 * this should be 'until 100ms have elapsed' or so.
+	 * Trigger a limited set of updates. At this time 'limited' means '10'.
+	 * Maybe this should be 'until 100ms have elapsed' or so.
 	 * 
 	 * @return whether more updates are needed
 	 */
@@ -48,6 +48,10 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 		for (int i = 0; (hasNext = iterator.hasNext()) && i < 10; i++) {
 			try {
 				iterator.next().valuesChanged();
+			} catch (final ConcurrentModificationException cme) {
+				iterator = null;// can't keep using this one
+				cme.printStackTrace();
+				break;
 			} catch (final Throwable e) {
 				// TODO Need logging
 				e.printStackTrace();

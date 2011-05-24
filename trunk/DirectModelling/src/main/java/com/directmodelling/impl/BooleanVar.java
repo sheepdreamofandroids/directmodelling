@@ -19,34 +19,34 @@
  */
 package com.directmodelling.impl;
 
-import com.directmodelling.api.IntValue;
+import com.directmodelling.api.BooleanValue;
 
-public class IntVar extends Variable<Integer> implements IntValue.Modifiable {
+public class BooleanVar extends Variable<Boolean> implements BooleanValue.Modifiable {
 
 	@Override
-	public void set(final int value) {
+	public void set(final boolean value) {
 		setValue(value);
 	}
 
 	@Override
-	public int get() {
+	public boolean get() {
 		return getValue();
 	}
 
 	@Override
 	public Type type() {
-		return Type.tInteger;
+		return Type.tBoolean;
 	}
 
-	public IntVar _(Applicable<? super IntVar> a) {
+	public BooleanVar _(Applicable<? super BooleanVar> a) {
 		a.applyTo(this);
 		return this;
 	}
 
-	public IntVar() {
+	public BooleanVar() {
 	}
 
-	public IntVar(Applicable<? super IntVar>... as) {
+	public BooleanVar(Applicable<? super BooleanVar>... as) {
 		super((Applicable<Object>[]) as);
 	}
 }

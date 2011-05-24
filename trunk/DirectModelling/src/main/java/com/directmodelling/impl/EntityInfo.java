@@ -8,6 +8,24 @@ import java.util.Collection;
 import com.directmodelling.api.Value;
 
 public class EntityInfo {
+	/** Iterates all properties recursively while applying code. */
+	public static void forAllProperties(Object entity, Applicable<Value<?>> code) {
+		try {
+			final Class<? extends Object> clazz = entity.getClass();
+			for (Field field : clazz.getFields()) {
+				field.setAccessible(true);
+				final Object val = field.get(entity);
+				if (null != val)
+					if (Value.class.isAssignableFrom(field.getType()))
+						code.applyTo((Value<?>) val);
+					else
+						forAllProperties(val, code);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static Collection<Value<?>> allProperties(Object entity) {
 		ArrayList<Value<?>> result = new ArrayList<Value<?>>();
 		final Class<? extends Object> clazz = entity.getClass();
