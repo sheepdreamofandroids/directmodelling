@@ -142,4 +142,10 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 		values.putAll(storage.values);
 	}
 
+	@Override
+	protected void bindProperty(Value<?> value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

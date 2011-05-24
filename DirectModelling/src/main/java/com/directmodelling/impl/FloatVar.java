@@ -50,8 +50,8 @@ public class FloatVar extends Variable<Float> implements FloatValue.Mutable {
 	// return this;
 	// }
 
-	// public FloatVar() {
-	// }
+	public FloatVar() {
+	}
 
 	public FloatVar(Applicable<? super FloatVar>... as) {
 		super((Applicable<Object>[]) as);
