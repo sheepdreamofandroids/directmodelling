@@ -49,4 +49,9 @@ public class IntVar extends Variable<Integer> implements IntValue.Modifiable {
 	public IntVar(Applicable<? super IntVar>... as) {
 		super((Applicable<Object>[]) as);
 	}
+
+	public IntVar(int val, Applicable<? super IntVar>... as) {
+		super((Applicable<Object>[]) as);
+		set(val);
+	}
 }
