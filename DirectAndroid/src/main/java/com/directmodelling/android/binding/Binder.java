@@ -22,12 +22,15 @@ import java.util.Map;
 import android.util.Log;
 
 import com.directmodelling.api.Converter;
+import com.directmodelling.api.Status;
+import com.directmodelling.api.Status.HasStatus;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value.Mutable;
 
 public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiver {
-	protected final Mutable<TMutableValue> m;
+	protected final Mutable<TMutableValue> mutable;
+	protected final HasStatus hasStatus;
 	protected final TView view;
 	protected final Converter<TMutableValue, TViewValue> toView;
 	protected final Converter<TViewValue, TMutableValue> fromView;
@@ -41,11 +44,25 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 	// TODO this binder is completely Android agnostic (apart from logging),
 	// move to directmodelling?
 
-	// TODO binders should be held by a weak reference to avoid leaking views
+	// FIXME binders should be held by a weak reference to avoid leaking views
+
+	// TODO separate in a baseclass that binds the status when available and
+	// derive this one
 
 	protected Binder(final Mutable<TMutableValue> m, final TView s, final Converter<TMutableValue, TViewValue> toView,
 					final Converter<TViewValue, TMutableValue> toMutable) {
-		this.m = m;
+		this(m, (HasStatus) (m instanceof HasStatus ? m : null), s, toView, toMutable);
+	}
+
+	protected Binder(HasStatus hs, final TView s) {
+		this(null, hs, s, null, null);
+	}
+
+	protected Binder(final Mutable<TMutableValue> m, HasStatus hs, final TView s,
+					final Converter<TMutableValue, TViewValue> toView,
+					final Converter<TViewValue, TMutableValue> toMutable) {
+		this.mutable = m;
+		hasStatus = hs;
 		this.view = s;
 		this.toView = toView;
 		this.fromView = toMutable;
@@ -63,24 +80,33 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 
 	@Override
 	public void valuesChanged() {
-		final TMutableValue newValue = m.getValue();
-		if (!equals(newValue, lastValue)) {
-			lastValue = newValue;
-			boolean viewIsCorrect = false;
-			try {
-				viewIsCorrect = equals(fromView.convert(getViewValue()), newValue);
-			} catch (Exception e1) {
-				// cannot convert view contents back to value, must be wrong
+		if (null != mutable) {
+			final TMutableValue newValue = mutable.getValue();
+			if (!equals(newValue, lastValue)) {
+				lastValue = newValue;
+				boolean viewIsCorrect = false;
+				try {
+					viewIsCorrect = equals(fromView.convert(getViewValue()), newValue);
+				} catch (Exception e1) {
+					// cannot convert view contents back to value, must be wrong
+				}
+				try {
+					// when the current data is wrong, correct it, even while
+					// the
+					// user is editing
+					// if it is in a slightly different format (e.g. 10.0
+					// instead of
+					// 10), leave it
+					setViewValue(toView.convert(lastValue), !viewIsCorrect);
+				} catch (final Exception e) {
+					Log.w("Setting view from value", e);
+				}
 			}
-			try {
-				// when the current data is wrong, correct it, even while the
-				// user is editing
-				// if it is in a slightly different format (e.g. 10.0 instead of
-				// 10), leave it
-				setViewValue(toView.convert(lastValue), !viewIsCorrect);
-			} catch (final Exception e) {
-				Log.w("Setting view from value", e);
-			}
+		}
+
+		if (hasStatus != null) {
+			Status status = hasStatus.status();
+			setViewEnabled(status.enabled);
 		}
 	}
 
@@ -90,14 +116,16 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 			lastViewContents = v;
 			try {
 				final TMutableValue newMutableValue = fromView.convert(v);
-				if (!equals(newMutableValue, m.getValue())) {
-					m.setValue(newMutableValue);
+				if (!equals(newMutableValue, mutable.getValue())) {
+					mutable.setValue(newMutableValue);
 				}
 			} catch (final Exception e) {
 				Log.w("Setting mutable from view", e);
 			}
 		}
 	}
+
+	abstract protected void setViewEnabled(boolean b);
 
 	abstract protected void setViewValue(TViewValue v, boolean force);
 

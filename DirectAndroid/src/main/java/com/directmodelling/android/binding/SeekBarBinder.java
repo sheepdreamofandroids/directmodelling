@@ -62,4 +62,9 @@ public final class SeekBarBinder<T> extends Binder<SeekBar, T, Integer> implemen
 	public void unbind() {
 		view.setOnSeekBarChangeListener(null);
 	}
+
+	@Override
+	protected void setViewEnabled(boolean enabled) {
+		view.setEnabled(enabled);
+	}
 }

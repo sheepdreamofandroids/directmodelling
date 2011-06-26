@@ -74,4 +74,9 @@ public final class TextViewBinder<T> extends Binder<TextView, T, String> impleme
 		view.removeTextChangedListener(this);
 		view.setOnFocusChangeListener(null);
 	}
+
+	@Override
+	protected void setViewEnabled(boolean enabled) {
+		view.setEnabled(enabled);
+	}
 }

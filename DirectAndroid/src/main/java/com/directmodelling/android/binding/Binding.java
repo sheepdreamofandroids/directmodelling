@@ -16,11 +16,13 @@
  *******************************************************************************/
 package com.directmodelling.android.binding;
 
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.impl.Command;
 
 /**
  * <p>
@@ -35,16 +37,24 @@ import com.directmodelling.api.Value.Mutable;
  * </p>
  */
 public class Binding {
-	public static SeekBarBinder bindDouble(final SeekBar s, final Mutable<Double> m) {
-		return new SeekBarBinder(m, s, Converter.Double2Integer, Converter.Integer2Double);
+	public static void bindDouble(final SeekBar s, final Mutable<Double> m) {
+		new SeekBarBinder<Double>(m, s, Converter.Double2Integer, Converter.Integer2Double);
 	}
 
-	public static <T> void bindInteger(final TextView s, final Mutable<Integer> m) {
-		new TextViewBinder(m, s, Converter.toString, Converter.String2Integer);
+	public static void bindInteger(final TextView s, final Mutable<Integer> m) {
+		new TextViewBinder<Integer>(m, s, Converter.Integer2String, Converter.String2Integer);
 	}
 
-	public static <T> void bindDouble(final TextView s, final Mutable<Double> m) {
-		new TextViewBinder(m, s, Converter.toString, Converter.String2Double);
+	public static void bindDouble(final TextView s, final Mutable<Double> m) {
+		new TextViewBinder<Double>(m, s, Converter.Double2String, Converter.String2Double);
+	}
+
+	public static void bindCommand(View upgradeButton, Command command) {
+		new ClickBinder(command, upgradeButton);
+	}
+
+	public static void bindPressure(View view, final Mutable<Double> m) {
+		new PressureBinder(m, view, Converter.Double2Number, Converter.Number2Double);
 	}
 
 }

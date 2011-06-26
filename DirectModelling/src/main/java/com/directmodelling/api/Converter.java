@@ -42,6 +42,7 @@ public interface Converter<From, To> {
 		}
 	};
 	public static final Converter<Double, String> Double2String = (Converter<Double, String>) toString;
+	public static final Converter<Integer, String> Integer2String = (Converter<Integer, String>) toString;
 
 	public abstract class Util {
 		@SuppressWarnings("unchecked")
