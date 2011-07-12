@@ -22,4 +22,5 @@
 	<source path="impl" />
 	<source path="stm" />
 	<source path="properties" />
+	<!-- For obvious reasons, do not source 'reflective' -->
 </module>

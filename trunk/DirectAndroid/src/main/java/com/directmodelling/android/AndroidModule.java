@@ -16,13 +16,14 @@
  *******************************************************************************/
 package com.directmodelling.android;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
-
 import com.directmodelling.api.Context;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Tracker;
+import com.directmodelling.impl.EntityUtil;
 import com.directmodelling.impl.SimpleContext;
+import com.directmodelling.reflective.EntityInfo;
+import com.google.inject.Binder;
+import com.google.inject.Module;
 
 public class AndroidModule implements Module {
 
@@ -30,6 +31,7 @@ public class AndroidModule implements Module {
 	public void configure(final Binder b) {
 		b.bind(Context.class).to(SimpleContext.class);
 		b.bind(Tracker.class).to(AndroidUpdateTracker.class);
+		b.bind(EntityUtil.class).to(EntityInfo.class);
 		b.requestStaticInjection(Updates.class);
 	}
 

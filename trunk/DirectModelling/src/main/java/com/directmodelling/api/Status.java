@@ -22,14 +22,14 @@ package com.directmodelling.api;
  * <dl>
  * <dt>irrelevant</dt>
  * <dd>Currently this data is meaningless. Treat it as if it didn't exist. A
- * typical GUI would render this invisible. Reading and writing should fail.</dd>
+ * typical GUI would render this invisible. Reading and writing could fail.</dd>
  * <dt>pending</dt>
  * <dd>This data is being calculated right now. The result will be available
  * soon and an update will be issued to notify you. The result of get() and
- * getValue() is undefined.</dd>
+ * getValue() will be outdated. A GUI could show a progress bar or throbber.</dd>
  * <dt>readonly</dt>
  * <dd>This data is calculated. The get() or getValue() methods will return
- * meaningful results. set() and setValue() should fail.</dd>
+ * meaningful results. set() and setValue() could fail.</dd>
  * <dt>writeable</dt>
  * <dd>A normal read/write field. The current value is valid.</dd>
  * <dt>invalid</dt>
@@ -49,10 +49,21 @@ public enum Status {
 
 	public final boolean enabled;
 
+	/**
+	 * In practice states like enabled, hidden, invalid etc. are usually
+	 * interdependent. Invalid and disabled doesn't make sense, nor does pending
+	 * and hidden. Therefore the calculation of these states are quite similar
+	 * and calculating them separately would lead to code duplication. That's
+	 * why you can calculate them all at once
+	 * 
+	 * @author guus
+	 * 
+	 */
 	public interface HasStatus {
 		Status status();
 	}
 
-	// TODO have some kind of 'reason' that can be presented to the user somehow.
+	// TODO have some kind of 'reason' that can be presented to the user
+	// somehow.
 
 }

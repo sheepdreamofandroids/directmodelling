@@ -20,8 +20,7 @@ import java.io.Serializable;
 
 import com.directmodelling.api.Context;
 import com.directmodelling.api.Value;
-import com.directmodelling.impl.Applicable;
-import com.directmodelling.impl.EntityInfo;
+import com.directmodelling.impl.EntityUtil;
 import com.directmodelling.impl.SimpleContext;
 import com.google.inject.Inject;
 
@@ -38,6 +37,8 @@ public interface Storage extends Serializable {
 
 	public abstract void bind(Object bean);
 
+	public abstract void bindProperty(Value<?> value);
+
 	public interface HasStorage {
 		Storage getStorage();
 
@@ -45,19 +46,13 @@ public interface Storage extends Serializable {
 	}
 
 	public abstract class AbstractStorage implements Storage {
+		@Inject
+		EntityUtil entityInfo;
+
 		@Override
 		public void bind(Object bean) {
-			EntityInfo.forAllProperties(bean, new Applicable<Value<?>>() {
-				@Override
-				public void applyTo(Value<?> value) {
-					if (value instanceof HasStorage)
-						((HasStorage) value).setStorage(AbstractStorage.this);
-					bindProperty(value);
-				}
-			});
+			entityInfo.store(bean, this);
 		}
-
-		protected abstract void bindProperty(Value<?> value);
 	}
 
 	// boolean get(BooleanValue.Modifiable v);

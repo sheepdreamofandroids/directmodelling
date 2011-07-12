@@ -153,7 +153,7 @@ public class PreferencesStorage extends AbstractStorage implements Storage, OnSh
 	}
 
 	@Override
-	protected void bindProperty(Value<?> value) {
+	public void bindProperty(Value<?> value) {
 		boundVars.put(HasKey.Registry.get(value), value);
 	}
 }
