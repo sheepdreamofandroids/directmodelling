@@ -42,7 +42,8 @@ public class ClickBinder extends Binder<View, Void, Void> implements OnClickList
 
 	@Override
 	public void onClick(View v) {
-		command.run();
+		if (command.status().enabled)
+			command.run();
 	}
 
 }

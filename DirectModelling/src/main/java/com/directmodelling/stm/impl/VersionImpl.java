@@ -143,7 +143,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	}
 
 	@Override
-	protected void bindProperty(Value<?> value) {
+	public void bindProperty(Value<?> value) {
 		// TODO Auto-generated method stub
 
 	}
