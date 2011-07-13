@@ -20,7 +20,7 @@ public interface DoubleValue extends Value<Double> {
 	double get();
 
 	interface Modifiable extends DoubleValue, Value.Mutable<Double> {
-		void set(double value);
+		Modifiable set(double value);
 	}
 
 	// interface UserValue extends Modifiable, Value.UserValue<Double> {
