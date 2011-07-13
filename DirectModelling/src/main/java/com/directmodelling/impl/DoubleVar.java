@@ -24,8 +24,9 @@ import com.directmodelling.api.DoubleValue;
 public class DoubleVar extends Variable<Double> implements DoubleValue.Modifiable {
 
 	@Override
-	public void set(final double value) {
+	public DoubleVar set(final double value) {
 		setValue(value);
+		return this;
 	}
 
 	@Override
