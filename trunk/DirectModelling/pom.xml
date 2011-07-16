@@ -9,12 +9,11 @@
 	If not, see <http://www.gnu.org/licenses /> -->
 
 <!-- Integration with google code done using ideas from: http://blog.fastconnect.fr/?p=275 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectModelling</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<build>
 		<!-- <resources> -->
 		<!-- <resource> -->
@@ -94,9 +93,9 @@
 		<!-- </dependency> -->
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk/DirectModelling</connection>
-		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk/DirectModelling</developerConnection>
-		<url>https://directmodelling.googlecode.com/svn/trunk/DirectModelling</url>
+		<connection>scm:svn:http://directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</developerConnection>
+		<url>https://directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</url>
 	</scm>
 	<issueManagement>
 		<system>Google Code</system>
