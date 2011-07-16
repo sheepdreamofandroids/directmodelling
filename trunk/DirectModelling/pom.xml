@@ -13,7 +13,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectModelling</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<build>
 		<!-- <resources> -->
 		<!-- <resource> -->
@@ -93,9 +93,9 @@
 		<!-- </dependency> -->
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</connection>
-		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</developerConnection>
-		<url>https://directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</url>
+		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk/DirectModelling</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk/DirectModelling</developerConnection>
+		<url>https://directmodelling.googlecode.com/svn/trunk/DirectModelling</url>
 	</scm>
 	<issueManagement>
 		<system>Google Code</system>
