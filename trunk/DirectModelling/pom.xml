@@ -7,11 +7,14 @@
 	PURPOSE. See the GNU General Public License for more details. You should 
 	have received a copy of the GNU General Public License along with this program. 
 	If not, see <http://www.gnu.org/licenses /> -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+<!-- Integration with google code done using ideas from: http://blog.fastconnect.fr/?p=275 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectModelling</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<!-- <resources> -->
 		<!-- <resource> -->
@@ -91,9 +94,20 @@
 		<!-- </dependency> -->
 	</dependencies>
 	<scm>
-		<connection>scm:svn:https://directmodelling.googlecode.com/svn/trunk/DirectModelling</connection>
-		<url>scm:svn:https://directmodelling.googlecode.com/svn/trunk/DirectModelling</url>
+		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk/DirectModelling</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk/DirectModelling</developerConnection>
+		<url>https://directmodelling.googlecode.com/svn/trunk/DirectModelling</url>
 	</scm>
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/directmodelling/issues/list</url>
+	</issueManagement>
+	<distributionManagement>
+		<repository>
+			<id>directmodelling</id>
+			<url>dav:https://directmodelling.googlecode.com/svn/maven2/releases</url>
+		</repository>
+	</distributionManagement>
 	<properties>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
