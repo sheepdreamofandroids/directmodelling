@@ -1,19 +1,12 @@
-<!--
-    Copyright (c) 2010 Guus C. Bloemsma.
-   
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-   
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-   
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>
- -->
+<!-- Copyright (c) 2010 Guus C. Bloemsma. This program is free software: 
+	you can redistribute it and/or modify it under the terms of the GNU General 
+	Public License as published by the Free Software Foundation, either version 
+	3 of the License, or (at your option) any later version. This program is 
+	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See the GNU General Public License for more details. You should 
+	have received a copy of the GNU General Public License along with this program. 
+	If not, see <http://www.gnu.org/licenses/> -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -21,15 +14,15 @@
 	<artifactId>DirectModelling</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
-<!--		<resources>-->
-<!--			<resource>-->
-<!--				<directory>src/main/java</directory>-->
-<!--				<includes>-->
-<!--					<include>**/*.java</include>-->
-<!--					<include>**/*.gwt.xml</include>-->
-<!--				</includes>-->
-<!--			</resource>-->
-<!--		</resources>-->
+		<!-- <resources> -->
+		<!-- <resource> -->
+		<!-- <directory>src/main/java</directory> -->
+		<!-- <includes> -->
+		<!-- <include>**/*.java</include> -->
+		<!-- <include>**/*.gwt.xml</include> -->
+		<!-- </includes> -->
+		<!-- </resource> -->
+		<!-- </resources> -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -54,50 +47,54 @@
 					</execution>
 				</executions>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.codehaus.mojo</groupId>-->
-<!--				<artifactId>gwt-maven-plugin</artifactId>-->
-<!--				<executions>-->
-<!--					 GWT version detected from dependencyManagement -->
-<!--					<execution>-->
-<!--						<goals>-->
-<!--							<goal>resources</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
+			<!-- <plugin> -->
+			<!-- <groupId>org.codehaus.mojo</groupId> -->
+			<!-- <artifactId>gwt-maven-plugin</artifactId> -->
+			<!-- <executions> -->
+			<!-- GWT version detected from dependencyManagement -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>resources</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
-<!--	<repositories>-->
-<!--		<repository>-->
-<!--			<id>functional-java</id>-->
-<!--			<url>http://functionaljava.googlecode.com/svn/maven</url>-->
-<!--		</repository>-->
-<!--	</repositories>-->
+	<!-- <repositories> -->
+	<!-- <repository> -->
+	<!-- <id>functional-java</id> -->
+	<!-- <url>http://functionaljava.googlecode.com/svn/maven</url> -->
+	<!-- </repository> -->
+	<!-- </repositories> -->
 	<dependencies>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 			<version>2.0-no_aop</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>trove</groupId>-->
-<!--			<artifactId>trove</artifactId>-->
-<!--			<version>1.1-beta-5</version>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
+		<!-- <dependency> -->
+		<!-- <groupId>trove</groupId> -->
+		<!-- <artifactId>trove</artifactId> -->
+		<!-- <version>1.1-beta-5</version> -->
+		<!-- <scope>runtime</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.functionaljava</groupId>-->
-<!--			<artifactId>fj</artifactId>-->
-<!--			<version>2.19</version>-->
-<!--		</dependency>-->
+		<!-- <dependency> -->
+		<!-- <groupId>org.functionaljava</groupId> -->
+		<!-- <artifactId>fj</artifactId> -->
+		<!-- <version>2.19</version> -->
+		<!-- </dependency> -->
 	</dependencies>
+	<scm>
+		<connection>scm:svn:https://directmodelling.googlecode.com/svn/trunk/DirectModelling</connection>
+		<url>scm:svn:https://directmodelling.googlecode.com/svn/trunk/DirectModelling</url>
+	</scm>
 	<properties>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
