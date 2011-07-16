@@ -21,6 +21,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.directmodelling.api.Converter;
+import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 import com.directmodelling.impl.Command;
 
@@ -45,7 +46,7 @@ public class Binding {
 		new TextViewBinder<Integer>(m, s, Converter.Integer2String, Converter.String2Integer);
 	}
 
-	public static void bindDouble(final TextView s, final Mutable<Double> m) {
+	public static void bindDouble(final TextView s, final Value<Double> m) {
 		new TextViewBinder<Double>(m, s, Converter.Double2String, Converter.String2Double);
 	}
 

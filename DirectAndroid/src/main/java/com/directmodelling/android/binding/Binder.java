@@ -26,10 +26,12 @@ import com.directmodelling.api.Status;
 import com.directmodelling.api.Status.HasStatus;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
+import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 
 public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiver {
 	protected final Mutable<TMutableValue> mutable;
+	protected final Value<TMutableValue> value;
 	protected final HasStatus hasStatus;
 	protected final TView view;
 	protected final Converter<TMutableValue, TViewValue> toView;
@@ -49,19 +51,28 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 	// TODO separate in a baseclass that binds the status when available and
 	// derive this one
 
-	protected Binder(final Mutable<TMutableValue> m, final TView s, final Converter<TMutableValue, TViewValue> toView,
+	// protected Binder(final Mutable<TMutableValue> m, final TView s, final
+	// Converter<TMutableValue, TViewValue> toView,
+	// final Converter<TViewValue, TMutableValue> toMutable) {
+	// this(m, m, (HasStatus) (m instanceof HasStatus ? m : null), s, toView,
+	// toMutable);
+	// }
+
+	protected Binder(final Value<TMutableValue> v, final TView s, final Converter<TMutableValue, TViewValue> toView,
 					final Converter<TViewValue, TMutableValue> toMutable) {
-		this(m, (HasStatus) (m instanceof HasStatus ? m : null), s, toView, toMutable);
+		this((Mutable<TMutableValue>) (v instanceof Mutable ? v : null), v, (HasStatus) (v instanceof HasStatus ? v
+						: null), s, toView, toMutable);
 	}
 
 	protected Binder(HasStatus hs, final TView s) {
-		this(null, hs, s, null, null);
+		this(null, null, hs, s, null, null);
 	}
 
-	protected Binder(final Mutable<TMutableValue> m, HasStatus hs, final TView s,
+	protected Binder(final Mutable<TMutableValue> m, Value<TMutableValue> value, HasStatus hs, final TView s,
 					final Converter<TMutableValue, TViewValue> toView,
 					final Converter<TViewValue, TMutableValue> toMutable) {
 		this.mutable = m;
+		this.value = value;
 		hasStatus = hs;
 		this.view = s;
 		this.toView = toView;

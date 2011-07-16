@@ -1,5 +1,6 @@
 package com.directmodelling.android.binding;
 
+import roboguice.util.Ln;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -13,21 +14,23 @@ import com.directmodelling.api.Value.Mutable;
  * @author guus
  * 
  */
-public final class PressureBinder<TMutableValue> extends Binder<View, TMutableValue, Float> {
+public final class PressureBinder<TMutableValue> extends Binder<View, TMutableValue, Number> {
 	private final Mutable<TMutableValue> mutable;
 	{
 		view.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				mutable.setValue(fromView.convert(event.getPressure()));
+				final float pressure = event.getPressure();
+				Ln.d("Pressure: %s, size: %s", pressure, event.getSize());
+				mutable.setValue(fromView.convert(pressure));
 				return false;
 			}
 		});
 	}
 
-	PressureBinder(Mutable<TMutableValue> mutable, View view, Converter<TMutableValue, Float> toView,
-					Converter<Float, TMutableValue> toMutable) {
+	PressureBinder(Mutable<TMutableValue> mutable, View view, Converter<TMutableValue, Number> toView,
+					Converter<Number, TMutableValue> toMutable) {
 		super(mutable, view, toView, toMutable);
 		this.mutable = mutable;
 	}
@@ -38,12 +41,12 @@ public final class PressureBinder<TMutableValue> extends Binder<View, TMutableVa
 	}
 
 	@Override
-	protected void setViewValue(Float v, boolean force) {
+	protected void setViewValue(Number v, boolean force) {
 		// nada
 	}
 
 	@Override
-	protected Float getViewValue() {
+	protected Number getViewValue() {
 		// TODO Auto-generated method stub
 		return null;
 	}
