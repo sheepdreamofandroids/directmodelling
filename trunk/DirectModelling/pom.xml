@@ -91,9 +91,9 @@
 		<!-- </dependency> -->
 	</dependencies>
 	<scm>
-		<connection>scm:svn:https://${svn_user}:${svn_password}@directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</connection>
-		<developerConnection>scm:svn:https://${svn_user}:${svn_password}@directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</developerConnection>
-		<url>scm:svn:https://${svn_user}:${svn_password}@directmodelling.googlecode.com/svn/tags/DirectModelling-0.0.1</url>
+		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk</developerConnection>
+		<url>http://directmodelling.googlecode.com/svn/trunk/</url>
 	</scm>
 	<properties>
 		<maven.compiler.target>1.6</maven.compiler.target>
