@@ -58,14 +58,23 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 			}
 		}
 		if (!hasNext) {
-			iterator = null;
-			running = false;
+			if (newReceivers.isEmpty()) {
+				iterator = null;
+				running = false;
+			} else {
+				RECEIVERS.addAll(newReceivers);
+				iterator = newReceivers.iterator();
+				newReceivers = new HashSet<Receiver>();
+			}
 		}
-		return hasNext;
+		return running;
 	}
 
 	// Can't be static. Weird....
 	private final Set<Updates.Receiver> RECEIVERS = new HashSet<Updates.Receiver>();
+
+	// receivers added during update batch
+	private Set<Updates.Receiver> newReceivers = new HashSet<Updates.Receiver>();
 
 	// private boolean notifyStarted;
 
@@ -81,12 +90,15 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 
 	/** Register a change listener */
 	public void registerForChanges(final Updates.Receiver ru) {
-		RECEIVERS.add(ru);
+		// RECEIVERS.add(ru);
+		if (!RECEIVERS.contains(ru))
+			newReceivers.add(ru);
 	}
 
 	@Override
 	public void unregister(final Receiver ru) {
 		RECEIVERS.remove(ru);
+		newReceivers.remove(ru);
 	}
 
 	public void runUpdates() {

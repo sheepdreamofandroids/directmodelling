@@ -19,8 +19,20 @@
 	<inherits name='com.directmodelling.Value' />
 	<inherits name='com.google.gwt.user.User' />
 
+
+	<inherits name='com.google.gwt.dom.DOM' />
+
 	<!--	<source path="api" />-->
 	<source path="gwt" />
 	<!--	<source path="impl" />-->
 <!--	<entry-point class="com.directmodelling.gwt.demo.Demo"></entry-point>-->
+
+
+	<source path="api" />
+	<source path="gwt" />
+	<source path="impl" />
+	<source path="stm" />
+	<source path="properties" />
+	<!-- For obvious reasons, do not source 'reflective' -->
+
 </module>
