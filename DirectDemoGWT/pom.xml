@@ -13,6 +13,9 @@
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectDemoGWT</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<gwt-version>2.3.0</gwt-version>
+	</properties>
 	<build>
 		<outputDirectory>war/WEB-INF/classes</outputDirectory>
 		<plugins>
@@ -75,18 +78,18 @@
 			<type>jar</type>
 			<optional>false</optional>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.google.gwt</groupId> -->
+<!-- 			<artifactId>gwt-user</artifactId> -->
+<!-- 			<version>${gwt-version}</version> -->
+<!-- 			<type>jar</type> -->
+<!-- 			<classifier>sources</classifier> -->
+<!-- 			<optional>false</optional> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>2.2.0</version>
-			<type>jar</type>
-			<classifier>sources</classifier>
-			<optional>false</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.google.gwt</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>2.2.0</version>
+			<version>${gwt-version}</version>
 			<type>jar</type>
 			<optional>false</optional>
 		</dependency>
@@ -101,7 +104,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>2.2.0</version>
+			<version>${gwt-version}</version>
 			<type>jar</type>
 			<optional>false</optional>
 		</dependency>

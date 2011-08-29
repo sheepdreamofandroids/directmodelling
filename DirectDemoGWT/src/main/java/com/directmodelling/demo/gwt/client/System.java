@@ -42,14 +42,14 @@ public class System {
 		@Override
 		public void run() {
 			greetingService.update(changes, new AsyncCallback<Void>() {
-			
+
 				@Override
 				public void onFailure(final Throwable e) {
 					// show error?
 					changes.reset();
 					GWT.log("", e);
 				}
-			
+
 				@Override
 				public void onSuccess(final Void arg0) {
 					GWT.log("Committing " + changes);
