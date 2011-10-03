@@ -4,6 +4,6 @@
 
 In a corporate setting you could have an application server acting as a "logic repository". A frontend application like a webserver could query it to get an instance of a (direct) model. In addition this repository would supply the necessary class files (for example by referring to a particular version in a maven repository). This model could know how to call back to the app server for additional data.
 
-= State based programming =
+= State based programming vs event based programming =
 
-Assume a system that can take N different states. There are N x (N-1) possible events to take into account. That is a (too) simple reason why programming in states is easier than programming in events (delta's between states)
+Assume a system that can take N different states. There are N x (N-1) possible events to take into account. That is a (too) simple reason why programming in states is easier than programming in events (delta's between states).
