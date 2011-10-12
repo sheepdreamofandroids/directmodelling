@@ -9,6 +9,14 @@
 	If not, see <http://www.gnu.org/licenses/> -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>com.directmodelling</groupId>
+		<artifactId>DirectModellingParent</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectAndroid</artifactId>
@@ -22,8 +30,6 @@
 		</repository>
 	</repositories>
 	<build>
-		<!-- <sourceDirectory>src</sourceDirectory> -->
-		<!-- <finalName>${project.artifactId}</finalName> -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -34,51 +40,13 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>com.jayway.maven.plugins.android.generation2</groupId> -->
-			<!-- <artifactId>maven-android-plugin</artifactId> -->
-			<!-- <configuration> -->
-			<!-- <sdk> -->
-			<!-- <path>${env.ANDROID_HOME}</path> -->
-			<!-- <platform>1.5</platform> -->
-			<!-- </sdk> -->
-			<!-- <deleteConflictingFiles>true</deleteConflictingFiles> -->
-			<!-- </configuration> -->
-			<!-- <extensions>true</extensions> -->
-			<!-- </plugin> -->
-			<!-- <plugin> -->
-			<!-- ADT will complain when gen is not a source folder -->
-			<!-- <groupId>org.codehaus.mojo</groupId> -->
-			<!-- <artifactId>build-helper-maven-plugin</artifactId> -->
-			<!-- <version>1.1</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>add-source</id> -->
-			<!-- <phase>generate-sources</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>add-source</goal> -->
-			<!-- </goals> -->
-			<!-- <configuration> -->
-			<!-- <sources> -->
-			<!-- <source>gen</source> -->
-			<!-- </sources> -->
-			<!-- </configuration> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
 		</plugins>
 	</build>
 	<dependencies>
-		<!-- <dependency> -->
-		<!-- <groupId>com.google.android</groupId> -->
-		<!-- <artifactId>android</artifactId> -->
-		<!-- <version>1.5_r4</version> -->
-		<!-- <scope>provided</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.directmodelling</groupId>
 			<artifactId>DirectModelling</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -94,11 +62,5 @@
 			<version>2.1_r1</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>com.directmodelling</groupId> -->
-		<!-- <artifactId>DirectDemoModel</artifactId> -->
-		<!-- <version>0.0.1-SNAPSHOT</version> -->
-		<!-- <scope>compile</scope> -->
-		<!-- </dependency> -->
 	</dependencies>
 </project>
