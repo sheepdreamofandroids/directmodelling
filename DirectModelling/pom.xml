@@ -10,20 +10,19 @@
 
 <!-- Integration with google code done using ideas from: http://blog.fastconnect.fr/?p=275 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>com.directmodelling</groupId>
+		<artifactId>DirectModellingParent</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectModelling</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<build>
-		<!-- <resources> -->
-		<!-- <resource> -->
-		<!-- <directory>src/main/java</directory> -->
-		<!-- <includes> -->
-		<!-- <include>**/*.java</include> -->
-		<!-- <include>**/*.gwt.xml</include> -->
-		<!-- </includes> -->
-		<!-- </resource> -->
-		<!-- </resources> -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -48,49 +47,20 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.codehaus.mojo</groupId> -->
-			<!-- <artifactId>gwt-maven-plugin</artifactId> -->
-			<!-- <executions> -->
-			<!-- GWT version detected from dependencyManagement -->
-			<!-- <execution> -->
-			<!-- <goals> -->
-			<!-- <goal>resources</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
 		</plugins>
 	</build>
-	<!-- <repositories> -->
-	<!-- <repository> -->
-	<!-- <id>functional-java</id> -->
-	<!-- <url>http://functionaljava.googlecode.com/svn/maven</url> -->
-	<!-- </repository> -->
-	<!-- </repositories> -->
 	<dependencies>
 		<dependency>
 			<groupId>com.google.inject</groupId>
 			<artifactId>guice</artifactId>
 			<version>2.0-no_aop</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>trove</groupId> -->
-		<!-- <artifactId>trove</artifactId> -->
-		<!-- <version>1.1-beta-5</version> -->
-		<!-- <scope>runtime</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.functionaljava</groupId> -->
-		<!-- <artifactId>fj</artifactId> -->
-		<!-- <version>2.19</version> -->
-		<!-- </dependency> -->
 	</dependencies>
 	<scm>
 		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk/DirectModelling</connection>

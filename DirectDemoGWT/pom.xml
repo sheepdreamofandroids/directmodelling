@@ -9,6 +9,14 @@
 	If not, see <http://www.gnu.org/licenses/> -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>com.directmodelling</groupId>
+		<artifactId>DirectModellingParent</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectDemoGWT</artifactId>
@@ -78,14 +86,6 @@
 			<type>jar</type>
 			<optional>false</optional>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.google.gwt</groupId> -->
-<!-- 			<artifactId>gwt-user</artifactId> -->
-<!-- 			<version>${gwt-version}</version> -->
-<!-- 			<type>jar</type> -->
-<!-- 			<classifier>sources</classifier> -->
-<!-- 			<optional>false</optional> -->
-<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>

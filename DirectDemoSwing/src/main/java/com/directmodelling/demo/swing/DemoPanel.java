@@ -25,16 +25,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 import com.directmodelling.demo.shared.IDemoModel;
-import com.directmodelling.swing.RTextBox;
 import com.directmodelling.swing.binding.Binding;
-
 
 public class DemoPanel extends JPanel {
 
 	private final IDemoModel model;
-	private final RTextBox textBox;
+	private final JTextField textBox;
 
 	/**
 	 * Create the panel.
@@ -73,7 +72,7 @@ public class DemoPanel extends JPanel {
 		gbc_lblSecondField.gridy = 1;
 		add(lblSecondField, gbc_lblSecondField);
 
-		textBox = new RTextBox();
+		textBox = new JTextField();
 		GridBagConstraints gbc_textBox = new GridBagConstraints();
 		gbc_textBox.anchor = GridBagConstraints.NORTH;
 		gbc_textBox.fill = GridBagConstraints.HORIZONTAL;

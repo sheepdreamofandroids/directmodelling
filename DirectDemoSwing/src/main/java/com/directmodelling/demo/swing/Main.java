@@ -18,14 +18,21 @@ package com.directmodelling.demo.swing;
 
 import javax.swing.JFrame;
 
+import com.directmodelling.api.Updates;
 import com.directmodelling.demo.shared.DemoModel;
-import com.directmodelling.swing.Init;
-
+import com.directmodelling.stm.Storage;
+import com.directmodelling.stm.Storage.Util;
+import com.directmodelling.stm.impl.TransactionImpl;
+import com.directmodelling.stm.impl.VersionImpl;
+import com.directmodelling.swing.SwingContext;
+import com.directmodelling.swing.SwingUpdateTracker;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Init.init();
+		final VersionImpl baseData = new VersionImpl();
+		Util.current = new SwingContext<Storage>(new TransactionImpl(baseData));
+		Updates.tracker = new SwingUpdateTracker();
 		JFrame frame = new JFrame("Demo");
 		frame.setContentPane(new DemoPanel(new DemoModel()));
 		frame.pack();
