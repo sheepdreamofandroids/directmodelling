@@ -16,7 +16,8 @@
  *******************************************************************************/
 package com.directmodelling.gwt;
 
-
+import com.directmodelling.api.Updates;
+import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value.Mutable;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
@@ -30,7 +31,7 @@ public class BoundSlider<N extends Number & Comparable<N>, T extends Mutable<N> 
 				extends SliderBar implements HasValue<Double>/*
 															 * , HasMaximum<N>,
 															 * HasMinimum<N>
-															 */{
+															 */, Receiver {
 	public BoundSlider() {
 		super(0, 100);
 		setNumTicks(10);
@@ -43,6 +44,7 @@ public class BoundSlider<N extends Number & Comparable<N>, T extends Mutable<N> 
 	}
 
 	private final DoubleBinder binder = new DoubleBinder(this);
+	private Mutable<Double> v;
 
 	/**
 	 * @param var
@@ -57,7 +59,10 @@ public class BoundSlider<N extends Number & Comparable<N>, T extends Mutable<N> 
 	// }
 
 	public void setDoubleVar(Mutable<Double> v) {
+		this.v = v;
 		binder.setDoubleVar(v);
+		if (v instanceof HasMinimum || v instanceof HasMaximum)
+			Updates.tracker.registerForChanges(this);
 	}
 
 	public void setStringVar(Mutable<String> v) {
@@ -87,6 +92,7 @@ public class BoundSlider<N extends Number & Comparable<N>, T extends Mutable<N> 
 		if (fireEvent)
 			ValueChangeEvent.fireIfNotEqual(this, oldValue, newValue);
 	}
+
 	// @Override
 	// public N getMaximum() {
 	// return getMaxValue();
@@ -107,4 +113,12 @@ public class BoundSlider<N extends Number & Comparable<N>, T extends Mutable<N> 
 	// public void setMinimum(final Number min) {
 	// setMinValue(min.doubleValue());
 	// }
+
+	@SuppressWarnings("unchecked")
+	public void valuesChanged() {
+		if (v instanceof HasMinimum)
+			setMinValue(((HasMinimum<Double>) v).getMinimum());
+		if (v instanceof HasMaximum)
+			setMaxValue(((HasMaximum<Double>) v).getMaximum());
+	}
 }

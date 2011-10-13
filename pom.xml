@@ -1,0 +1,77 @@
+<!-- Copyright (c) 2010 Guus C. Bloemsma. This program is free software: 
+	you can redistribute it and/or modify it under the terms of the GNU General 
+	Public License as published by the Free Software Foundation, either version 
+	3 of the License, or (at your option) any later version. This program is 
+	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See the GNU General Public License for more details. You should 
+	have received a copy of the GNU General Public License along with this program. 
+	If not, see <http://www.gnu.org/licenses /> -->
+
+<!-- Integration with google code done using ideas from: http://blog.fastconnect.fr/?p=275 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.directmodelling</groupId>
+	<artifactId>DirectModellingParent</artifactId>
+    <packaging>pom</packaging>
+	<version>0.0.2-SNAPSHOT</version>
+
+    <modules>
+        <module>DirectModelling</module>
+        <module>DirectAndroid</module>
+        <module>DirectGWT</module>
+        <module>DirectSwing</module>
+        <module>DirectDemoModel</module>
+        <!-- <module>DirectDemoAndroid</module> -->
+        <module>DirectDemoGWT</module>
+        <module>DirectDemoSwing</module>
+    </modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<scm>
+		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk</developerConnection>
+		<url>https://directmodelling.googlecode.com/svn/trunk</url>
+	</scm>
+	<issueManagement>
+		<system>Google Code</system>
+		<url>http://code.google.com/p/directmodelling/issues/list</url>
+	</issueManagement>
+	<distributionManagement>
+		<repository>
+			<id>directmodelling</id>
+			<url>dav:https://directmodelling.googlecode.com/svn/maven2/releases</url>
+		</repository>
+	</distributionManagement>
+	<properties>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<gwt.version>2.4.0</gwt.version>
+	</properties>
+</project>
