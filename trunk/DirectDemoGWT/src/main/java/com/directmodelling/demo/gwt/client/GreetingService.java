@@ -16,9 +16,9 @@
  *******************************************************************************/
 package com.directmodelling.demo.gwt.client;
 
-
 import com.directmodelling.api.Value;
 import com.directmodelling.demo.shared.DemoModel;
+import com.directmodelling.demo.shared.MyDoubleVar;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.stm.impl.VersionImpl;
@@ -37,6 +37,7 @@ public interface GreetingService extends RemoteService {
 	public static class Init implements IsSerializable {
 		public VersionImpl storage;
 		public DemoModel model;
+		public MyDoubleVar wtf;
 	}
 
 	Init getInitial();

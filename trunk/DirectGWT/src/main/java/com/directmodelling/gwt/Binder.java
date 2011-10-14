@@ -18,20 +18,20 @@ package com.directmodelling.gwt;
 
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Updates;
-import com.directmodelling.api.Value;
 import com.directmodelling.api.Updates.Receiver;
+import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.HasValue;
 
-
 /** Binds variables to widgets. */
 public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHandler<WidgetDomain> {
 
 	private final HasValue<WidgetDomain> gwtValue;
 	private Mutable<VarDomain> var;
+	private Value<VarDomain> val;
 	private final HandlerRegistration addValueChangeHandler;
 	private Converter<WidgetDomain, VarDomain> toVar;
 	private Converter<VarDomain, WidgetDomain> toWidget;
@@ -45,8 +45,8 @@ public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHan
 
 	// A mutable changed
 	public void valuesChanged() {
-		if (null != var) {
-			gwtValue.setValue(toWidget.convert(var.getValue()), false);
+		if (null != val) {
+			gwtValue.setValue(toWidget.convert(val.getValue()), false);
 		}
 	}
 
@@ -63,12 +63,19 @@ public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHan
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> void setVar(
-			final Value.Mutable<T> var,
-			final Converter<? super WidgetDomain, T> toVar,
-			final Converter<? super T, WidgetDomain> toWidget) {
+	public <T> void setVar(final Value.Mutable<T> var, final Converter<? super WidgetDomain, T> toVar,
+					final Converter<? super T, WidgetDomain> toWidget) {
+		this.val = (Value<VarDomain>) var;
 		this.var = (Mutable<VarDomain>) var;
-		this.toVar = (Converter<WidgetDomain, VarDomain>) toVar;
+		this.toVar = this.var == null ? null : (Converter<WidgetDomain, VarDomain>) toVar;
+		this.toWidget = (Converter<VarDomain, WidgetDomain>) toWidget;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setVal(final Value<? extends VarDomain> var, final Converter<? extends VarDomain, WidgetDomain> toWidget) {
+		this.val = (Value<VarDomain>) var;
+		this.var = null;
+		this.toVar = null;
 		this.toWidget = (Converter<VarDomain, WidgetDomain>) toWidget;
 	}
 

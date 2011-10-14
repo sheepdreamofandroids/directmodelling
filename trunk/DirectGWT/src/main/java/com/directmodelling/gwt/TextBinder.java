@@ -17,9 +17,9 @@
 package com.directmodelling.gwt;
 
 import com.directmodelling.api.Converter;
+import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 import com.google.gwt.user.client.ui.HasValue;
-
 
 public class TextBinder extends Binder<String, Object> {
 
@@ -33,6 +33,10 @@ public class TextBinder extends Binder<String, Object> {
 
 	public final void setDoubleVar(final Mutable<Double> var) {
 		setVar(var, Converter.String2Double, Converter.Double2String);
+	}
+
+	public final void setDoubleVal(final Value<Double> var) {
+		setVal(var, Converter.Double2String);
 	}
 
 }

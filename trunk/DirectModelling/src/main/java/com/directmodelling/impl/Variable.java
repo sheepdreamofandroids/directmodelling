@@ -16,6 +16,8 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
+import java.io.Serializable;
+
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Status.HasStatus;
@@ -25,7 +27,7 @@ import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
 
-public abstract class Variable<T> implements Value.Mutable<T>, HasStatus, HasKey, HasStorage {
+public abstract class Variable<T> implements Value.Mutable<T>, HasStatus, HasKey, HasStorage, Serializable {
 	public Variable() {
 		super();
 	}

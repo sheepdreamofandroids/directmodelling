@@ -5,47 +5,24 @@ package com.directmodelling.demo.shared;
 
 import java.io.Serializable;
 
+import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.ListValue.Modifiable;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.ListVar;
 import com.directmodelling.impl.ObjectVar;
 import com.directmodelling.impl.Variable;
-import com.directmodelling.properties.HasMaximum;
-import com.directmodelling.properties.HasMinimum;
 
 public class DemoModel implements IDemoModel, Serializable {
 
-	public static final class MyDoubleVar extends DoubleVar implements HasMaximum<Double>, HasMinimum<Double> {
-
-		@Override
-		public Double getMaximum() {
-			// TODO Auto-generated method stub
-			return 10d;
-		}
-
-		public void setMaximum(final Double max) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public Double getMinimum() {
-			// TODO Auto-generated method stub
-			return -10d;
-		}
-
-		public void setMinimum(final Double min) {
-			// TODO Auto-generated method stub
-
-		}
-	}
-
 	ObjectVar<String> var = new ObjectVar<String>();
-	DemoModel.MyDoubleVar doub = new MyDoubleVar();
+	MyDoubleVar doub = new MyDoubleVar(5, -10, 10);
 	ListVar<IPerson> persons = new ListVar<IPerson>();
 
+	MyDoubleVar a = new MyDoubleVar(50, 0, 100);
+	MyDoubleVar b = new MyDoubleVar(50, 0, 100);
+	Sum sum = new Sum(a, b);
+
 	{
-		doub.set(5.3);
 		var.set("initial");
 		for (int i = 10; i > 0; i--)
 			persons.add(new Person());
@@ -69,5 +46,17 @@ public class DemoModel implements IDemoModel, Serializable {
 	@Override
 	public Modifiable<IPerson> persons() {
 		return persons;
+	}
+
+	public DoubleVar a() {
+		return a;
+	}
+
+	public DoubleVar b() {
+		return b;
+	}
+
+	public DoubleValue sum() {
+		return sum;
 	}
 }
