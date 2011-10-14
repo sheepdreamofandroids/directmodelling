@@ -19,7 +19,7 @@ package com.directmodelling.api;
 public interface DoubleValue extends Value<Double> {
 	double get();
 
-	interface Modifiable extends DoubleValue, Value.Mutable<Double> {
+	public interface Modifiable extends DoubleValue, Value.Mutable<Double> {
 		Modifiable set(double value);
 	}
 
