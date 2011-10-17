@@ -24,7 +24,16 @@ import com.directmodelling.api.Status.HasStatus;
  * whether it can be used or not.
  */
 public abstract class Command implements HasStatus, Runnable {
-
+	/**
+	 * @return <dl>
+	 *         <dt>writeable</dt>
+	 *         <dd>All parameters are OK and this command can be run.</dd>
+	 *         <dt>irrelevant</dt>
+	 *         <dd>The command doesn't make sense in the current context.</dd>
+	 *         <dt>suspect</dt>
+	 *         <dd>The command cannot be run because of wrong parameters.</dd>
+	 *         </dl>
+	 */
 	@Override
 	public Status status() {
 		return Status.writeable;

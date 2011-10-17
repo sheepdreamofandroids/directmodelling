@@ -22,26 +22,48 @@ package com.directmodelling.api;
  * <dl>
  * <dt>irrelevant</dt>
  * <dd>Currently this data is meaningless. Treat it as if it didn't exist. A
- * typical GUI would render this invisible. Reading and writing could fail.</dd>
+ * typical GUI might render this invisible. Reading and writing could fail.</dd>
  * <dt>pending</dt>
  * <dd>This data is being calculated right now. The result will be available
  * soon and an update will be issued to notify you. The result of get() and
  * getValue() will be outdated. A GUI could show a progress bar or throbber.</dd>
  * <dt>readonly</dt>
  * <dd>This data is calculated. The get() or getValue() methods will return
- * meaningful results. set() and setValue() could fail.</dd>
+ * current data. Set() or setValue() might fail.</dd>
+ * <dt>suspect</dt>
+ * <dd>Like readonly but at least one input is invalid or wrong.</dd>
  * <dt>writeable</dt>
- * <dd>A normal read/write field. The current value is valid.</dd>
+ * <dd>Readable and writable. The current value is valid.</dd>
  * <dt>invalid</dt>
  * <dd>A read/write field with an invalid value.</dd>
  * </dl>
  */
 public enum Status {
 	/**
-	 * The order somewhat indicates the urgency for the user to look at this
-	 * field.
+	 * Currently this data is meaningless. Treat it as if it didn't exist. A
+	 * typical GUI might hide this. Reading and writing could fail.
 	 */
-	irrelevant(false), pending(false), readonly(false), writeable(true), invalid(true);
+	irrelevant(false),
+	/**
+	 * This data is being calculated right now. The result will be available
+	 * soon and an update will be issued to notify you. The result of get() and
+	 * getValue() will be outdated. A GUI could show a progress bar or throbber.
+	 */
+	pending(false),
+	/**
+	 * This data is calculated. The get() or getValue() methods will return
+	 * current data. Set() or setValue() might fail.
+	 */
+	readonly(false),
+	/** Like readonly but at least one input is invalid or wrong. */
+	suspect(false),
+	/** Readable and writable. The current value is valid. */
+	writeable(true),
+	/**
+	 * Readable and writable. The current value is not valid and needs to be
+	 * corrected.
+	 */
+	invalid(true);
 
 	private Status(final boolean enabled) {
 		this.enabled = enabled;
