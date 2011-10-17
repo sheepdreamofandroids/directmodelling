@@ -14,32 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.api;
+package com.directmodelling.impl;
 
-import java.io.Serializable;
+/** A calculated boolean. */
+public abstract class BooleanFun extends Function<Boolean> {
 
-public interface Value<T> extends Serializable {
-	/** @return Boxed value */
-	T getValue();
+	public abstract boolean get();
 
-	Type type();
-
-	/** Indicate JVM type */
-	enum Type {
-		tBoolean, tByte, tShort, tInteger, tLong, tCharacter, tFloat, tDouble, tObject
+	@Override
+	public Type type() {
+		return Type.tBoolean;
 	}
 
-	public interface Mutable<T> extends Value<T> {
-		/**
-		 * @param value
-		 *            Boxed value to be stored.
-		 */
-		void setValue(T value);
-		// a setter
+	@Override
+	public Boolean getValue() {
+		return get();
 	}
-
-	// public interface UserValue<T> extends Mutable<T>, HasStatus {
-	// // maybe another status getter
-	// }
-
 }
