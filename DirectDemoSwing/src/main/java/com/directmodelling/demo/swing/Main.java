@@ -30,12 +30,16 @@ import com.directmodelling.swing.SwingUpdateTracker;
 public class Main {
 
 	public static void main(String[] args) {
-		final VersionImpl baseData = new VersionImpl();
-		Util.current = new SwingContext<Storage>(new TransactionImpl(baseData));
-		Updates.tracker = new SwingUpdateTracker();
+		startup();
 		JFrame frame = new JFrame("Demo");
 		frame.setContentPane(new DemoPanel(new DemoModel()));
 		frame.pack();
 		frame.setVisible(true);
+	}
+
+	public static void startup() {
+		final VersionImpl baseData = new VersionImpl();
+		Util.current = new SwingContext<Storage>(new TransactionImpl(baseData));
+		Updates.tracker = new SwingUpdateTracker();
 	}
 }
