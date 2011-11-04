@@ -16,10 +16,15 @@
  *******************************************************************************/
 package com.directmodelling.demo.swing;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,8 +32,12 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import com.directmodelling.api.Updates;
 import com.directmodelling.demo.shared.IDemoModel;
+import com.directmodelling.demo.swing.calculator.OperatorCell;
 import com.directmodelling.swing.binding.Binding;
+import com.directmodelling.swing.binding.Iterator2PanelBinding;
+import com.directmodelling.swing.binding.Iterator2PanelBinding.Function;
 
 public class DemoPanel extends JPanel {
 
@@ -42,9 +51,9 @@ public class DemoPanel extends JPanel {
 		this.model = model;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 100, 305, 0 };
-		gridBagLayout.rowHeights = new int[] { 21, 27, 37, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowHeights = new int[] { 21, 27, 37, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		JLabel label = new JLabel("New label");
@@ -83,6 +92,7 @@ public class DemoPanel extends JPanel {
 
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 5, 0);
 		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel.anchor = GridBagConstraints.NORTH;
 		gbc_panel.gridx = 1;
@@ -96,9 +106,35 @@ public class DemoPanel extends JPanel {
 		JButton btnOk = new JButton("OK");
 		panel.add(btnOk);
 
+		final JPanel container = new JPanel();
+		GridBagConstraints gbc_container = new GridBagConstraints();
+		gbc_container.gridheight = 3;
+		gbc_container.gridwidth = 2;
+		gbc_container.insets = new Insets(0, 0, 0, 5);
+		gbc_container.fill = GridBagConstraints.BOTH;
+		gbc_container.gridx = 0;
+		gbc_container.gridy = 3;
+		add(container, gbc_container);
+
 		// These bindings are handwritten
 		Binding.bind(slider, model.doub());
-		Binding.bind(textBox, model.doub());
+		// Binding.bind(textBox, model.doub());
+		final List<String> x = new ArrayList<String>();
+		new Timer().schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				x.add("" + System.currentTimeMillis());
+				Updates.aValueChanged(null);
+			}
+		}, 0, 1000);
+
+		new Iterator2PanelBinding<String>(container, x, new Function<String, Component>() {
+			@Override
+			public Component apply(String in) {
+				return new OperatorCell(in);
+			}
+		});
 	}
 
 }
