@@ -10,6 +10,12 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
+import com.directmodelling.api.Converter;
+import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.demo.shared.FunctionApplication;
+import com.directmodelling.swing.binding.DocumentBinder;
+import com.directmodelling.swing.binding.TextBinding;
+
 public class OperatorCell extends JPanel {
 	private final JTextField textField = new JTextField();
 	private final JLabel lblNewLabel = new JLabel("123");
@@ -19,16 +25,23 @@ public class OperatorCell extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public OperatorCell(String in) {
+	public OperatorCell() {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		label.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setText(in);
 		textField.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		textField.setColumns(10);
 
 		initComponents();
+	}
+
+	public OperatorCell(FunctionApplication in) {
+		this();
+		new DocumentBinder<Double>(textField, (Mutable<Double>) in.right, Converter.String2Double,
+						Converter.Double2String);
+		label.setText(in.operator.getValue().name);
+		TextBinding.bind(lblNewLabel, in);
 	}
 
 	private void initComponents() {

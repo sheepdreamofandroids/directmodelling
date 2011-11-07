@@ -1,8 +1,18 @@
 package com.directmodelling.demo.swing.calculator;
 
-import javax.swing.JFrame;
+import java.awt.Component;
 
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
+import com.directmodelling.api.Converter;
+import com.directmodelling.api.DoubleValue;
+import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.demo.shared.FunctionApplication;
 import com.directmodelling.demo.swing.Main;
+import com.directmodelling.swing.binding.Button2CommandBinding;
+import com.directmodelling.swing.binding.DocumentBinder;
+import com.directmodelling.swing.binding.Iterator2PanelBinding;
 
 public class Calculator {
 
@@ -16,8 +26,30 @@ public class Calculator {
 
 	public static void start() {
 		JFrame frame = new JFrame("Calculator");
-		frame.setContentPane(new CalculatorPanel());
+		final CalculatorPanel calc = new CalculatorPanel();
+		bind(calc, new com.directmodelling.demo.shared.Calculator());
+		frame.setContentPane(calc);
 		frame.pack();
 		frame.setVisible(true);
+	}
+
+	private static void bind(CalculatorPanel calc, com.directmodelling.demo.shared.Calculator calculator) {
+		new Button2CommandBinding(calc.plus, calculator.plus);
+		new Button2CommandBinding(calc.minus, calculator.minus);
+		new Button2CommandBinding(calc.multiply, calculator.multiply);
+		new Button2CommandBinding(calc.divide, calculator.divide);
+		new Button2CommandBinding(calc.getClear(), calculator.clear);
+		new Iterator2PanelBinding<DoubleValue>(calc.getCalculationList(), calculator.flattenedOperatorList,
+						new Iterator2PanelBinding.Function<DoubleValue, Component>() {
+							@Override
+							public Component apply(DoubleValue in) {
+								if (in instanceof FunctionApplication)
+									return new OperatorCell((FunctionApplication) in);
+								final JTextField tf = new JTextField("jo");
+								new DocumentBinder<Double>(tf, (Mutable<Double>) in, Converter.String2Double,
+												Converter.Double2String);
+								return tf;
+							}
+						});
 	}
 }

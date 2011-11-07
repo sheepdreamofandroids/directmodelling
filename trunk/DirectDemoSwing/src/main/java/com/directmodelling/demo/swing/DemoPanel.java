@@ -16,7 +16,6 @@
  *******************************************************************************/
 package com.directmodelling.demo.swing;
 
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,10 +33,7 @@ import javax.swing.JTextField;
 
 import com.directmodelling.api.Updates;
 import com.directmodelling.demo.shared.IDemoModel;
-import com.directmodelling.demo.swing.calculator.OperatorCell;
 import com.directmodelling.swing.binding.Binding;
-import com.directmodelling.swing.binding.Iterator2PanelBinding;
-import com.directmodelling.swing.binding.Iterator2PanelBinding.Function;
 
 public class DemoPanel extends JPanel {
 
@@ -129,12 +125,13 @@ public class DemoPanel extends JPanel {
 			}
 		}, 0, 1000);
 
-		new Iterator2PanelBinding<String>(container, x, new Function<String, Component>() {
-			@Override
-			public Component apply(String in) {
-				return new OperatorCell(in);
-			}
-		});
+		// new Iterator2PanelBinding<String>(container, x, new Function<String,
+		// Component>() {
+		// @Override
+		// public Component apply(String in) {
+		// return new OperatorCell(in);
+		// }
+		// });
 	}
 
 }

@@ -16,6 +16,9 @@
  *******************************************************************************/
 package com.directmodelling.swing.binding;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
@@ -24,7 +27,6 @@ import com.directmodelling.api.Converter;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value.Mutable;
-
 
 public class DocumentBinder<T> implements Receiver, DocumentListener {
 	private final Mutable<T> var;
@@ -41,6 +43,21 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 		this.toComponent = toComponent;
 		tc.getDocument().addDocumentListener(this);
 		Updates.tracker.registerForChanges(this);
+
+		tc.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	public static <T> DocumentBinder bind(JTextComponent tc, Mutable<T> var, Converter<String, T> toVar,
@@ -71,14 +88,14 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 	}
 
 	private void edited() {
-            try {
-                if (!suppressTextChanges) {
-                    var.setValue(toVar.convert(textComponent.getText()));
-
-                }
-            } catch (Exception e) {
-                //ignore
-            }
+		try {
+			if (!suppressTextChanges) {
+				var.setValue(toVar.convert(textComponent.getText()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// ignore
+		}
 	}
 
 	@Override

@@ -22,16 +22,16 @@ import java.util.WeakHashMap;
 
 import javax.swing.JComponent;
 
+import com.directmodelling.api.ListValue;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
-import com.directmodelling.api.Value;
 
 /**
  * Binds the list of subcomponents of a panel to a list of arbitrary data, using
  * a function to transform the data into components.
  */
-public class Iterator2PanelBinding<T> implements Receiver {
-	private static class ComponentFactoryCache<In, Out> implements Function<In, Out> {
+public class Iterable2ComponentsBinding<T> implements Receiver {
+	public static class ComponentFactoryCache<In, Out> implements Function<In, Out> {
 
 		private final WeakHashMap<In, Out> cache = new WeakHashMap<In, Out>();
 		Function<In, Out> fun;
@@ -54,15 +54,15 @@ public class Iterator2PanelBinding<T> implements Receiver {
 	}
 
 	Container container;
-	Value<Iterable<T>> values;
+	ListValue<T> values;
 	Function<T, Component> factory;
 
-	public Iterator2PanelBinding(final Container container, final Value<Iterable<T>> values,
+	public Iterable2ComponentsBinding(final Container container, final ListValue<T> values,
 					final Function<T, Component> factory) {
 		super();
 		this.container = container;
 		this.values = values;
-		this.factory = new ComponentFactoryCache<T, Component>(factory);
+		this.factory = factory;
 		Updates.registerForChanges(this);
 	}
 
@@ -75,19 +75,25 @@ public class Iterator2PanelBinding<T> implements Receiver {
 
 	@Override
 	public void valuesChanged() {
-		// TODO should attempt to change as little as possible
-		int index = 0;
-		for (T t : values.getValue()) {
-			Component component = factory.apply(t);
-			// inserts new, moves or leaves alone
-			if (container.getComponentCount() <= index || container.getComponent(index) != component)
-				container.add(component, index);
-			index++;
-		}
+		// modify container to match
+		final int componentCount = container.getComponentCount();
+		final int size = values.size();
+		for (int i = 0; i < componentCount; i++) {
+			final Component component = container.getComponent(i);
 
-		// remove superfluous children
-		while (container.getComponentCount() > index) {
-			container.remove(index);
+			final T data = values.get(i);
+			// if (null != data) {
+			final Component converted = factory.apply(data);
+			if (component != converted) {
+				container.remove(i);
+				container.add(converted, i);
+			}
+			// } else {
+			// container.remove(container.getComponentCount() - 1);
+			// }
+		}
+		for (int i = componentCount; i < size; i++) {
+			container.add(factory.apply(values.get(i)));
 		}
 
 		if (container instanceof JComponent) {
