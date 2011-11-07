@@ -63,6 +63,15 @@
 		<system>Google Code</system>
 		<url>http://code.google.com/p/directmodelling/issues/list</url>
 	</issueManagement>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 	<distributionManagement>
 		<repository>
 			<id>directmodelling</id>
