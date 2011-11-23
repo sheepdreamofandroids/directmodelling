@@ -16,7 +16,7 @@
  *******************************************************************************/
 package com.directmodelling.gwt;
 
-
+import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -28,7 +28,7 @@ public class BoundTextbox extends TextBox {
 		binder.setStringVar(var);
 	}
 
-	public void setDoubleVar(final Mutable<Double> var) {
+	public void setDoubleVar(final Value<Double> var) {
 		binder.setDoubleVar(var);
 	}
 }

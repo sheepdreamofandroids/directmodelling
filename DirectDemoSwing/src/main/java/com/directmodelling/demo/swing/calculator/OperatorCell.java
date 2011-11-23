@@ -38,9 +38,9 @@ public class OperatorCell extends JPanel {
 
 	public OperatorCell(FunctionApplication in) {
 		this();
-		new DocumentBinder<Double>(textField, (Mutable<Double>) in.right, Converter.String2Double,
+		new DocumentBinder<Double>(textField, (Mutable<Double>) in.right(), Converter.String2Double,
 						Converter.Double2String);
-		label.setText(in.operator.getValue().name);
+		label.setText(in.operator().getValue().name);
 		TextBinding.bind(lblNewLabel, in);
 	}
 

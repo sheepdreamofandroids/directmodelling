@@ -33,8 +33,8 @@ public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHan
 	private Mutable<VarDomain> var;
 	private Value<VarDomain> val;
 	private final HandlerRegistration addValueChangeHandler;
-	private Converter<WidgetDomain, VarDomain> toVar;
-	private Converter<VarDomain, WidgetDomain> toWidget;
+	private Converter<? super WidgetDomain, ? extends VarDomain> toVar;
+	private Converter<? super VarDomain, ? extends WidgetDomain> toWidget;
 
 	public Binder(final HasValue<WidgetDomain> gwtValue) {
 		assert null != gwtValue;
@@ -63,13 +63,25 @@ public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHan
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> void setVar(final Value.Mutable<T> var, final Converter<? super WidgetDomain, T> toVar,
+	public <T> void setVar(final Value<T> var, final Converter<? super WidgetDomain, T> toVar,
 					final Converter<? super T, WidgetDomain> toWidget) {
 		this.val = (Value<VarDomain>) var;
-		this.var = (Mutable<VarDomain>) var;
+		if (val instanceof Value.Mutable)
+			this.var = (Mutable<VarDomain>) var;
 		this.toVar = this.var == null ? null : (Converter<WidgetDomain, VarDomain>) toVar;
 		this.toWidget = (Converter<VarDomain, WidgetDomain>) toWidget;
 	}
+
+	// @SuppressWarnings("unchecked")
+	// public void setVar(final Value.Mutable<VarDomain> var,
+	// final Converter<? super WidgetDomain, ? extends VarDomain> toVar,
+	// final Converter<? super VarDomain, ? extends WidgetDomain> toWidget) {
+	// this.val = var;
+	// this.var = var;
+	// this.toVar = this.var == null ? null : (Converter<WidgetDomain,
+	// VarDomain>) toVar;
+	// this.toWidget = toWidget;
+	// }
 
 	@SuppressWarnings("unchecked")
 	public void setVal(final Value<? extends VarDomain> var, final Converter<? extends VarDomain, WidgetDomain> toWidget) {

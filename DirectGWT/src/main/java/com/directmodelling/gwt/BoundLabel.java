@@ -16,6 +16,7 @@
  *******************************************************************************/
 package com.directmodelling.gwt;
 
+import com.directmodelling.api.Converter;
 import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -41,6 +42,10 @@ public class BoundLabel extends Label implements HasValue<String> {
 
 	public void setDoubleVal(Value<Double> var) {
 		binder.setDoubleVal(var);
+	}
+
+	public final void setVal(final Value<?> var) {
+		binder.setVal(var, Converter.toString);
 	}
 
 	public String getValue() {
