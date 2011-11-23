@@ -10,6 +10,7 @@ import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.Value.Mutable;
 import com.directmodelling.demo.shared.FunctionApplication;
 import com.directmodelling.demo.swing.Main;
+import com.directmodelling.impl.util.Function;
 import com.directmodelling.swing.binding.Button2CommandBinding;
 import com.directmodelling.swing.binding.DocumentBinder;
 import com.directmodelling.swing.binding.Iterator2PanelBinding;
@@ -34,13 +35,13 @@ public class Calculator {
 	}
 
 	private static void bind(CalculatorPanel calc, com.directmodelling.demo.shared.Calculator calculator) {
-		new Button2CommandBinding(calc.plus, calculator.plus);
-		new Button2CommandBinding(calc.minus, calculator.minus);
-		new Button2CommandBinding(calc.multiply, calculator.multiply);
-		new Button2CommandBinding(calc.divide, calculator.divide);
-		new Button2CommandBinding(calc.getClear(), calculator.clear);
+		new Button2CommandBinding(calc.plus, calculator.plus());
+		new Button2CommandBinding(calc.minus, calculator.minus());
+		new Button2CommandBinding(calc.multiply, calculator.multiply());
+		new Button2CommandBinding(calc.divide, calculator.divide());
+		new Button2CommandBinding(calc.getClear(), calculator.clear());
 		new Iterator2PanelBinding<DoubleValue>(calc.getCalculationList(), calculator.flattenedOperatorList,
-						new Iterator2PanelBinding.Function<DoubleValue, Component>() {
+						new Function<DoubleValue, Component>() {
 							@Override
 							public Component apply(DoubleValue in) {
 								if (in instanceof FunctionApplication)
