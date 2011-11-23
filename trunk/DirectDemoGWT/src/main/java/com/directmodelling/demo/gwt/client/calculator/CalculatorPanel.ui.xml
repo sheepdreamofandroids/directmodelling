@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.directmodelling.gwt">
+	<ui:style>
+		
+	</ui:style>
+	<ui:with type="com.directmodelling.demo.shared.Calculator"
+		field="calculator" />
+	<g:VerticalPanel width="100%" height="100%">
+		<g:ScrollPanel width="100%" height="400px">
+			<g:VerticalPanel ui:field="tape" width="100%" height="0%" />
+		</g:ScrollPanel>
+		<g:HorizontalPanel height="0%" width="100%">
+			<p1:CommandButton command="{calculator.plus}" width="100%">+</p1:CommandButton>
+			<p1:CommandButton command="{calculator.minus}"
+				width="100%">-</p1:CommandButton>
+			<p1:CommandButton command="{calculator.multiply}"
+				width="100%">*</p1:CommandButton>
+			<p1:CommandButton command="{calculator.divide}"
+				width="100%">/</p1:CommandButton>
+			<p1:CommandButton command="{calculator.clear}"
+				width="100%">CLR</p1:CommandButton>
+		</g:HorizontalPanel>
+	</g:VerticalPanel>
+</ui:UiBinder> 

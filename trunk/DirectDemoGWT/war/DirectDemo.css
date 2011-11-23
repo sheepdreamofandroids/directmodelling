@@ -75,3 +75,7 @@ h1 {
   background-color: #DDDDDD;
   cursor: pointer;
 }
+.operator {
+  font-size: 1em;
+  font-weight: bold;
+}

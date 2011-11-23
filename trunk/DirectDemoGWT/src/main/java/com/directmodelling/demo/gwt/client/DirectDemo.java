@@ -18,10 +18,13 @@ package com.directmodelling.demo.gwt.client;
 
 import com.directmodelling.demo.gwt.client.GreetingService.Init;
 import com.directmodelling.demo.gwt.client.GreetingService.MakeSerializable;
+import com.directmodelling.demo.gwt.client.calculator.CalculatorPanel;
+import com.directmodelling.demo.shared.Calculator;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -33,11 +36,11 @@ public class DirectDemo implements EntryPoint {
 	 * returns an error.
 	 */
 	private static final String SERVER_ERROR = "An error occurred while "
-		+ "attempting to contact the server. Please check your network "
-		+ "connection and try again.";
+					+ "attempting to contact the server. Please check your network " + "connection and try again.";
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 * Create a remote service proxy to talk to the server-side Greeting
+	 * service.
 	 */
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
@@ -46,6 +49,7 @@ public class DirectDemo implements EntryPoint {
 	 */
 	@Override
 	public void onModuleLoad() {
+
 		if (Document.get() == null) {
 			greetingService.dummy(new MakeSerializable(), new AsyncCallback<MakeSerializable>() {
 
@@ -83,6 +87,13 @@ public class DirectDemo implements EntryPoint {
 				//
 				// }
 				// });
+				final CalculatorPanel calc = new CalculatorPanel(new Calculator());
+				DialogBox popupPanel = new DialogBox(false, false);
+				popupPanel.setTitle("Calculator");
+				popupPanel.setText("Calculator");
+				popupPanel.add(calc);
+				popupPanel.center();
+				// popupPanel.show();
 
 			}
 
