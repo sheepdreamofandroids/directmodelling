@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:direct="urn:import:com.directmodelling.gwt">
+	<ui:style>
+		
+	</ui:style>
+	<ui:with type="com.directmodelling.demo.shared.FunctionApplication"
+		field="functionApplication" />
+	<g:Grid>
+		<g:row>
+			<g:customCell>
+				<direct:BoundTextbox doubleVar="{functionApplication.right}"
+					alignment="RIGHT" />
+			</g:customCell>
+			<g:customCell>
+				<direct:BoundLabel val="{functionApplication.operator}"
+					styleName="operator" />
+			</g:customCell>
+		</g:row>
+		<g:row>
+			<g:customCell>
+				<g:Label text="--------------------" horizontalAlignment="ALIGN_RIGHT" />
+			</g:customCell>
+		</g:row>
+		<g:row>
+			<g:customCell>
+				<direct:BoundLabel doubleVal="{functionApplication}"
+					horizontalAlignment="ALIGN_RIGHT" />
+			</g:customCell>
+		</g:row>
+	</g:Grid>
+</ui:UiBinder> 
