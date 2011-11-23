@@ -34,7 +34,19 @@ public class FunctionApplication extends DoubleFunction {
 		return 0;
 	}
 
-	public final DoubleValue left;
-	public final DoubleValue right;
-	public final Mutable<Operator> operator = new ObjectVar<Operator>();
+	public DoubleValue left() {
+		return left;
+	}
+
+	public DoubleValue right() {
+		return right;
+	}
+
+	public Mutable<Operator> operator() {
+		return operator;
+	}
+
+	private final DoubleValue left;
+	private final DoubleValue right;
+	private final Mutable<Operator> operator = new ObjectVar<Operator>();
 }

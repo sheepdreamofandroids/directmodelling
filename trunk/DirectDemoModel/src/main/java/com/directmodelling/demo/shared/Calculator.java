@@ -3,6 +3,7 @@ package com.directmodelling.demo.shared;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.directmodelling.api.DirectModelling;
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
@@ -16,11 +17,11 @@ public class Calculator {
 	/** Link to outermost (rightmost) operator. Initially link to first value. */
 	public final Mutable<DoubleValue> calculation = new ObjectVar<DoubleValue>();
 
-	public final Command plus = new DoAppendOperator(Operator.plus);
-	public final Command minus = new DoAppendOperator(Operator.minus);
-	public final Command multiply = new DoAppendOperator(Operator.multiply);
-	public final Command divide = new DoAppendOperator(Operator.divide);
-	public final Command clear = new Command() {
+	private final Command plus = new DoAppendOperator(Operator.plus);
+	private final Command minus = new DoAppendOperator(Operator.minus);
+	private final Command multiply = new DoAppendOperator(Operator.multiply);
+	private final Command divide = new DoAppendOperator(Operator.divide);
+	private final Command clear = new Command() {
 		@Override
 		public void run() {
 			final DoubleVar var = new DoubleVar();
@@ -37,7 +38,7 @@ public class Calculator {
 			DoubleValue o = calculation.getValue();
 			while (o instanceof FunctionApplication) {
 				result.add(o);
-				o = ((FunctionApplication) o).left;
+				o = ((FunctionApplication) o).left();
 			}
 			result.add(o);
 			Collections.reverse(result);
@@ -46,7 +47,12 @@ public class Calculator {
 
 	};
 
+	static {
+		DirectModelling.init();
+	}
+
 	{
+		DirectModelling.init();
 		clear.run();
 	}
 
@@ -63,5 +69,25 @@ public class Calculator {
 			right.set(0);
 			calculation.setValue(new FunctionApplication(calculation.getValue(), right, op));
 		}
+	}
+
+	public Command plus() {
+		return plus;
+	}
+
+	public Command minus() {
+		return minus;
+	}
+
+	public Command multiply() {
+		return multiply;
+	}
+
+	public Command divide() {
+		return divide;
+	}
+
+	public Command clear() {
+		return clear;
 	}
 }
