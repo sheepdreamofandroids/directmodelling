@@ -16,18 +16,23 @@
  *******************************************************************************/
 package com.directmodelling.android.demo;
 
-import static com.directmodelling.android.binding.Binding.bindDouble;
 import net.bloemsma.reactive.android.demo.R;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
 import com.directmodelling.demo.shared.DemoModel;
+import com.directmodelling.impl.Command;
 import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.VersionImpl;
+
+import static com.directmodelling.android.binding.Binding.bindCommand;
+import static com.directmodelling.android.binding.Binding.bindDouble;
 
 public class DirectDemoAndroid extends RoboActivity {
 	// Enjoy this typesafety thank to the excellent RoboGuice
@@ -36,6 +41,8 @@ public class DirectDemoAndroid extends RoboActivity {
 	SeekBar bar;
 	@InjectView(R.id.EditText01)
 	EditText text;
+	@InjectView(R.id.startCalculator)
+	Button startCalculator;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -46,6 +53,12 @@ public class DirectDemoAndroid extends RoboActivity {
 		final DemoModel demoModel = new DemoModel();
 		bindDouble(bar, demoModel.doub());
 		bindDouble(text, demoModel.doub());
+		bindCommand(startCalculator, new Command() {
+			@Override
+			public void run() {
+				startActivity(new Intent(DirectDemoAndroid.this, CalculatorActivity.class));
+			}
+		});
 	}
 
 	private void initAndroid() {

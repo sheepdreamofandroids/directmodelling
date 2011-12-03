@@ -29,9 +29,9 @@ import com.directmodelling.api.Value;
 public final class TextViewBinder<T> extends Binder<TextView, T, String> implements Receiver, TextWatcher,
 				OnFocusChangeListener {
 
-	public TextViewBinder(final Value<T> m, final TextView s, final Converter<T, String> toInt,
-					final Converter<String, T> fromInt) {
-		super(m, s, toInt, fromInt);
+	public TextViewBinder(final Value<T> m, final TextView s, final Converter<T, String> toView,
+					final Converter<String, T> toMutable) {
+		super(m, s, toView, toMutable);
 		s.addTextChangedListener(this);
 		s.setOnFocusChangeListener(this);
 	}

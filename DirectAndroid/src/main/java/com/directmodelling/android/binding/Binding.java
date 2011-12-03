@@ -50,6 +50,14 @@ public class Binding {
 		new TextViewBinder<Double>(m, s, Converter.Double2String, Converter.String2Double);
 	}
 
+	public static void bindText(final TextView s, final Value<String> m) {
+		new TextViewBinder<String>(m, s, Converter.ID_String, Converter.ID_String);
+	}
+
+	public static void bindVal(final TextView s, final Value<?> m) {
+		new TextViewBinder(m, s, Converter.toString, null);
+	}
+
 	public static void bindCommand(View upgradeButton, Command command) {
 		new ClickBinder(command, upgradeButton);
 	}

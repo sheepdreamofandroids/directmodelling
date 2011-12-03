@@ -91,8 +91,8 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 
 	@Override
 	public void valuesChanged() {
-		if (null != mutable) {
-			final TMutableValue newValue = mutable.getValue();
+		if (null != value) {
+			final TMutableValue newValue = value.getValue();
 			if (!equals(newValue, lastValue)) {
 				lastValue = newValue;
 				boolean viewIsCorrect = false;
