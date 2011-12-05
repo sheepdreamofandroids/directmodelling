@@ -3,6 +3,7 @@ package com.directmodelling.demo.shared;
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.impl.ObjectVar;
 
+/** Binds a binary operator to arguments. */
 @SuppressWarnings("serial")
 public class FunctionApplication extends DoubleFunction {
 
@@ -14,24 +15,11 @@ public class FunctionApplication extends DoubleFunction {
 	}
 
 	/**
-	 * Does the actual calculation. Obviously the operator should know how to
-	 * calculate but that is irrelevant to this demo.
+	 * Delegates the actual calculation to the operator.
 	 */
 	@Override
 	public double get() {
-		final double l = left.get();
-		final double r = right.get();
-		switch (operator.getValue()) {
-		case plus:
-			return l + r;
-		case minus:
-			return l - r;
-		case multiply:
-			return l * r;
-		case divide:
-			return l / r;
-		}
-		return 0;
+		return operator.getValue().eval(left.get(), right.get());
 	}
 
 	public DoubleValue left() {
