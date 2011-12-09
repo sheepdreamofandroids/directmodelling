@@ -7,7 +7,6 @@ import javax.swing.JTextField;
 
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.DoubleValue;
-import com.directmodelling.api.Value.Mutable;
 import com.directmodelling.demo.shared.FunctionApplication;
 import com.directmodelling.demo.swing.Main;
 import com.directmodelling.impl.util.Function;
@@ -34,23 +33,24 @@ public class Calculator {
 		frame.setVisible(true);
 	}
 
-	private static void bind(CalculatorPanel calc, com.directmodelling.demo.shared.Calculator calculator) {
+	private static void bind(CalculatorPanel calc,
+			com.directmodelling.demo.shared.Calculator calculator) {
 		new Button2CommandBinding(calc.plus, calculator.plus());
 		new Button2CommandBinding(calc.minus, calculator.minus());
 		new Button2CommandBinding(calc.multiply, calculator.multiply());
 		new Button2CommandBinding(calc.divide, calculator.divide());
 		new Button2CommandBinding(calc.getClear(), calculator.clear());
-		new Iterator2PanelBinding<DoubleValue>(calc.getCalculationList(), calculator.flattenedOperatorList,
-						new Function<DoubleValue, Component>() {
-							@Override
-							public Component apply(DoubleValue in) {
-								if (in instanceof FunctionApplication)
-									return new OperatorCell((FunctionApplication) in);
-								final JTextField tf = new JTextField("jo");
-								new DocumentBinder<Double>(tf, (Mutable<Double>) in, Converter.String2Double,
-												Converter.Double2String);
-								return tf;
-							}
-						});
+		new Iterator2PanelBinding<DoubleValue>(calc.getCalculationList(),
+				calculator.flattenedOperatorList, new Function<DoubleValue, Component>() {
+					@Override
+					public Component apply(DoubleValue in) {
+						if (in instanceof FunctionApplication)
+							return new OperatorCell((FunctionApplication) in);
+						final JTextField tf = new JTextField();
+						new DocumentBinder<Double>(tf, in, Converter.String2Double,
+								Converter.Double2String);
+						return tf;
+					}
+				});
 	}
 }

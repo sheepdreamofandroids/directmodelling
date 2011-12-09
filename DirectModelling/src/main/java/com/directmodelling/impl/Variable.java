@@ -26,7 +26,8 @@ import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
 
-public abstract class Variable<T> extends Function<T> implements Value.Mutable<T>, HasKey, HasStorage, Serializable {
+public abstract class Variable<T> extends Function<T> implements Value.Mutable<T>, HasKey,
+		HasStorage, Serializable {
 	public Variable() {
 		super();
 	}
@@ -89,6 +90,6 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 
 	@Override
 	public String toString() {
-		return "(Var '" + getKey() + /* "' = " + storage.get(this) + */")";
+		return "(Var " + hash + " '" + getKey() + /* "' = " + storage.get(this) + */")";
 	}
 }

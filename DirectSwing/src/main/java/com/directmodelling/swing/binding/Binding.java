@@ -16,34 +16,63 @@
  *******************************************************************************/
 package com.directmodelling.swing.binding;
 
+import java.awt.Component;
+
 import javax.swing.JSlider;
 import javax.swing.text.JTextComponent;
 
 import com.directmodelling.api.Converter;
-import com.directmodelling.impl.DoubleVar;
-
+import com.directmodelling.api.Value;
 
 public class Binding {
 
 	/**
 	 * @param slider
-	 *          TODO
-	 * @param doubleVar
-	 *          TODO
+	 *            TODO
+	 * @param doubleVal
+	 *            TODO
 	 */
-	public static void bind(JSlider slider, DoubleVar doubleVar) {
-		BoundedRangeModelBinding.bind(slider, doubleVar, Converter.Double2Integer, Converter.Integer2Double);
+	public static void bindDouble(JSlider slider, Value<Double> doubleVal) {
+		BoundedRangeModelBinding.bind(slider, doubleVal, Converter.Double2Integer,
+				Converter.Integer2Double);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void bind(JSlider slider, Value<?> val) {
+		switch (val.type()) {
+		case tDouble:
+			bindDouble(slider, (Value<Double>) val);
+			return;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void bind(JTextComponent text, Value<?> val) {
+		switch (val.type()) {
+		case tDouble:
+			bindDouble(text, (Value<Double>) val);
+			return;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void bind(Component c, Value<?> val) {
+		if (c instanceof JSlider)
+			bind((JSlider) c, val);
+		else if (c instanceof JTextComponent)
+			bind((JTextComponent) c, val);
 	}
 
 	/**
 	 * @param m
 	 * @param text
-	 *          TODO
+	 *            TODO
 	 * @param doubleVar
-	 *          TODO
+	 *            TODO
 	 * @return
 	 */
-	public static DocumentBinder bind(JTextComponent text, DoubleVar doubleVar) {
-		return DocumentBinder.bind(text, doubleVar, Converter.String2Double, Converter.Double2String);
+	public static DocumentBinder bindDouble(JTextComponent text, Value<Double> doubleVar) {
+		return DocumentBinder.bind(text, doubleVar, Converter.String2Double,
+				Converter.Double2String);
 	}
 }
