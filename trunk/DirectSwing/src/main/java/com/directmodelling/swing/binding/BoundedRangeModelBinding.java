@@ -24,19 +24,21 @@ import javax.swing.event.ChangeListener;
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
+import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
-
 
 public class BoundedRangeModelBinding<T> implements ChangeListener, Receiver {
 
+	private final Value<T> val;
 	private final Mutable<T> var;
 	private final DefaultBoundedRangeModel brm;
 	private final Converter<T, Integer> toWidget;
 	private final Converter<Integer, T> toVar;
 
-	public BoundedRangeModelBinding(final Mutable<T> var, final Converter<T, Integer> toWidget,
-					final Converter<Integer, T> toVar) {
-		this.var = var;
+	public BoundedRangeModelBinding(final Value<T> val, final Converter<T, Integer> toWidget,
+			final Converter<Integer, T> toVar) {
+		this.val = val;
+		this.var = (val instanceof Mutable ? (Mutable<T>) val : null);
 		this.toWidget = toWidget;
 		this.toVar = toVar;
 		brm = new DefaultBoundedRangeModel();
@@ -50,17 +52,19 @@ public class BoundedRangeModelBinding<T> implements ChangeListener, Receiver {
 
 	@Override
 	public void stateChanged(final ChangeEvent e) {
-		var.setValue(toVar.convert(brm.getValue()));
+		if (var != null)
+			var.setValue(toVar.convert(brm.getValue()));
 	}
 
 	@Override
 	public void valuesChanged() {
-		brm.setValue(toWidget.convert(var.getValue()).intValue());
+		brm.setValue(toWidget.convert(val.getValue()).intValue());
 	}
 
-	public static <T> BoundedRangeModelBinding bind(final JSlider slider, final Mutable<T> var,
-					final Converter<T, Integer> toWidget, final Converter<Integer, T> toVar) {
-		final BoundedRangeModelBinding bmr = new BoundedRangeModelBinding(var, toWidget, toVar);
+	public static <T> BoundedRangeModelBinding<T> bind(final JSlider slider, final Value<T> var,
+			final Converter<T, Integer> toWidget, final Converter<Integer, T> toVar) {
+		final BoundedRangeModelBinding<T> bmr = new BoundedRangeModelBinding<T>(var, toWidget,
+				toVar);
 		slider.setModel(bmr.getModel());
 		return bmr;
 	}

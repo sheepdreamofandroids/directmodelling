@@ -26,42 +26,47 @@ import javax.swing.text.JTextComponent;
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
+import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 
 public class DocumentBinder<T> implements Receiver, DocumentListener {
+	private final Value<T> val;
 	private final Mutable<T> var;
 	private final Converter<String, T> toVar;
 	private final Converter<T, String> toComponent;
 	private final JTextComponent textComponent;
 	private boolean suppressTextChanges;
 
-	public DocumentBinder(JTextComponent tc, Mutable<T> var, Converter<String, T> toVar,
-					Converter<T, String> toComponent) {
+	public DocumentBinder(JTextComponent tc, Value<T> val, Converter<String, T> toVar,
+			Converter<T, String> toComponent) {
 		this.textComponent = tc;
-		this.var = var;
+		this.val = val;
+		this.var = val instanceof Mutable ? (Mutable<T>) val : null;
 		this.toVar = toVar;
 		this.toComponent = toComponent;
-		tc.getDocument().addDocumentListener(this);
 		Updates.tracker.registerForChanges(this);
 
-		tc.addFocusListener(new FocusListener() {
+		if (var != null && toVar != null) {
+			tc.getDocument().addDocumentListener(this);
+			tc.addFocusListener(new FocusListener() {
 
-			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
+				@Override
+				public void focusLost(FocusEvent e) {
+					// TODO Auto-generated method stub
 
-			}
+				}
 
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
+				@Override
+				public void focusGained(FocusEvent e) {
+					// TODO Auto-generated method stub
 
-			}
-		});
+				}
+			});
+		}
 	}
 
-	public static <T> DocumentBinder bind(JTextComponent tc, Mutable<T> var, Converter<String, T> toVar,
-					Converter<T, String> toComponent) {
+	public static <T> DocumentBinder bind(JTextComponent tc, Value<T> var,
+			Converter<String, T> toVar, Converter<T, String> toComponent) {
 		return new DocumentBinder(tc, var, toVar, toComponent);
 	}
 
@@ -70,7 +75,7 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 		if (!textComponent.hasFocus()) {
 			suppressTextChanges = true;
 			try {
-				textComponent.setText(toComponent.convert(var.getValue()));
+				textComponent.setText(toComponent.convert(val.getValue()));
 			} finally {
 				suppressTextChanges = false;
 			}
@@ -90,7 +95,8 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 	private void edited() {
 		try {
 			if (!suppressTextChanges) {
-				var.setValue(toVar.convert(textComponent.getText()));
+				if (var != null)
+					var.setValue(toVar.convert(textComponent.getText()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

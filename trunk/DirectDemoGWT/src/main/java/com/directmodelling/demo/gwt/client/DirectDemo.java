@@ -25,7 +25,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -50,6 +50,28 @@ public class DirectDemo implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
+		makeSerializable();
+
+		final System system = new System();
+		greetingService.getInitial(new AsyncCallback<GreetingService.Init>() {
+
+			@Override
+			public void onSuccess(final Init result) {
+				system.initializeValues(result.storage);
+				system.doneInitializing();
+				popup(new DemoPanel(result.model, system), "sliders");
+				popup(new CalculatorPanel(new Calculator()), "Calculator");
+			}
+
+			@Override
+			public void onFailure(final Throwable caught) {
+				GWT.log("", caught);
+			}
+		});
+	}
+
+	/** dummy code to work around some serialization issues */
+	public void makeSerializable() {
 		if (Document.get() == null) {
 			greetingService.dummy(new MakeSerializable(), new AsyncCallback<MakeSerializable>() {
 
@@ -66,41 +88,17 @@ public class DirectDemo implements EntryPoint {
 				}
 			});
 		}
+	}
 
-		final System system = new System();
-		greetingService.getInitial(new AsyncCallback<GreetingService.Init>() {
+	public void showCalculator() {
+		popup(new CalculatorPanel(new Calculator()), "Calculator");
+	}
 
-			@Override
-			public void onSuccess(final Init result) {
-				// final MyGinjector ginjector = GWT.create(MyGinjector.class);
-				final DemoPanel demoPanel = new DemoPanel(result.model, system);
-				RootPanel.get().add(demoPanel);
-				system.initializeValues(result.storage);
-				system.doneInitializing();
-				// Updates.registerForChanges(new Receiver() {
-				//
-				// private GreetingServiceAsync create;
-				//
-				// @Override
-				// public void valuesChanged() {
-				// commit(baseValues, changes);
-				//
-				// }
-				// });
-				final CalculatorPanel calc = new CalculatorPanel(new Calculator());
-				DialogBox popupPanel = new DialogBox(false, false);
-				popupPanel.setTitle("Calculator");
-				popupPanel.setText("Calculator");
-				popupPanel.add(calc);
-				popupPanel.center();
-				// popupPanel.show();
-
-			}
-
-			@Override
-			public void onFailure(final Throwable caught) {
-				GWT.log("", caught);
-			}
-		});
+	public void popup(final Widget calc, String title) {
+		DialogBox popupPanel = new DialogBox(false, false);
+		popupPanel.setTitle(title);
+		popupPanel.setText("title");
+		popupPanel.add(calc);
+		popupPanel.center();
 	}
 }

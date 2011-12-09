@@ -35,6 +35,7 @@ import com.directmodelling.stm.Version;
 public class VersionImpl extends AbstractStorage implements Version, Serializable {
 	protected transient VersionImpl parent;
 	protected HashMap<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
+	private static final Object nullMarker = "NULL MARKER";
 
 	// TODO use specific hashtables for primitive types
 	public VersionImpl() {
@@ -53,7 +54,8 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	@Override
 	public <T> T get(final Value<T> v) {
 		if (values.containsKey(v)) {
-			return (T) values.get(v);
+			final Object result = values.get(v);
+			return result == nullMarker ? null : (T) result;
 		} else if (null != parent) {
 			return parent.get(v);
 		} else {
@@ -63,8 +65,8 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 
 	@Override
 	public <T> void set(final Value.Mutable<T> m, final T val) {
-		// System.err.println(m.hashCode() + " := " + val);
-		values.put(m, val);
+		System.err.println(m + " := " + val);
+		values.put(m, val == null ? nullMarker : val);
 		Updates.tracker.aValueChanged(m);
 	}
 
