@@ -35,7 +35,7 @@ import com.directmodelling.stm.Version;
 public class VersionImpl extends AbstractStorage implements Version, Serializable {
 	protected transient VersionImpl parent;
 	protected HashMap<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
-	private static final Object nullMarker = "NULL MARKER";
+	protected static final Object nullMarker = "NULL MARKER";
 
 	// TODO use specific hashtables for primitive types
 	public VersionImpl() {

@@ -16,10 +16,14 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
-public interface ObjectValue<T> extends Value<T> {
-	T get();
+import com.directmodelling.impl.EnumerableDomain;
 
-	public interface Mutable<T> extends ObjectValue<T>, Value.Mutable<T> {
-		void set(T value);
+/**
+ * Convenience class interface when you want to express explicitly that your
+ * variable or function can enumerate its domain.
+ */
+public interface EnumValue<T extends Enum<T>> extends ObjectValue<T>, EnumerableDomain<T> {
+
+	public interface Mutable<T extends Enum<T>> extends EnumValue<T>, ObjectValue.Mutable<T> {
 	}
 }

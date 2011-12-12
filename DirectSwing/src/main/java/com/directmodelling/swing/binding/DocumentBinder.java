@@ -63,6 +63,8 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 				}
 			});
 		}
+
+		valuesChanged();
 	}
 
 	public static <T> DocumentBinder bind(JTextComponent tc, Value<T> var,

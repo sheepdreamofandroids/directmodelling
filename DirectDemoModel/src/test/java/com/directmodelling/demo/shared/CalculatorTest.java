@@ -7,8 +7,8 @@ import org.junit.Test;
 import com.directmodelling.api.DoubleValue.Modifiable;
 import com.directmodelling.api.Updates;
 import com.directmodelling.impl.DoubleVar;
+import com.directmodelling.impl.ExplicitUpdatesTracker;
 import com.directmodelling.impl.SimpleContext;
-import com.directmodelling.impl.SingleThreadedUpdateTracker;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.Util;
 import com.directmodelling.stm.impl.VersionImpl;
@@ -21,12 +21,7 @@ public class CalculatorTest {
 	public void setup() {
 		final VersionImpl baseData = new VersionImpl();
 		Util.current = new SimpleContext<Storage>(new VersionImpl(baseData));
-		Updates.tracker = new SingleThreadedUpdateTracker() {
-			@Override
-			protected void schedule() {
-				// nada, purely demand driven
-			}
-		};
+		Updates.tracker = new ExplicitUpdatesTracker();
 	}
 
 	@Test

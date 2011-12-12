@@ -18,10 +18,12 @@ package com.directmodelling.swing.binding;
 
 import java.awt.Component;
 
+import javax.swing.JComboBox;
 import javax.swing.JSlider;
 import javax.swing.text.JTextComponent;
 
 import com.directmodelling.api.Converter;
+import com.directmodelling.api.EnumValue;
 import com.directmodelling.api.Value;
 
 public class Binding {
@@ -33,8 +35,11 @@ public class Binding {
 	 *            TODO
 	 */
 	public static void bindDouble(JSlider slider, Value<Double> doubleVal) {
-		BoundedRangeModelBinding.bind(slider, doubleVal, Converter.Double2Integer,
-				Converter.Integer2Double);
+		BoundedRangeModelBinding.bind(slider, doubleVal, Converter.Double2Integer, Converter.Integer2Double);
+	}
+
+	public static void bindEnum(JComboBox comboBox, EnumValue val) {
+		ListModelBinding.bind(comboBox, val);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,6 +57,9 @@ public class Binding {
 		case tDouble:
 			bindDouble(text, (Value<Double>) val);
 			return;
+		default:
+			bindString(text, (Value<String>) val);
+
 		}
 	}
 
@@ -61,6 +69,8 @@ public class Binding {
 			bind((JSlider) c, val);
 		else if (c instanceof JTextComponent)
 			bind((JTextComponent) c, val);
+		else if (c instanceof JComboBox && val instanceof EnumValue)
+			bindEnum((JComboBox) c, (EnumValue) val);
 	}
 
 	/**
@@ -72,7 +82,10 @@ public class Binding {
 	 * @return
 	 */
 	public static DocumentBinder bindDouble(JTextComponent text, Value<Double> doubleVar) {
-		return DocumentBinder.bind(text, doubleVar, Converter.String2Double,
-				Converter.Double2String);
+		return DocumentBinder.bind(text, doubleVar, Converter.String2Double, Converter.Double2String);
+	}
+
+	public static DocumentBinder bindString(JTextComponent text, Value<String> stringVar) {
+		return DocumentBinder.bind(text, stringVar, Converter.ID_String, Converter.ID_String);
 	}
 }
