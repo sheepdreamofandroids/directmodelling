@@ -74,21 +74,21 @@ public class TransactionImpl extends VersionImpl {
 		// TODO fail here when any parent received a commit
 		final Object a = values.get(v);
 		if (null != a) {
-			return (T) a;
+			return a == nullMarker ? null : (T) a;
 		}
 		final Object b = reads.get(v);
 		if (null != b) {
-			return (T) b;
+			return b == nullMarker ? null : (T) b;
 		}
 		final T val = parent.get(v);
 		// remember that this value was known before and used by the transaction
-		reads.put(v, val);
+		reads.put(v, val == null ? nullMarker : val);
 		return val;
 	}
 
 	/**
-	 * Try to accept all changes in t. This will work when none of the reads in t
-	 * have been changed already. This only makes sense when both transactions
+	 * Try to accept all changes in t. This will work when none of the reads in
+	 * t have been changed already. This only makes sense when both transactions
 	 * emerge from the same parent.
 	 * 
 	 * @return whether the commit succeeded.
@@ -112,7 +112,8 @@ public class TransactionImpl extends VersionImpl {
 	 * Like {@link TransactionImpl#mergeAfter(TransactionImpl)}, only reads and
 	 * writes are specified seperately.
 	 */
-	public boolean mergeAfter(final Map<Value<?>, Object> reads, final Map<Value.Mutable<?>, Object> writes) {
+	public boolean mergeAfter(final Map<Value<?>, Object> reads,
+			final Map<Value.Mutable<?>, Object> writes) {
 		final boolean success = Collections.disjoint(getWrites().keySet(), reads.keySet());
 		// TODO Maybe a better criterion is checking whether all the read values
 		// are still the same so that writing without changing the value doesn't
@@ -128,17 +129,14 @@ public class TransactionImpl extends VersionImpl {
 		// check that none of the reads have been modified
 		for (final Entry<Value<?>, Object> entry : reads.entrySet()) {
 			if (!equals(t.get(entry.getKey()), entry.getValue())) {
-				throw new CommitAbortedException("Value of "
-					+ entry.getKey()
-					+ " was changed: expected ("
-					+ entry.getValue()
-					+ ") but got ("
-					+ t.get(entry.getKey())
-					+ ").");
+				throw new CommitAbortedException("Value of " + entry.getKey()
+						+ " was changed: expected (" + entry.getValue() + ") but got ("
+						+ t.get(entry.getKey()) + ").");
 			}
 		}
 		// all input is still correct, now apply the output
-		for (final Entry<Mutable<Object>, ?> entry : (Set<Entry<Mutable<Object>, ?>>) (Set) values.entrySet()) {
+		for (final Entry<Mutable<Object>, ?> entry : (Set<Entry<Mutable<Object>, ?>>) (Set) values
+				.entrySet()) {
 			t.set(entry.getKey(), entry.getValue());
 		}
 	}

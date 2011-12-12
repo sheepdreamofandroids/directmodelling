@@ -1,7 +1,8 @@
 package com.directmodelling.demo.shared;
 
 import com.directmodelling.api.DoubleValue;
-import com.directmodelling.impl.ObjectVar;
+import com.directmodelling.api.EnumValue;
+import com.directmodelling.impl.EnumVar;
 
 /** Binds a binary operator to arguments. */
 @SuppressWarnings("serial")
@@ -30,11 +31,11 @@ public class FunctionApplication extends DoubleFunction {
 		return right;
 	}
 
-	public Mutable<Operator> operator() {
+	public EnumValue.Mutable<Operator> operator() {
 		return operator;
 	}
 
 	private final DoubleValue left;
 	private final DoubleValue right;
-	private final Mutable<Operator> operator = new ObjectVar<Operator>();
+	private final EnumVar<Operator> operator = new EnumVar<Operator>(Operator.values());
 }
