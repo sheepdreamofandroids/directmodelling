@@ -67,7 +67,7 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 	}
 
 	public static <T> DocumentBinder bind(JTextComponent tc, Value<T> var,
-					Converter<? extends String, ? super T> toVar, Converter<? extends T, ? super String> toComponent) {
+					Converter<? super String, ? extends T> toVar, Converter<? super T, ? extends String> toComponent) {
 		return new DocumentBinder(tc, var, toVar, toComponent);
 	}
 
