@@ -37,8 +37,7 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 	private final JTextComponent textComponent;
 	private boolean suppressTextChanges;
 
-	public DocumentBinder(JTextComponent tc, Value<T> val, Converter<String, T> toVar,
-			Converter<T, String> toComponent) {
+	public DocumentBinder(JTextComponent tc, Value<T> val, Converter<String, T> toVar, Converter<T, String> toComponent) {
 		this.textComponent = tc;
 		this.val = val;
 		this.var = val instanceof Mutable ? (Mutable<T>) val : null;
@@ -68,7 +67,7 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 	}
 
 	public static <T> DocumentBinder bind(JTextComponent tc, Value<T> var,
-			Converter<String, T> toVar, Converter<T, String> toComponent) {
+					Converter<? extends String, ? super T> toVar, Converter<? extends T, ? super String> toComponent) {
 		return new DocumentBinder(tc, var, toVar, toComponent);
 	}
 
