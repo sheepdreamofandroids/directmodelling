@@ -122,12 +122,14 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 	}
 
 	public void takeValueFromView() {
+		if (mutable == null)
+			return;
 		final TViewValue v = getViewValue();
 		if (!equals(v, lastViewContents)) {
 			lastViewContents = v;
 			try {
 				final TMutableValue newMutableValue = fromView.convert(v);
-				if (!equals(newMutableValue, mutable.getValue())) {
+				if (!equals(newMutableValue, value.getValue())) {
 					mutable.setValue(newMutableValue);
 				}
 			} catch (final Exception e) {

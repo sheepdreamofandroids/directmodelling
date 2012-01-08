@@ -26,7 +26,27 @@ public interface Value<T> extends Serializable {
 
 	/** Indicate JVM type */
 	enum Type {
-		tBoolean, tByte, tShort, tInteger, tLong, tCharacter, tFloat, tDouble, tObject
+		tBoolean, tByte, tShort, tInteger, tLong, tCharacter, tFloat, tDouble, tObject;
+
+		public static Type fromClass(Class<?> c) {
+			if (c == Boolean.class || c == Boolean.TYPE)
+				return tBoolean;
+			if (c == Byte.class || c == Byte.TYPE)
+				return tByte;
+			if (c == Short.class || c == Short.TYPE)
+				return tShort;
+			if (c == Integer.class || c == Integer.TYPE)
+				return tInteger;
+			if (c == Long.class || c == Long.TYPE)
+				return tLong;
+			if (c == Character.class || c == Character.TYPE)
+				return tCharacter;
+			if (c == Float.class || c == Float.TYPE)
+				return tFloat;
+			if (c == Double.class || c == Double.TYPE)
+				return tDouble;
+			return tObject;
+		}
 	}
 
 	public interface Mutable<T> extends Value<T> {
