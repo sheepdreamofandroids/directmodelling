@@ -34,7 +34,7 @@ public interface Converter<From, To> {
 		}
 	};
 
-	public static final Converter<?, String> toString = new Converter<Object, String>() {
+	public static final Converter<? extends Object, String> toString = new Converter<Object, String>() {
 
 		@Override
 		public String convert(final Object value) {
