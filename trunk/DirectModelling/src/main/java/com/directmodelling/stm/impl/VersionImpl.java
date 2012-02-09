@@ -19,9 +19,14 @@ package com.directmodelling.stm.impl;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
+import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.AbstractStorage;
 import com.directmodelling.stm.Version;
 
@@ -33,8 +38,8 @@ import com.directmodelling.stm.Version;
  * 
  */
 public class VersionImpl extends AbstractStorage implements Version, Serializable {
-	protected transient VersionImpl parent;
-	protected HashMap<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
+	protected final Storage parent;
+	protected final Map<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
 	protected static final Object nullMarker = "NULL MARKER";
 
 	// TODO use specific hashtables for primitive types
@@ -42,7 +47,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 		this(null);
 	}
 
-	public VersionImpl(final VersionImpl versionImpl) {
+	public VersionImpl(final Storage versionImpl) {
 		parent = versionImpl;
 	}
 
@@ -65,9 +70,21 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 
 	@Override
 	public <T> void set(final Value.Mutable<T> m, final T val) {
-		System.err.println(m + " := " + val);
+		// System.err.println(m + " := " + val);
 		values.put(m, val == null ? nullMarker : val);
 		Updates.tracker.aValueChanged(m);
+	}
+
+	/** Writes all values to the parent. */
+	public void commit() {
+		commitTo(parent);
+	}
+
+	/** Writes all values to the given storage. */
+	public void commitTo(final Storage t) {
+		for (final Entry<Mutable<Object>, ?> entry : (Set<Entry<Mutable<Object>, ?>>) (Set) values.entrySet()) {
+			t.set(entry.getKey(), entry.getValue());
+		}
 	}
 
 	// @Override
@@ -124,8 +141,12 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	// Updates.tracker.aValueChanged(v);
 	// }
 
-	public HashMap<Value.Mutable<?>, Object> getWrites() {
+	public Map<Value.Mutable<?>, Object> getWrites() {
 		return values;
+	}
+
+	public void addValues(Map<Value.Mutable<?>, Object> values) {
+		this.values.putAll(values);
 	}
 
 	public void reset() {

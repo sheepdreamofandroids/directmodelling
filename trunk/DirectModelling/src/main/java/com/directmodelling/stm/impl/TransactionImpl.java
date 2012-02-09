@@ -20,10 +20,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import com.directmodelling.api.Value;
-import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.stm.Storage;
 
 public class TransactionImpl extends VersionImpl {
 	protected HashMap<Value<?>, Object> reads = new HashMap<Value<?>, Object>();
@@ -32,7 +31,7 @@ public class TransactionImpl extends VersionImpl {
 		this(null);
 	}
 
-	public TransactionImpl(final VersionImpl parentTransaction) {
+	public TransactionImpl(final Storage parentTransaction) {
 		super(parentTransaction);
 	}
 
@@ -112,8 +111,7 @@ public class TransactionImpl extends VersionImpl {
 	 * Like {@link TransactionImpl#mergeAfter(TransactionImpl)}, only reads and
 	 * writes are specified seperately.
 	 */
-	public boolean mergeAfter(final Map<Value<?>, Object> reads,
-			final Map<Value.Mutable<?>, Object> writes) {
+	public boolean mergeAfter(final Map<Value<?>, Object> reads, final Map<Value.Mutable<?>, Object> writes) {
 		final boolean success = Collections.disjoint(getWrites().keySet(), reads.keySet());
 		// TODO Maybe a better criterion is checking whether all the read values
 		// are still the same so that writing without changing the value doesn't
@@ -125,20 +123,18 @@ public class TransactionImpl extends VersionImpl {
 		return success;
 	}
 
-	public void commitTo(final VersionImpl t) {
+	/** Writes all values to the given storage. */
+	@Override
+	public void commitTo(final Storage other) {
 		// check that none of the reads have been modified
 		for (final Entry<Value<?>, Object> entry : reads.entrySet()) {
-			if (!equals(t.get(entry.getKey()), entry.getValue())) {
-				throw new CommitAbortedException("Value of " + entry.getKey()
-						+ " was changed: expected (" + entry.getValue() + ") but got ("
-						+ t.get(entry.getKey()) + ").");
+			if (!equals(other.get(entry.getKey()), entry.getValue())) {
+				throw new CommitAbortedException("Value of " + entry.getKey() + " was changed: expected ("
+								+ entry.getValue() + ") but got (" + other.get(entry.getKey()) + ").");
 			}
 		}
 		// all input is still correct, now apply the output
-		for (final Entry<Mutable<Object>, ?> entry : (Set<Entry<Mutable<Object>, ?>>) (Set) values
-				.entrySet()) {
-			t.set(entry.getKey(), entry.getValue());
-		}
+		super.commitTo(other);
 	}
 
 	private boolean equals(final Object a, final Object b) {

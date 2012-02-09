@@ -25,13 +25,13 @@ public class AndroidUpdateTracker extends SingleThreadedUpdateTracker implements
 
 	@Override
 	protected void schedule() {
-		handler.postDelayed(this, 10);
+		handler.postDelayed(this, 100);
 	}
 
 	@Override
 	public void run() {
 		if (updateSome()) {
-			handler.post(this);
+			handler.postDelayed(this, 10);
 		}
 	}
 
