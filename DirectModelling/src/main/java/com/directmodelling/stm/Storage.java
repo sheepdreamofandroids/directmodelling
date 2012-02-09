@@ -17,6 +17,7 @@
 package com.directmodelling.stm;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import com.directmodelling.api.Context;
 import com.directmodelling.api.Value;
@@ -44,6 +45,8 @@ public interface Storage extends Serializable {
 
 		void setStorage(Storage s);
 	}
+
+	public void addValues(Map<Value.Mutable<?>, Object> values);
 
 	public abstract class AbstractStorage implements Storage {
 		@Inject

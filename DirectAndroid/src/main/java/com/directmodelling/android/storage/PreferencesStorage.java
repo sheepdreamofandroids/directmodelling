@@ -2,6 +2,7 @@ package com.directmodelling.android.storage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -155,5 +156,24 @@ public class PreferencesStorage extends AbstractStorage implements Storage, OnSh
 	@Override
 	public void bindProperty(Value<?> value) {
 		boundVars.put(HasKey.Registry.get(value), value);
+	}
+
+	/** Write data to preferences. */
+	public void store() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void addValues(Map<Mutable<?>, Object> values) {
+		Editor editor = preferences.edit();
+		for (Entry<Mutable<?>, Object> entry : values.entrySet()) {
+			Mutable<?> v = entry.getKey();
+			Object val = entry.getValue();
+			final String key = ((HasKey) v).getKey();
+			final Type type = v.type();
+			write(val, key, type, editor);
+		}
+		editor.commit();
 	}
 }
