@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+	Copyright (c) 2010 Guus C. Bloemsma.
+
+	This program is free software: you can redistribute it and/or modify it
+	under the terms of the GNU General Public License as published by the Free
+	Software Foundation, either version 3 of the License, or (at your option)
+	any later version.
+
+	This program is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with this program. If not, see <http://www.gnu.org/licenses/>
+-->
+
+<module rename-to='directdemo'>
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User' />
+
+	<!--
+		Inherit the default GWT style sheet. You can change the theme of your
+		GWT application by uncommenting any one of the following lines.
+	-->
+	<!-- <inherits name='com.google.gwt.user.theme.standard.Standard' /> -->
+	<!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+	<inherits name='com.google.gwt.user.theme.dark.Dark' />
+
+	<!-- Other module inherits -->
+	<inherits name='com.directmodelling.DirectGWT' />
+	<inherits name='com.directmodelling.demo.DirectDemoModel' />
+
+	<!-- Specify the app entry point class. -->
+	<entry-point class='com.directmodelling.demo.gwt.client.DirectDemo' />
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+
+	<set-configuration-property name="UiBinder.useSafeHtmlTemplates"
+		value="true" />
+</module>

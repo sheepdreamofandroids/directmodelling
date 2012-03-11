@@ -1,0 +1,106 @@
+<!-- Copyright (c) 2010 Guus C. Bloemsma. This program is free software: 
+	you can redistribute it and/or modify it under the terms of the GNU General 
+	Public License as published by the Free Software Foundation, either version 
+	3 of the License, or (at your option) any later version. This program is 
+	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See the GNU General Public License for more details. You should 
+	have received a copy of the GNU General Public License along with this program. 
+	If not, see <http://www.gnu.org/licenses/> -->
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:rct="urn:import:com.directmodelling.gwt">
+	<ui:style>
+		.gwt-Button {
+			width: 15em;
+		}
+		
+		/* Applied to SliderBar.				 */
+		.gwt-SliderBar-shell {
+			height: 34pt;
+			width: 50%;
+		}
+		
+		.gwt-SliderBar-shell .gwt-SliderBar-line {
+			border: 1px solid black;
+			background-color: white;
+			height: 4px;
+			width: 95%;
+			top: 22pt;
+			overflow: hidden;
+		}
+		
+		.gwt-SliderBar-shell .gwt-SliderBar-line-disabled {
+			border: 1px solid gray;
+		}
+		
+		.gwt-SliderBar-shell .gwt-SliderBar-knob {
+			top: 14pt;
+			width: 11px;
+			height: 21px;
+			z-index: 1;
+			cursor: pointer;
+		}
+		
+		.gwt-SliderBar-shell .gwt-SliderBar-tick {
+			top: 16pt;
+			width: 1px;
+			height: 6pt;
+			background: black;
+			overflow: hidden;
+		}
+		
+		.gwt-SliderBar-shell .gwt-SliderBar-tick-disabled {
+			background: gray;
+		}
+		
+		.gwt-SliderBar-shell .gwt-SliderBar-label {
+			top: 2pt;
+			font-size: 8pt;
+			cursor: default;
+		}
+		
+		.gwt-SliderBar-shell-focused {
+			
+		}
+		
+		.gwt-SliderBar-shell .gwt-SliderBar-line-sliding {
+			cursor: pointer;
+		}
+		
+		.fullWidth {
+			width: 100%;
+		}
+	</ui:style>
+	<ui:with field="model" type="com.directmodelling.demo.shared.IDemoModel" />
+	<ui:with type="com.directmodelling.demo.gwt.client.System"
+		field="system" />
+	<g:HTMLPanel>
+		<rct:BoundTextbox stringVar="{model.var}" />
+		<rct:BoundTextbox stringVar="{model.var}" />
+		<rct:BoundLabel stringVar="{model.var}" />
+		<rct:BoundSlider doubleVar="{model.doub}" />
+		<rct:BoundTextbox doubleVar="{model.doub}" />
+		
+<!-- 		<g:HorizontalPanel width="100%"> -->
+			<g:Label>A:</g:Label>
+			<rct:BoundSlider doubleVar="{model.a}" />
+			<rct:BoundLabel doubleVar="{model.a}" />
+<!-- 		</g:HorizontalPanel> -->
+		
+<!-- 		<g:HorizontalPanel width="100%"> -->
+			<g:Label>B:</g:Label>
+			<rct:BoundSlider doubleVar="{model.b}" />
+			<rct:BoundLabel doubleVar="{model.b}" />
+<!-- 		</g:HorizontalPanel> -->
+		
+<!-- 		<g:HorizontalPanel width="100%"> -->
+			<g:Label>Sum:</g:Label>
+			<rct:BoundSlider doubleVal="{model.sum}" />
+			<rct:BoundLabel doubleVal="{model.sum}" />
+<!-- 		</g:HorizontalPanel> -->
+		
+		<!-- <rct:CommandButton command="{system.commit}">Commit</rct:CommandButton> -->
+		<!-- <rct:CommandButton command="{system.restore}">Restore</rct:CommandButton> -->
+	</g:HTMLPanel>
+</ui:UiBinder> 
