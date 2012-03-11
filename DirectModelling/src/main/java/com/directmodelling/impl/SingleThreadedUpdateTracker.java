@@ -45,7 +45,7 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 			iterator = RECEIVERS.iterator();
 		}
 		boolean hasNext;
-		for (int i = 0; (hasNext = iterator.hasNext()) && i < 10; i++) {
+		for (int i = 0; (hasNext = iterator.hasNext()) && i < 1000; i++) {
 			try {
 				iterator.next().valuesChanged();
 			} catch (final ConcurrentModificationException cme) {

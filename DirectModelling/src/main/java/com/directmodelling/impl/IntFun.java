@@ -14,26 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.android;
+package com.directmodelling.impl;
 
-import android.os.Handler;
+import com.directmodelling.api.IntValue;
 
-import com.directmodelling.impl.SingleThreadedUpdateTracker;
-
-public class AndroidUpdateTracker extends SingleThreadedUpdateTracker implements Runnable {
-	private final Handler handler = new Handler();
+/** A calculated boolean. */
+public abstract class IntFun extends Function<Integer> implements IntValue {
 
 	@Override
-	protected void schedule() {
-		handler.post(this);
-		// postDelayed(this, 100);
+	public Type type() {
+		return Type.tInteger;
 	}
 
 	@Override
-	public void run() {
-		if (updateSome()) {
-			handler.postDelayed(this, 10);
-		}
+	public Integer getValue() {
+		return get();
 	}
-
 }
