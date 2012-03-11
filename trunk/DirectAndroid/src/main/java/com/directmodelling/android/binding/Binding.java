@@ -42,7 +42,7 @@ public class Binding {
 		new SeekBarBinder<Double>(m, s, Converter.Double2Integer, Converter.Integer2Double);
 	}
 
-	public static void bindInteger(final TextView s, final Mutable<Integer> m) {
+	public static void bindInteger(final TextView s, final Value<Integer> m) {
 		new TextViewBinder<Integer>(m, s, Converter.Integer2String, Converter.String2Integer);
 	}
 
