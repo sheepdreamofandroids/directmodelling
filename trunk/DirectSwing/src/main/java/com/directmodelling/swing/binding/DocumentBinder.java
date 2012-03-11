@@ -76,7 +76,9 @@ public class DocumentBinder<T> implements Receiver, DocumentListener {
 		if (!textComponent.hasFocus()) {
 			suppressTextChanges = true;
 			try {
-				textComponent.setText(toComponent.convert(val.getValue()));
+				final T value = val.getValue();
+				final String converted = toComponent.convert(value);
+				textComponent.setText(converted);
 			} finally {
 				suppressTextChanges = false;
 			}
