@@ -10,6 +10,8 @@ Typical models in the java world consist of classes containing private fields wi
 
 Object Orientation differentiates itself from other methodologies by emphasizing Objects with encapsulated state AND behaviour. A JavaBean that simply stores some fields does not have any interesting behaviour to reuse.
 
+DM defines a standardized API for models. JavaBeans does the same but DM goes further. JavaBeans allows you to access the value of properties in a standardized way. DM also allows standardized access to metadata of properties such as validity, writeability, availability, valid values etc.
+
 == Advantages of DM = 
 
 Assuming that your idea of how the app should work is nearly perfect, this should not change a lot anymore. If it is not, you have no business coding yet! This implies that changes to the model should be small and rare. Therefore it is very useful and practical to write tests for this model.
