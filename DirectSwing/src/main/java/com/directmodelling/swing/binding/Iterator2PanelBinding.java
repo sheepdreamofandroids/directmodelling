@@ -25,6 +25,7 @@ import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value;
 import com.directmodelling.impl.util.Function;
+import com.directmodelling.impl.util.FunctionCache;
 
 /**
  * Binds the list of subcomponents of a panel to a list of arbitrary data, using

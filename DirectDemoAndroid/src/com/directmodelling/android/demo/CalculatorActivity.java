@@ -1,6 +1,6 @@
 package com.directmodelling.android.demo;
 
-import net.bloemsma.reactive.android.demo.R;
+import com.directmodelling.android.demo.R;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 import android.os.Bundle;

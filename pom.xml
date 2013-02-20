@@ -14,18 +14,18 @@
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectModellingParent</artifactId>
     <packaging>pom</packaging>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 
     <modules>
         <module>DirectModelling</module>
-        <module>DirectAndroid</module>
+<!--         <module>DirectAndroid</module>
         <module>DirectGWT</module>
         <module>DirectSwing</module>
         <module>DirectDemoModel</module>
-        <!-- <module>DirectDemoAndroid</module> -->
-        <module>DirectDemoGWT</module>
+ -->        <!-- <module>DirectDemoAndroid</module> -->
+<!--         <module>DirectDemoGWT</module>
         <module>DirectDemoSwing</module>
-    </modules>
+ -->    </modules>
 
 	<build>
 		<plugins>
@@ -55,9 +55,9 @@
 		</plugins>
 	</build>
 	<scm>
-		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk</developerConnection>
-		<url>https://directmodelling.googlecode.com/svn/trunk</url>
+		<connection>scm:svn:http://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2</developerConnection>
+		<url>https://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2</url>
 	</scm>
 	<issueManagement>
 		<system>Google Code</system>
@@ -69,7 +69,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
@@ -81,6 +81,6 @@
 	<properties>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<maven.compiler.source>1.6</maven.compiler.source>
-		<gwt.version>2.4.0</gwt.version>
+		<gwt.version>2.5.0</gwt.version>
 	</properties>
 </project>

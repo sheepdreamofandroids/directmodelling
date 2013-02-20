@@ -6,14 +6,13 @@
 	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
 	PURPOSE. See the GNU General Public License for more details. You should 
 	have received a copy of the GNU General Public License along with this program. 
-	If not, see <http://www.gnu.org/licenses/> -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	If not, see <http://www.gnu.org/licenses /> -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<parent>
 		<groupId>com.directmodelling</groupId>
 		<artifactId>DirectModellingParent</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.3-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -21,7 +20,6 @@
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectAndroid</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
 	<repositories>
 		<repository>
 			<id>maven2-repository.dev.java.net</id>
@@ -46,8 +44,7 @@
 		<dependency>
 			<groupId>com.directmodelling</groupId>
 			<artifactId>DirectModelling</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
-			<scope>compile</scope>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.roboguice</groupId>
