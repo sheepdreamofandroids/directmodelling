@@ -41,8 +41,8 @@ package com.directmodelling.api;
  * webserver and GWT?
  * </p>
  * <p>
- * Business logic doesn't want to know about such details and simply wants the
- * 'appropriate' locale or resourcebundle.
+ * Business logic doesn't want to know about such details and simply wants
+ * whatever is appropriate for the environment.
  * </p>
  * 
  * @author guus

@@ -17,6 +17,7 @@
 package com.directmodelling.impl;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Status;
@@ -55,9 +56,10 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 	}
 
 	// Make sure (de-)serialized vars refer to the same values
-	private int hash = 0;
+	private transient int hash = 0;
 	private static int uniqueHash = 0;
-	private Storage storage = Util.current.it();
+	private transient Storage storage = Util.current.it();
+	private String id = UUID.randomUUID().toString();
 
 	@Override
 	public int hashCode() {

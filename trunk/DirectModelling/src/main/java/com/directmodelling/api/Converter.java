@@ -38,7 +38,7 @@ public interface Converter<From, To> {
 
 		@Override
 		public String convert(final Object value) {
-			return value.toString();
+			return String.valueOf(value);
 		}
 	};
 	public static final Converter<Double, String> Double2String = (Converter<Double, String>) toString;

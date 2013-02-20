@@ -24,8 +24,9 @@ import javax.swing.event.ChangeListener;
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
+import com.directmodelling.impl.util.AbstractBinder;
 
-public class BoundedRangeModelBinding<T> extends AbstractBinder<T> implements ChangeListener {
+public class BoundedRangeModelBinding<T> extends AbstractBinder<T, Integer> implements ChangeListener {
 
 	final DefaultBoundedRangeModel brm;
 

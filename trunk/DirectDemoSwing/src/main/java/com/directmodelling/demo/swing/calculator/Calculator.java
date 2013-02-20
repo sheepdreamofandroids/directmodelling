@@ -30,13 +30,13 @@ public class Calculator {
 		frame.setVisible(true);
 	}
 
-	private static void bind(CalculatorPanel calc, com.directmodelling.demo.shared.Calculator calculator) {
-		new Button2CommandBinding(calc.plus, calculator.plus());
-		new Button2CommandBinding(calc.minus, calculator.minus());
-		new Button2CommandBinding(calc.multiply, calculator.multiply());
-		new Button2CommandBinding(calc.divide, calculator.divide());
-		new Button2CommandBinding(calc.getClear(), calculator.clear());
-		new Iterator2PanelBinding<DoubleValue>(calc.getCalculationList(), calculator.flattenedOperatorList,
+	private static void bind(CalculatorPanel panel, com.directmodelling.demo.shared.Calculator model) {
+		new Button2CommandBinding(panel.plus, model.plus());
+		new Button2CommandBinding(panel.minus, model.minus());
+		new Button2CommandBinding(panel.multiply, model.multiply());
+		new Button2CommandBinding(panel.divide, model.divide());
+		new Button2CommandBinding(panel.getClear(), model.clear());
+		new Iterator2PanelBinding<DoubleValue>(panel.getCalculationList(), model.flattenedOperatorList,
 						new Function<DoubleValue, Component>() {
 							@Override
 							public Component apply(DoubleValue in) {
