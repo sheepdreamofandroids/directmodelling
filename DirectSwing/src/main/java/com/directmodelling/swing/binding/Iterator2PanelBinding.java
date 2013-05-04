@@ -33,11 +33,12 @@ import com.directmodelling.impl.util.FunctionCache;
  */
 public class Iterator2PanelBinding<T> implements Receiver {
 	Container container;
-	Value<Iterable<T>> values;
+	Value<? extends Iterable<? extends T>> values;
 	Function<T, Component> factory;
 
-	public Iterator2PanelBinding(final Container container, final Value<Iterable<T>> values,
-					final Function<T, Component> factory) {
+	public Iterator2PanelBinding(final Container container,
+			final Value<? extends Iterable<? extends T>> values,
+			final Function<T, Component> factory) {
 		super();
 		this.container = container;
 		this.values = values;
@@ -49,10 +50,11 @@ public class Iterator2PanelBinding<T> implements Receiver {
 	public void valuesChanged() {
 		// TODO should attempt to change as little as possible
 		int index = 0;
-		for (T t : values.getValue()) {
-			Component component = factory.apply(t);
+		for (final T t : values.getValue()) {
+			final Component component = factory.apply(t);
 			// inserts new, moves or leaves alone
-			if (container.getComponentCount() <= index || container.getComponent(index) != component)
+			if (container.getComponentCount() <= index
+					|| container.getComponent(index) != component)
 				container.add(component, index);
 			index++;
 		}

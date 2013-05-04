@@ -12,12 +12,10 @@
 	<parent>
 		<groupId>com.directmodelling</groupId>
 		<artifactId>DirectModellingParent</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectAndroid</artifactId>
 	<packaging>jar</packaging>
 	<repositories>
@@ -44,19 +42,16 @@
 		<dependency>
 			<groupId>com.directmodelling</groupId>
 			<artifactId>DirectModelling</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.roboguice</groupId>
 			<artifactId>roboguice</artifactId>
-			<version>1.1.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
-			<version>2.1_r1</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

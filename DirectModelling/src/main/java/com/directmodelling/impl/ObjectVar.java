@@ -22,6 +22,12 @@ package com.directmodelling.impl;
 import com.directmodelling.api.ObjectValue;
 
 public class ObjectVar<T> extends Variable<T> implements ObjectValue.Mutable<T> {
+	public ObjectVar() {
+	}
+
+	public ObjectVar(T t) {
+		set(t);
+	}
 
 	@Override
 	public T get() {

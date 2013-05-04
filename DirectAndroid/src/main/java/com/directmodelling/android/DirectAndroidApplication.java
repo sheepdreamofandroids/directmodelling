@@ -16,30 +16,31 @@
  *******************************************************************************/
 package com.directmodelling.android;
 
-import java.util.List;
-
-import roboguice.application.RoboApplication;
+import roboguice.RoboGuice;
+import android.app.Application;
 
 import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.VersionImpl;
-import com.google.inject.Module;
+import com.google.inject.util.Modules;
 
 /**
  * Subclass this for your own application, or use this directly. If neither is
  * acceptable, add {@link AndroidModule} yourself.
  */
-public class DirectAndroidApplication extends RoboApplication {
-	@Override
-	protected void addApplicationModules(final List<Module> modules) {
+public class DirectAndroidApplication extends Application {
+	public DirectAndroidApplication() {
+		super();
 		Storage.Util.current = new SimpleContext<Storage>(new VersionImpl());// FIXME
-		modules.add(new AndroidModule());
-		super.addApplicationModules(modules);
 	}
 
 	@Override
-	protected com.google.inject.Injector createInjector() {
-		return super.createInjector();
-	};
-
+	public void onCreate() {
+		super.onCreate();
+		RoboGuice.setBaseApplicationInjector(
+				this,
+				RoboGuice.DEFAULT_STAGE,
+				Modules.override(RoboGuice.newDefaultRoboModule(this)).with(
+						new AndroidModule()));
+	}
 }

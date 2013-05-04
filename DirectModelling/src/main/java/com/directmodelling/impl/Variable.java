@@ -17,7 +17,6 @@
 package com.directmodelling.impl;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Status;
@@ -27,14 +26,14 @@ import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
 
-public abstract class Variable<T> extends Function<T> implements Value.Mutable<T>, HasKey,
-		HasStorage, Serializable {
+public abstract class Variable<T> extends Function<T> implements
+		Value.Mutable<T>, HasKey, HasStorage, Serializable {
 	public Variable() {
 		super();
 	}
 
-	public Variable(Applicable<Object> as[]) {
-		for (Applicable<Object> applicable : as) {
+	public Variable(final Applicable<Object> as[]) {
+		for (final Applicable<Object> applicable : as) {
 			applicable.applyTo(this);
 		}
 	}
@@ -59,7 +58,8 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 	private transient int hash = 0;
 	private static int uniqueHash = 0;
 	private transient Storage storage = Util.current.it();
-	private String id = UUID.randomUUID().toString();
+
+	// private final String id = UUID.uuid();
 
 	@Override
 	public int hashCode() {
@@ -69,7 +69,7 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj instanceof Variable)
 			return obj.hashCode() == hash;
 		return super.equals(obj);
@@ -81,7 +81,7 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 	}
 
 	@Override
-	public void setStorage(Storage s) {
+	public void setStorage(final Storage s) {
 		this.storage = s;
 	}
 
@@ -92,6 +92,7 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 
 	@Override
 	public String toString() {
-		return "(Var " + hash + " '" + getKey() + /* "' = " + storage.get(this) + */")";
+		return "(Var " + hash + " '" + getKey()
+				+ /* "' = " + storage.get(this) + */")";
 	}
 }

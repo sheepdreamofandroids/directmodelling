@@ -19,14 +19,11 @@
 	<parent>
 		<groupId>com.directmodelling</groupId>
 		<artifactId>DirectModellingParent</artifactId>
-		<version>0.0.2</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectGWT</artifactId>
-	<version>0.0.1</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -47,14 +44,14 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>com.directmodelling</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>DirectModelling</artifactId>
-			<version>0.0.2</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.directmodelling</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>DirectModelling</artifactId>
-			<version>0.0.2</version>
+			<version>${project.version}</version>
 			<classifier>sources</classifier>
 		</dependency>
 		<dependency>

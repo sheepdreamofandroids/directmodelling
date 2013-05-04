@@ -19,7 +19,12 @@
  */
 package com.directmodelling.impl;
 
-
+@SuppressWarnings("serial")
 public class StringVar extends ObjectVar<String> {
-	// no implementation needed
+	public StringVar() {
+	}
+
+	public StringVar(String initialValue) {
+		super(initialValue);
+	}
 }

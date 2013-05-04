@@ -50,6 +50,10 @@ public interface Converter<From, To> {
 			return (Converter<From, To>) id;
 		}
 
+		public static <T> Converter<T, T> id(final Class<T> c) {
+			return (Converter<T, T>) id;
+		}
+
 		@SuppressWarnings("unchecked")
 		public static <T extends Number> Converter<T, Double> toDouble() {
 			return (Converter<T, Double>) Number2Double;
