@@ -16,7 +16,7 @@ import com.directmodelling.api.Value;
 import com.directmodelling.demo.shared.FunctionApplication;
 import com.directmodelling.swing.binding.DocumentBinder;
 import com.directmodelling.swing.binding.ListModelBinding;
-import com.directmodelling.swing.binding.TextBinding;
+import com.directmodelling.swing.binding.ReadOnlyBinding;
 
 public class OperatorCell extends JPanel {
 	private final JTextField textField = new JTextField();
@@ -41,7 +41,7 @@ public class OperatorCell extends JPanel {
 		this();
 		new DocumentBinder<Double>(textField, in.right(), Converter.String2Double, Converter.Double2String);
 		// label.setText(in.operator().getValue().name);
-		TextBinding.bind(lblNewLabel, in);
+		ReadOnlyBinding.bind(lblNewLabel, in);
 		ListModelBinding.bind(operatorChooser, in.operator());
 	}
 
@@ -49,7 +49,7 @@ public class OperatorCell extends JPanel {
 		this();
 		new DocumentBinder<Double>(textField, in, Converter.String2Double, Converter.Double2String);
 		// label.setText(in.operator().getValue().name);
-		TextBinding.bind(lblNewLabel, in);
+		ReadOnlyBinding.bind(lblNewLabel, in);
 		operatorChooser.setVisible(false);
 	}
 

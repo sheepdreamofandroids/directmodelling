@@ -17,6 +17,7 @@
 package com.directmodelling.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -77,6 +78,12 @@ public class ListVar<T> extends ArrayList<T> implements ListValue.UserValue<T> {
 		final boolean result = super.add(e);
 		Updates.aValueChanged(this);
 		return result;
+	}
+
+	public boolean setAll(T...t){
+		Updates.aValueChanged(this);
+		this.clear();
+		return this.addAll(Arrays.asList(t));
 	}
 
 	@Override

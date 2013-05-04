@@ -20,14 +20,11 @@
 	<parent>
 		<groupId>com.directmodelling</groupId>
 		<artifactId>DirectModellingParent</artifactId>
-		<version>0.0.2</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectDemoSwing</artifactId>
-	<version>0.0.1</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -43,9 +40,9 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>com.directmodelling</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>DirectSwing</artifactId>
-			<version>0.0.1</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.inject.extensions</groupId>
@@ -53,10 +50,15 @@
 			<version>2.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.directmodelling</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>DirectDemoModel</artifactId>
-			<version>0.0.1</version>
+			<version>${project.version}</version>
 			<scope>compile</scope>
 		</dependency>
+	 <dependency>
+	  <groupId>org.swinglabs</groupId>
+	  <artifactId>swing-layout</artifactId>
+	  <version>1.0.3</version>
+	 </dependency>
 	</dependencies>
 </project>

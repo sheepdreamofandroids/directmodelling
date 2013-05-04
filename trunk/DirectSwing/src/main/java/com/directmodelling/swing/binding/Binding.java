@@ -19,7 +19,9 @@ package com.directmodelling.swing.binding;
 import java.awt.Component;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.text.JTextComponent;
 
 import com.directmodelling.api.Converter;
@@ -34,16 +36,18 @@ public class Binding {
 	 * @param doubleVal
 	 *            TODO
 	 */
-	public static void bindDouble(JSlider slider, Value<Double> doubleVal) {
-		BoundedRangeModelBinding.bind(slider, doubleVal, Converter.Double2Integer, Converter.Integer2Double);
+	public static void bindDouble(final JSlider slider,
+			final Value<Double> doubleVal) {
+		BoundedRangeModelBinding.bind(slider, doubleVal,
+				Converter.Double2Integer, Converter.Integer2Double);
 	}
 
-	public static void bindEnum(JComboBox comboBox, EnumValue val) {
+	public static void bindEnum(final JComboBox comboBox, final EnumValue val) {
 		ListModelBinding.bind(comboBox, val);
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void bind(JSlider slider, Value<?> val) {
+	public static void bind(final JSlider slider, final Value<?> val) {
 		switch (val.type()) {
 		case tDouble:
 			bindDouble(slider, (Value<Double>) val);
@@ -52,7 +56,7 @@ public class Binding {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void bind(JTextComponent text, Value<?> val) {
+	public static void bind(final JTextComponent text, final Value<?> val) {
 		switch (val.type()) {
 		case tDouble:
 			bindDouble(text, (Value<Double>) val);
@@ -63,14 +67,20 @@ public class Binding {
 		}
 	}
 
+	public static void bind(final JSpinner spinner, final Value<?> val) {
+
+	}
+
 	@SuppressWarnings("unchecked")
-	public static void bind(Component c, Value<?> val) {
+	public static void bind(final Component c, final Value<?> val) {
 		if (c instanceof JSlider)
 			bind((JSlider) c, val);
 		else if (c instanceof JTextComponent)
 			bind((JTextComponent) c, val);
 		else if (c instanceof JComboBox && val instanceof EnumValue)
 			bindEnum((JComboBox) c, (EnumValue) val);
+		else if (c instanceof JLabel)
+			ReadOnlyBinding.bindString((JLabel) c, (Value<String>) val);
 	}
 
 	/**
@@ -81,11 +91,15 @@ public class Binding {
 	 *            TODO
 	 * @return
 	 */
-	public static DocumentBinder bindDouble(JTextComponent text, Value<Double> doubleVar) {
-		return DocumentBinder.bind(text, doubleVar, Converter.String2Double, Converter.Double2String);
+	public static DocumentBinder bindDouble(final JTextComponent text,
+			final Value<Double> doubleVar) {
+		return DocumentBinder.bind(text, doubleVar, Converter.String2Double,
+				Converter.Double2String);
 	}
 
-	public static DocumentBinder bindString(JTextComponent text, Value<String> stringVar) {
-		return DocumentBinder.bind(text, stringVar, Converter.ID_String, Converter.ID_String);
+	public static DocumentBinder bindString(final JTextComponent text,
+			final Value<String> stringVar) {
+		return DocumentBinder.bind(text, stringVar, Converter.ID_String,
+				Converter.ID_String);
 	}
 }

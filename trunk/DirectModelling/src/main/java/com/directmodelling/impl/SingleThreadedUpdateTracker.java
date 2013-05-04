@@ -102,6 +102,9 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 	}
 
 	public void runUpdates() {
+		running = true;
+		while (updateSome())
+			;
 	}
 
 }
