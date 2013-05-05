@@ -100,9 +100,13 @@
 	</dependencies>
 	<distributionManagement>
 		<repository>
-			<id>directmodelling</id>
-			<url>dav:https://directmodelling.googlecode.com/svn/maven2/releases</url>
+			<id>directmodelling-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
+		<snapshotRepository>
+			<id>directmodelling-snapshots</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</snapshotRepository>
 	</distributionManagement>
 	<properties>
 		<maven.compiler.target>1.6</maven.compiler.target>
@@ -132,7 +136,7 @@
 				<artifactId>DirectAndroid</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-						<dependency>
+			<dependency>
 				<groupId>org.roboguice</groupId>
 				<artifactId>roboguice</artifactId>
 				<version>2.0</version>
