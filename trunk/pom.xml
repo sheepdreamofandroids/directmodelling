@@ -100,8 +100,8 @@
 	</dependencies>
 	<distributionManagement>
 		<repository>
-			<id>directmodelling-snapshots</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<id>directmodelling-release</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 		<snapshotRepository>
 			<id>directmodelling-snapshots</id>
