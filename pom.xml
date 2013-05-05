@@ -14,7 +14,7 @@
 	<groupId>com.directmodelling</groupId>
 	<artifactId>DirectModellingParent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 
 	<modules>
 		<module>DirectModelling</module>
@@ -80,9 +80,9 @@
 	</repositories>
 
 	<scm>
-		<connection>scm:svn:https://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2</connection>
-		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2</developerConnection>
-		<url>https://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2</url>
+		<connection>scm:svn:https://directmodelling.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk</developerConnection>
+		<url>https://directmodelling.googlecode.com/svn/trunk</url>
 	</scm>
 	<issueManagement>
 		<system>Google Code</system>
