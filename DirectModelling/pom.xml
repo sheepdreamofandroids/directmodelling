@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>com.directmodelling</groupId>
 		<artifactId>DirectModellingParent</artifactId>
-		<version>0.0.2</version>
+		<version>0.0.3-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -60,9 +60,9 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:svn:http://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2/DirectModelling</connection>
-		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2/DirectModelling</developerConnection>
-		<url>https://directmodelling.googlecode.com/svn/tags/DirectModellingParent-0.0.2/DirectModelling</url>
+		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk//DirectModelling</connection>
+		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk//DirectModelling</developerConnection>
+		<url>https://directmodelling.googlecode.com/svn/trunk//DirectModelling</url>
 	</scm>
 	<issueManagement>
 		<system>Google Code</system>
