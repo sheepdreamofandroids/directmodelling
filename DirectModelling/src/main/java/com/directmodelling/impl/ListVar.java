@@ -16,6 +16,7 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,26 +26,57 @@ import com.directmodelling.api.ListValue;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Updates;
 
-public class ListVar<T> extends ArrayList<T> implements ListValue.UserValue<T> {
+/**
+ * A variable that IS a list. See {@link #typeParameter()} for why it is
+ * abstract. When used as-is, simply write <code>{}</code> right after the
+ * declaration.
+ */
+public abstract class ListVar<T> extends ArrayList<T> implements
+		ListValue.UserValue<T> {
 
 	private static final long serialVersionUID = 1L;
 
+	// public final Class<T> type;
+
 	public ListVar() {
 		super();
+		// this.type = typeParameter();
 	}
 
 	public ListVar(final Collection<? extends T> c) {
 		super(c);
+		// this.type = typeParameter();
 	}
 
 	public ListVar(final int initialCapacity) {
 		super(initialCapacity);
+		// this.type = typeParameter();
+	}
+
+	/**
+	 * This method only works when called on subclasses of ListVar, not on
+	 * instances of ListVar itself. Thank java generics erasure for that. This
+	 * is the reason that ListVar is abstract.
+	 * 
+	 * @return the type parameter given to ListVar
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static Class<?> componentType(Class<? extends ListVar> c) {
+		// find the direct subclass of ListVar
+		while (c.getSuperclass() != ListVar.class)
+			c = (Class<? extends ListVar>) c.getSuperclass();
+		// get the base (=ListVar) as a ParameterizedType and then the first
+		// type
+		// argument
+		return ((ParameterizedType) c.getGenericSuperclass())
+				.getActualTypeArguments()[0].getClass();
 	}
 
 	public Status status() {
 		return Status.writeable;
 	}
 
+	@Override
 	public Status status(final int i) {
 		return Status.writeable;
 	}
@@ -80,7 +112,7 @@ public class ListVar<T> extends ArrayList<T> implements ListValue.UserValue<T> {
 		return result;
 	}
 
-	public boolean setAll(T...t){
+	public boolean setAll(final T... t) {
 		Updates.aValueChanged(this);
 		this.clear();
 		return this.addAll(Arrays.asList(t));

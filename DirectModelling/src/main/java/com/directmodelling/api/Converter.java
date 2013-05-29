@@ -94,7 +94,7 @@ public interface Converter<From, To> {
 
 	public static final Converter<String, String> ID_String = Util.id();
 	public static final Converter<Double, Double> ID_Double = Util.id();
-
-	public static final Converter ID_Integer = Util.id();
+	public static final Converter<Boolean, Boolean> ID_Boolean = Util.id();
+	public static final Converter<Integer, Integer> ID_Integer = Util.id();
 
 }
