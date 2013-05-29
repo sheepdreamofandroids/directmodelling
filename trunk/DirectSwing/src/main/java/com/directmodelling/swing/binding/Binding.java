@@ -18,6 +18,7 @@ package com.directmodelling.swing.binding;
 
 import java.awt.Component;
 
+import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -29,6 +30,26 @@ import com.directmodelling.api.EnumValue;
 import com.directmodelling.api.Value;
 
 public class Binding {
+
+	public static class ToggleBinder<TVal> extends
+			AbstractBinder<TVal, Boolean> {
+		private final AbstractButton c;
+		AbstractButton b;
+
+		public ToggleBinder(final Value<TVal> val,
+				final Converter<? super TVal, Boolean> toWidget,
+				final Converter<Boolean, ? extends TVal> toVar,
+				final AbstractButton c) {
+			super(val, toWidget, toVar);
+			this.c = c;
+			b = c;
+		}
+
+		@Override
+		public void valuesChanged() {
+			b.setSelected(toWidget.convert(val.getValue()));
+		}
+	}
 
 	/**
 	 * @param slider
@@ -81,6 +102,21 @@ public class Binding {
 			bindEnum((JComboBox) c, (EnumValue) val);
 		else if (c instanceof JLabel)
 			ReadOnlyBinding.bindString((JLabel) c, (Value<String>) val);
+		else if (c instanceof AbstractButton) {
+			bindToggle((AbstractButton) c, (Value<Boolean>) val);
+		}
+	}
+
+	/**
+	 * @param toggle
+	 * @param value
+	 * @return
+	 */
+	public static AbstractButton bindToggle(final AbstractButton toggle,
+			final Value<Boolean> value) {
+		new ToggleBinder<Boolean>(value, Converter.ID_Boolean,
+				Converter.ID_Boolean, toggle);
+		return toggle;
 	}
 
 	/**

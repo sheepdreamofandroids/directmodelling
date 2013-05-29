@@ -16,7 +16,8 @@ public class DemoModel implements IDemoModel, Serializable {
 
 	ObjectVar<String> var = new ObjectVar<String>();
 	MyDoubleVar doub = new MyDoubleVar(5, -10, 10);
-	ListVar<IPerson> persons = new ListVar<IPerson>();
+	ListVar<IPerson> persons = new ListVar<IPerson>() {
+	};
 
 	MyDoubleVar a = new MyDoubleVar(50, 0, 100);
 	MyDoubleVar b = new MyDoubleVar(50, 0, 100);
@@ -48,14 +49,17 @@ public class DemoModel implements IDemoModel, Serializable {
 		return persons;
 	}
 
+	@Override
 	public DoubleVar a() {
 		return a;
 	}
 
+	@Override
 	public DoubleVar b() {
 		return b;
 	}
 
+	@Override
 	public DoubleValue sum() {
 		return sum;
 	}

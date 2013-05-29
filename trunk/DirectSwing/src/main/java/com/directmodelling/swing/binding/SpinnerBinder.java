@@ -30,7 +30,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 		@Override
 		public void setValue(final Object value) {
 			if (var != null)
-				var.setValue((TVal) value);
+				var.setValue(toVar.convert(value));
 		}
 
 		@Override
@@ -61,7 +61,8 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 	private final SpinnerModel sm = new DefaultBoundSpinnerModel();
 
 	private SpinnerBinder(final Value<TVal> val, final JSpinner spinner,
-			final Converter<TVal, ?> toWidget, final Converter<?, TVal> toVar) {
+			final Converter<? super TVal, ?> toWidget,
+			final Converter<? super Object, ? extends TVal> toVar) {
 		super(val, toWidget, toVar);
 		spinner.setModel(sm);
 	}
@@ -74,7 +75,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 	public static SpinnerBinder<Integer> bind(final Value<Integer> val,
 			final JSpinner spinner) {
 		return new SpinnerBinder<Integer>(val, spinner, Converter.ID_Integer,
-				Converter.ID_Integer) {
+				(Converter) Converter.ID_Integer) {
 
 			/**
 			 * @param v
@@ -99,7 +100,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 	public static SpinnerBinder<Double> bindDouble(final Value<Double> val,
 			final JSpinner spinner, final double step) {
 		return new SpinnerBinder<Double>(val, spinner, Converter.ID_Double,
-				Converter.ID_Double) {
+				(Converter) Converter.ID_Double) {
 
 			/**
 			 * @param v
@@ -130,7 +131,8 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 				return value;
 			}
 		};
-		return new SpinnerBinder<T>(val, spinner, converter, converter) {
+		return new SpinnerBinder<T>(val, spinner, converter,
+				(Converter) converter) {
 
 			/**
 			 * @param v
