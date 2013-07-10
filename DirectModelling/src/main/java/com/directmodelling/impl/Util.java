@@ -21,6 +21,6 @@ package com.directmodelling.impl;
 
 public abstract class Util<T> {
 	public static boolean equal(final Object a, final Object b) {
-		return a == b || null != a && null != b && a.equals(b);
+		return a == b || (null != a && null != b && a.equals(b));
 	}
 }

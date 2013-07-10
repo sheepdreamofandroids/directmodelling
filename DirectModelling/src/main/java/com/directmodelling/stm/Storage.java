@@ -58,16 +58,16 @@ public interface Storage extends Serializable {
 		}
 	}
 
-	// boolean get(BooleanValue.Modifiable v);
+	// boolean get(BooleanValue.Mutable v);
 	//
-	// void set(BooleanValue.Modifiable v, boolean val);
+	// void set(BooleanValue.Mutable v, boolean val);
 	//
-	// int get(IntValue.Modifiable v);
+	// int get(IntValue.Mutable v);
 	//
-	// void set(IntValue.Modifiable v, int val);
+	// void set(IntValue.Mutable v, int val);
 	//
-	// double get(DoubleValue.Modifiable v);
+	// double get(DoubleValue.Mutable v);
 	//
-	// void set(DoubleValue.Modifiable v, double val);
+	// void set(DoubleValue.Mutable v, double val);
 
 }

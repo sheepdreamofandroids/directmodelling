@@ -18,7 +18,7 @@ package com.directmodelling.impl;
 
 import com.directmodelling.api.IntValue;
 
-/** A calculated boolean. */
+/** A calculated integer. */
 public abstract class IntFun extends Function<Integer> implements IntValue {
 
 	@Override

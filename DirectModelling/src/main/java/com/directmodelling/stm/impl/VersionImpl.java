@@ -88,7 +88,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	}
 
 	// @Override
-	// public boolean get(final BooleanValue.Modifiable v) {
+	// public boolean get(final BooleanValue.Mutable v) {
 	// if (values.containsKey(v)) {
 	// return (Boolean) values.get(v);
 	// } else if (null != parent) {
@@ -99,13 +99,13 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	// }
 	//
 	// @Override
-	// public void set(final BooleanValue.Modifiable v, final boolean val) {
+	// public void set(final BooleanValue.Mutable v, final boolean val) {
 	// values.put(v, val);
 	// Updates.tracker.aValueChanged(v);
 	// }
 	//
 	// @Override
-	// public int get(final IntValue.Modifiable v) {
+	// public int get(final IntValue.Mutable v) {
 	// if (values.containsKey(v)) {
 	// return (Integer) values.get(v);
 	// } else if (null != parent) {
@@ -116,7 +116,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	// }
 	//
 	// @Override
-	// public double get(final DoubleValue.Modifiable v) {
+	// public double get(final DoubleValue.Mutable v) {
 	// if (values.containsKey(v)) {
 	// return (Double) values.get(v);
 	// } else if (null != parent) {
@@ -127,7 +127,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	// }
 	//
 	// @Override
-	// public void set(final com.directmodelling.api.IntValue.Modifiable v,
+	// public void set(final com.directmodelling.api.IntValue.Mutable v,
 	// final
 	// int val) {
 	// values.put(v, val);
@@ -135,7 +135,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	// }
 	//
 	// @Override
-	// public void set(final com.directmodelling.api.DoubleValue.Modifiable v,
+	// public void set(final com.directmodelling.api.DoubleValue.Mutable v,
 	// final double val) {
 	// values.put(v, val);
 	// Updates.tracker.aValueChanged(v);

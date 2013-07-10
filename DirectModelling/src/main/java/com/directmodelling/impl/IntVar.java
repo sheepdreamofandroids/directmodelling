@@ -21,7 +21,7 @@ package com.directmodelling.impl;
 
 import com.directmodelling.api.IntValue;
 
-public class IntVar extends Variable<Integer> implements IntValue.Modifiable {
+public class IntVar extends Variable<Integer> implements IntValue.Mutable {
 
 	@Override
 	public void set(final int value) {

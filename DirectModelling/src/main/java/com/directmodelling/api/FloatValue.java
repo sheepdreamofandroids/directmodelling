@@ -23,6 +23,6 @@ public interface FloatValue extends Value<Float> {
 		void set(float value);
 	}
 
-	// interface UserValue extends Modifiable, Value.UserValue<Double> {
+	// interface UserValue extends Mutable, Value.UserValue<Double> {
 	// }
 }

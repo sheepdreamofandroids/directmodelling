@@ -21,7 +21,7 @@ package com.directmodelling.impl;
 
 import com.directmodelling.api.DoubleValue;
 
-public class DoubleVar extends Variable<Double> implements DoubleValue.Modifiable {
+public class DoubleVar extends Variable<Double> implements DoubleValue.Mutable {
 
 	@Override
 	public DoubleVar set(final double value) {

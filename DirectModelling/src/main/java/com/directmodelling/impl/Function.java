@@ -19,5 +19,8 @@ public abstract class Function<T> implements Value<T>, HasStatus {
 		return Status.readonly;
 	}
 
+	public Function() {
+
+	}
 	// TODO write implementations for all the primitives
 }

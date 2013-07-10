@@ -19,13 +19,25 @@
  */
 package com.directmodelling.stm.impl;
 
+import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Value;
 
 public class UninitializedException extends RuntimeException {
-	private final Value var;
+	private static final long serialVersionUID = 7526415871454438039L;
+	private final Value<?> var;
 
-	public UninitializedException(Value v) {
-		super("Uninitialized value in: " + v);
+	public UninitializedException(final Value<?> v) {
 		this.var = v;
+	}
+
+	@Override
+	public String getMessage() {
+		final StringBuilder sb = new StringBuilder("Uninitialized value in ");
+		sb.append(var.getClass().getSimpleName());
+		if (var instanceof HasKey) {
+			sb.append(" with key ");
+			sb.append(((HasKey) var).getKey());
+		}
+		return sb.toString();
 	}
 }

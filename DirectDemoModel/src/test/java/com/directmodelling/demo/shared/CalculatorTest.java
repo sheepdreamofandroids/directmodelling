@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.directmodelling.api.DoubleValue.Modifiable;
+import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.Updates;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.ExplicitUpdatesTracker;
@@ -26,10 +26,10 @@ public class CalculatorTest {
 
 	@Test
 	public void testCalculator() {
-		Calculator calculator = new Calculator();
+		final Calculator calculator = new Calculator();
 
 		Assert.assertTrue(calculator.calculation.getValue() instanceof DoubleVar);
-		Modifiable firstNumber = (Modifiable) calculator.calculation.getValue();
+		final DoubleValue.Mutable firstNumber = (DoubleValue.Mutable) calculator.calculation.getValue();
 		Assert.assertEquals(0, firstNumber.get(), 0);
 		Assert.assertEquals(0, calculator.calculation.getValue().get(), 0);
 
@@ -40,11 +40,11 @@ public class CalculatorTest {
 		calculator.plus().run();
 		Assert.assertTrue(calculator.calculation.getValue() instanceof FunctionApplication);
 
-		FunctionApplication lastFunction = (FunctionApplication) calculator.calculation.getValue();
+		final FunctionApplication lastFunction = (FunctionApplication) calculator.calculation.getValue();
 		Assert.assertSame(lastFunction.left(), firstNumber);
 		// Assert.assertTrue(lastFunction.right instanceof DoubleVar);
 
-		Modifiable secondNumber = (Modifiable) lastFunction.right();
+		final DoubleValue.Mutable secondNumber = (DoubleValue.Mutable) lastFunction.right();
 		Assert.assertEquals(12.3, calculator.calculation.getValue().get(), E);
 
 		secondNumber.set(-5.5);

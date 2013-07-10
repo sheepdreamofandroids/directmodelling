@@ -19,7 +19,7 @@ package com.directmodelling.api;
 public interface LongValue extends Value<Long> {
 	long get();
 
-	public interface Modifiable extends LongValue, Value.Mutable<Long> {
+	public interface Mutable extends LongValue, Value.Mutable<Long> {
 		void set(long value);
 	}
 }

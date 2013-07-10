@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.directmodelling.api.IntValue.Modifiable;
+import com.directmodelling.api.IntValue.Mutable;
 import com.directmodelling.impl.IntVar;
 import com.directmodelling.stm.impl.TransactionImpl;
 
@@ -29,7 +29,7 @@ public class TransactionImplTest extends DirectTestBase {
 	@Test
 	public void testStorage() {
 		final TransactionImpl parent = new TransactionImpl(null);
-		final Modifiable v = new IntVar();
+		final Mutable v = new IntVar();
 		parent.set(v, 5);
 		assertEquals(5, (int) parent.get(v));
 		final TransactionImpl child1 = parent.createChild();
