@@ -25,17 +25,17 @@ public class ObjectVar<T> extends Variable<T> implements ObjectValue.Mutable<T> 
 	public ObjectVar() {
 	}
 
-	public ObjectVar(T t) {
+	public ObjectVar(final T t) {
 		set(t);
 	}
 
 	@Override
-	public T get() {
+	public final T get() {
 		return getValue();
 	}
 
 	@Override
-	public void set(final T val) {
+	public final void set(final T val) {
 		setValue(val);
 	}
 

@@ -115,6 +115,8 @@
 						<version>2.5.1</version>
 						<configuration>
 							<module>com.directmodelling.demo.gwt.DirectDemoGWT</module>
+							<!-- <strict>true</strict> -->
+							<!-- <logLevel>DEBUG</logLevel> -->
 						</configuration>
 						<executions>
 							<execution>

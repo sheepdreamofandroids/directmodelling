@@ -41,7 +41,7 @@ public class TransactionImpl extends VersionImpl {
 	}
 
 	// @Override
-	// public boolean get(final Modifiable v) {
+	// public boolean get(final Mutable v) {
 	// final boolean val = super.get(v);
 	// if (!reads.containsKey(v)) {
 	// reads.put(v, val);
@@ -50,7 +50,7 @@ public class TransactionImpl extends VersionImpl {
 	// }
 	//
 	// @Override
-	// public int get(final com.directmodelling.api.IntValue.Modifiable v) {
+	// public int get(final com.directmodelling.api.IntValue.Mutable v) {
 	// final int val = super.get(v);
 	// if (!reads.containsKey(val)) {
 	// reads.put(v, val);
@@ -59,7 +59,7 @@ public class TransactionImpl extends VersionImpl {
 	// }
 	//
 	// @Override
-	// public double get(final com.directmodelling.api.DoubleValue.Modifiable v)
+	// public double get(final com.directmodelling.api.DoubleValue.Mutable v)
 	// {
 	// final double val = super.get(v);
 	// if (!reads.containsKey(val)) {

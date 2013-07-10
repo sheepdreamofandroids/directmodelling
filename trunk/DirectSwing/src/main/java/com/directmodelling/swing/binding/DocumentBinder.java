@@ -28,87 +28,92 @@ import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.stm.impl.UninitializedException;
 
 public class DocumentBinder<T> implements Receiver, DocumentListener {
-	private final Value<T> val;
-	private final Mutable<T> var;
-	private final Converter<String, T> toVar;
-	private final Converter<T, String> toComponent;
-	private final JTextComponent textComponent;
-	private boolean suppressTextChanges;
+    private final Value<T> val;
+    private final Mutable<T> var;
+    private final Converter<String, T> toVar;
+    private final Converter<T, String> toComponent;
+    private final JTextComponent textComponent;
+    private boolean suppressTextChanges;
 
-	public DocumentBinder(JTextComponent tc, Value<T> val, Converter<String, T> toVar, Converter<T, String> toComponent) {
-		this.textComponent = tc;
-		this.val = val;
-		this.var = val instanceof Mutable ? (Mutable<T>) val : null;
-		this.toVar = toVar;
-		this.toComponent = toComponent;
-		Updates.tracker.registerForChanges(this);
+    public DocumentBinder(final JTextComponent tc, final Value<T> val, final Converter<String, T> toVar,
+                          final Converter<T, String> toComponent) {
+        this.textComponent = tc;
+        this.val = val;
+        this.var = val instanceof Mutable ? (Mutable<T>) val : null;
+        this.toVar = toVar;
+        this.toComponent = toComponent;
+        Updates.tracker.registerForChanges(this);
 
-		if (var != null && toVar != null) {
-			tc.getDocument().addDocumentListener(this);
-			tc.addFocusListener(new FocusListener() {
+        if (var != null && toVar != null) {
+            tc.getDocument().addDocumentListener(this);
+            tc.addFocusListener(new FocusListener() {
 
-				@Override
-				public void focusLost(FocusEvent e) {
-					// TODO Auto-generated method stub
+                @Override
+                public void focusLost(final FocusEvent e) {
+                    // TODO Auto-generated method stub
 
-				}
+                }
 
-				@Override
-				public void focusGained(FocusEvent e) {
-					// TODO Auto-generated method stub
+                @Override
+                public void focusGained(final FocusEvent e) {
+                    // TODO Auto-generated method stub
 
-				}
-			});
-		}
+                }
+            });
+        }
 
-		valuesChanged();
-	}
+        // valuesChanged();
+        // instead, make tracker call later
+    }
 
-	public static <T> DocumentBinder bind(JTextComponent tc, Value<T> var,
-					Converter<? super String, ? extends T> toVar, Converter<? super T, ? extends String> toComponent) {
-		return new DocumentBinder(tc, var, toVar, toComponent);
-	}
+    public static <T> DocumentBinder bind(final JTextComponent tc, final Value<T> var,
+                                          final Converter<? super String, ? extends T> toVar, final Converter<? super T, ? extends String> toComponent) {
+        return new DocumentBinder(tc, var, toVar, toComponent);
+    }
 
-	@Override
-	public void valuesChanged() {
-		if (!textComponent.hasFocus()) {
-			suppressTextChanges = true;
-			try {
-				final T value = val.getValue();
-				final String converted = toComponent.convert(value);
-				textComponent.setText(converted);
-			} finally {
-				suppressTextChanges = false;
-			}
-		}
-	}
+    @Override
+    public void valuesChanged() {
+        if (!textComponent.hasFocus()) {
+            suppressTextChanges = true;
+            try {
+                final T value = val.getValue();
+                final String converted = toComponent.convert(value);
+                textComponent.setText(converted);
+            } catch (final UninitializedException uie) {
+                // ignore, textfield not set
+            } finally {
+                suppressTextChanges = false;
+            }
+        }
+    }
 
-	@Override
-	public void changedUpdate(DocumentEvent e) {
-		// TODO only plain text for now
-	}
+    @Override
+    public void changedUpdate(final DocumentEvent e) {
+        // TODO only plain text for now
+    }
 
-	@Override
-	public void insertUpdate(DocumentEvent e) {
-		edited();
-	}
+    @Override
+    public void insertUpdate(final DocumentEvent e) {
+        edited();
+    }
 
-	private void edited() {
-		try {
-			if (!suppressTextChanges) {
-				if (var != null)
-					var.setValue(toVar.convert(textComponent.getText()));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			// ignore
-		}
-	}
+    private void edited() {
+        try {
+            if (!suppressTextChanges) {
+                if (var != null)
+                    var.setValue(toVar.convert(textComponent.getText()));
+            }
+        } catch (final Exception e) {
+            e.printStackTrace();
+            // ignore
+        }
+    }
 
-	@Override
-	public void removeUpdate(DocumentEvent e) {
-		edited();
-	}
+    @Override
+    public void removeUpdate(final DocumentEvent e) {
+        edited();
+    }
 }

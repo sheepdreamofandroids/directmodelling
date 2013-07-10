@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.directmodelling.api.IntValue.Modifiable;
+import com.directmodelling.api.IntValue.Mutable;
 import com.directmodelling.impl.IntVar;
 import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.stm.Storage;
@@ -32,7 +32,7 @@ public class VersionImplTest extends DirectTestBase {
 	public void testStorage() {
 		final VersionImpl parent = new VersionImpl(null);
 		Storage.Util.current = new SimpleContext<Storage>(parent);
-		final Modifiable v = new IntVar();
+		final Mutable v = new IntVar();
 		parent.set(v, 5);
 		assertEquals(5, (long) parent.get(v));
 		final Version child1 = parent.createChild();

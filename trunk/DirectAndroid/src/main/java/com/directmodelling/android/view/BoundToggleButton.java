@@ -1,7 +1,7 @@
 package com.directmodelling.android.view;
 
-import com.directmodelling.api.BooleanValue.Modifiable;
+import com.directmodelling.api.BooleanValue.Mutable;
 
 public class BoundToggleButton {
-	Modifiable value;
+	Mutable value;
 }

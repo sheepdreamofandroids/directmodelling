@@ -21,7 +21,7 @@ package com.directmodelling.impl;
 
 import com.directmodelling.api.BooleanValue;
 
-public class BooleanVar extends Variable<Boolean> implements BooleanValue.Modifiable {
+public class BooleanVar extends Variable<Boolean> implements BooleanValue.Mutable {
 
 	@Override
 	public void set(final boolean value) {
@@ -38,7 +38,7 @@ public class BooleanVar extends Variable<Boolean> implements BooleanValue.Modifi
 		return Type.tBoolean;
 	}
 
-	public BooleanVar _(Applicable<? super BooleanVar> a) {
+	public BooleanVar _(final Applicable<? super BooleanVar> a) {
 		a.applyTo(this);
 		return this;
 	}
@@ -46,7 +46,11 @@ public class BooleanVar extends Variable<Boolean> implements BooleanValue.Modifi
 	public BooleanVar() {
 	}
 
-	public BooleanVar(Applicable<? super BooleanVar>... as) {
+	public BooleanVar(final Applicable<? super BooleanVar>... as) {
 		super((Applicable<Object>[]) as);
+	}
+
+	public BooleanVar(final boolean b) {
+		super(b);
 	}
 }

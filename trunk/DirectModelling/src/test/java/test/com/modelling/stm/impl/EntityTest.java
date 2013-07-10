@@ -20,22 +20,22 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.directmodelling.api.IntValue.Modifiable;
+import com.directmodelling.api.IntValue.Mutable;
 import com.directmodelling.api.Updates;
 import com.directmodelling.impl.ExplicitUpdatesTracker;
 import com.directmodelling.impl.IntVar;
 
 public class EntityTest extends DirectTestBase {
 	interface Simple {
-		Modifiable inty();
+		Mutable inty();
 	}
 
 	static class SimpleEntity implements Simple {
 
-		private static final Modifiable myInty = new IntVar();
+		private static final Mutable myInty = new IntVar();
 
 		@Override
-		public Modifiable inty() {
+		public Mutable inty() {
 			return myInty;
 		}
 

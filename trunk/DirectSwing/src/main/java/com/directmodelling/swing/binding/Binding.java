@@ -22,7 +22,6 @@ import javax.swing.AbstractButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
-import javax.swing.JSpinner;
 import javax.swing.text.JTextComponent;
 
 import com.directmodelling.api.Converter;
@@ -31,36 +30,8 @@ import com.directmodelling.api.Value;
 
 public class Binding {
 
-	public static class ToggleBinder<TVal> extends
-			AbstractBinder<TVal, Boolean> {
-		private final AbstractButton c;
-		AbstractButton b;
-
-		public ToggleBinder(final Value<TVal> val,
-				final Converter<? super TVal, Boolean> toWidget,
-				final Converter<Boolean, ? extends TVal> toVar,
-				final AbstractButton c) {
-			super(val, toWidget, toVar);
-			this.c = c;
-			b = c;
-		}
-
-		@Override
-		public void valuesChanged() {
-			b.setSelected(toWidget.convert(val.getValue()));
-		}
-	}
-
-	/**
-	 * @param slider
-	 *            TODO
-	 * @param doubleVal
-	 *            TODO
-	 */
-	public static void bindDouble(final JSlider slider,
-			final Value<Double> doubleVal) {
-		BoundedRangeModelBinding.bind(slider, doubleVal,
-				Converter.Double2Integer, Converter.Integer2Double);
+	public static void bindDouble(final JSlider slider, final Value<Double> doubleVal) {
+		BoundedRangeModelBinding.bind(slider, doubleVal, Converter.Double2Integer, Converter.Integer2Double);
 	}
 
 	public static void bindEnum(final JComboBox comboBox, final EnumValue val) {
@@ -82,14 +53,17 @@ public class Binding {
 		case tDouble:
 			bindDouble(text, (Value<Double>) val);
 			return;
+		case tInteger:
+			bindInteger(text, (Value<Integer>) val);
+			return;
 		default:
 			bindString(text, (Value<String>) val);
 
 		}
 	}
 
-	public static void bind(final JSpinner spinner, final Value<?> val) {
-
+	public static void bind(final JLabel label, final Value<String> v) {
+		ReadOnlyBinding.bindString(label, v);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -112,10 +86,8 @@ public class Binding {
 	 * @param value
 	 * @return
 	 */
-	public static AbstractButton bindToggle(final AbstractButton toggle,
-			final Value<Boolean> value) {
-		new ToggleBinder<Boolean>(value, Converter.ID_Boolean,
-				Converter.ID_Boolean, toggle);
+	public static AbstractButton bindToggle(final AbstractButton toggle, final Value<Boolean> value) {
+		new ToggleBinder<Boolean>(value, Converter.ID_Boolean, Converter.ID_Boolean, toggle);
 		return toggle;
 	}
 
@@ -127,15 +99,34 @@ public class Binding {
 	 *            TODO
 	 * @return
 	 */
-	public static DocumentBinder bindDouble(final JTextComponent text,
-			final Value<Double> doubleVar) {
-		return DocumentBinder.bind(text, doubleVar, Converter.String2Double,
-				Converter.Double2String);
+	public static DocumentBinder bindInteger(final JTextComponent text, final Value<Integer> doubleVar) {
+		return DocumentBinder.bind(text, doubleVar, Converter.String2Integer, Converter.Integer2String);
 	}
 
-	public static DocumentBinder bindString(final JTextComponent text,
-			final Value<String> stringVar) {
-		return DocumentBinder.bind(text, stringVar, Converter.ID_String,
-				Converter.ID_String);
+	public static DocumentBinder bindDouble(final JTextComponent text, final Value<Double> doubleVar) {
+		return DocumentBinder.bind(text, doubleVar, Converter.String2Double, Converter.Double2String);
 	}
+
+	public static DocumentBinder bindString(final JTextComponent text, final Value<String> stringVar) {
+		return DocumentBinder.bind(text, stringVar, Converter.ID_String, Converter.ID_String);
+	}
+
+	// /**
+	// * This method only works when called on subclasses of ListVar, not on
+	// * instances of ListVar itself. Thank java generics erasure for that. This
+	// * is the reason that ListVar is abstract.
+	// *
+	// * @return the type parameter given to ListVar
+	// */
+	// @SuppressWarnings({"rawtypes", "unchecked"})
+	// public static Class<?> componentType(Class<? extends Value> c) {
+	// // find the direct subclass of Value
+	// while (c.getSuperclass() != Value.class)
+	// c = (Class<? extends Value>) c.getSuperclass();
+	// // get the base (=Value) as a ParameterizedType and then the first
+	// // type argument
+	// return ((ParameterizedType) c.getGenericSuperclass())
+	// .getActualTypeArguments()[0].getClass();
+	// }
+
 }
