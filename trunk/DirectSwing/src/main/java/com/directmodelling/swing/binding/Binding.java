@@ -28,6 +28,13 @@ import com.directmodelling.api.Converter;
 import com.directmodelling.api.EnumValue;
 import com.directmodelling.api.Value;
 
+/**
+ * Just a couple of convenience methods for binding different combinations of
+ * {@link Component}s and {@link Value}s.
+ * 
+ * @author guus
+ * 
+ */
 public class Binding {
 
 	public static void bindDouble(final JSlider slider, final Value<Double> doubleVal) {
@@ -101,6 +108,10 @@ public class Binding {
 	 */
 	public static DocumentBinder bindInteger(final JTextComponent text, final Value<Integer> doubleVar) {
 		return DocumentBinder.bind(text, doubleVar, Converter.String2Integer, Converter.Integer2String);
+	}
+
+	public static DocumentBinder bindLong(final JTextComponent text, final Value<Long> doubleVar) {
+		return DocumentBinder.bind(text, doubleVar, Converter.String2Long, Converter.Long2String);
 	}
 
 	public static DocumentBinder bindDouble(final JTextComponent text, final Value<Double> doubleVar) {

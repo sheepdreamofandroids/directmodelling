@@ -20,6 +20,7 @@ import com.directmodelling.api.Updates;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.Util;
 import com.directmodelling.stm.impl.TransactionImpl;
+import com.directmodelling.stm.impl.VersionImpl;
 
 public class Init {
 
@@ -27,7 +28,7 @@ public class Init {
 	 * 
 	 */
 	public static void init() {
-		Util.current = new SwingContext<Storage>(new TransactionImpl(null));
+		Util.current = new SwingContext<Storage>(new TransactionImpl(new VersionImpl()));
 		Updates.tracker = new SwingUpdateTracker();
 	}
 

@@ -38,38 +38,62 @@ package com.directmodelling.api;
  * <dd>A read/write field with an invalid value.</dd>
  * </dl>
  */
-public enum Status {
+public interface Status {
+	public class Default implements Status {
+
+		public final boolean enabled;
+
+		public Default(final boolean enabled) {
+			this.enabled = enabled;
+		}
+
+		@Override
+		public boolean isEnabled() {
+			return enabled;
+		}
+
+		@Override
+		public Status unlessFrom(final Object possiblyHasStatus) {
+			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus).status() : this;
+		}
+
+	}
+
+	/** A hint for the GUI whether to show this status as enabled. */
+	boolean isEnabled();
+
+	/**
+	 * If possiblyHasStatus implements {@link HasStatus}, possiblyHasStatus's
+	 * {@link #status()} will be returned, otherwise this. Use like
+	 * {@link Status#writeable}.{@link #unlessFrom(o)}.
+	 */
+	Status unlessFrom(Object possiblyHasStatus);
+
 	/**
 	 * Currently this data is meaningless. Treat it as if it didn't exist. A
 	 * typical GUI might hide this. Reading and writing could fail.
 	 */
-	irrelevant(false),
+	Status irrelevant = new Default(false);
 	/**
 	 * This data is being calculated right now. The result will be available
 	 * soon and an update will be issued to notify you. The result of get() and
 	 * getValue() will be outdated. A GUI could show a progress bar or throbber.
 	 */
-	pending(false),
+	Status pending = new Default(false);
 	/**
 	 * This data is calculated. The get() or getValue() methods will return
 	 * current data. Set() or setValue() might fail.
 	 */
-	readonly(false),
+	Status readonly = new Default(false);
 	/** Like readonly but at least one input is invalid or wrong. */
-	suspect(false),
+	Status suspect = new Default(false);
 	/** Readable and writable. The current value is valid. */
-	writeable(true),
+	Status writeable = new Default(true);
 	/**
 	 * Readable and writable. The current value is not valid and needs to be
 	 * corrected.
 	 */
-	invalid(true);
-
-	private Status(final boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public final boolean enabled;
+	Status invalid = new Default(true);
 
 	/**
 	 * In practice states like enabled, hidden, invalid etc. are usually

@@ -29,11 +29,12 @@ public class ListModelBinding<T extends Enum<T>> extends AbstractListModel imple
 	private final JComboBox comboBox;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static <T extends Enum<T>, P extends Value<T> & EnumerableDomain<T>> void bind(JComboBox comboBox, P val) {
+	public static <T extends Enum<T>, P extends Value<T> & EnumerableDomain<T>> void bind(final JComboBox comboBox,
+			final P val) {
 		comboBox.setModel(new ListModelBinding(comboBox, val));
 	}
 
-	public <P extends Value<T> & EnumerableDomain<T>> ListModelBinding(JComboBox comboBox, P val) {
+	public <P extends Value<T> & EnumerableDomain<T>> ListModelBinding(final JComboBox comboBox, final P val) {
 		this.val = val;
 		var = val instanceof Mutable ? (Mutable<T>) val : null;
 		domain = val;
@@ -49,7 +50,7 @@ public class ListModelBinding<T extends Enum<T>> extends AbstractListModel imple
 
 		// Quick check to see if anything changed. Unfortunately we don't know
 		// (yet) exactly WHAT changed.
-		List<T> oldDomain = currentDomain;
+		final List<T> oldDomain = currentDomain;
 		currentDomain = domain.allPotentialValues();
 		if (!currentDomain.equals(oldDomain))
 			fireContentsChanged(null, 0, currentDomain.size());
@@ -62,19 +63,25 @@ public class ListModelBinding<T extends Enum<T>> extends AbstractListModel imple
 	}
 
 	@Override
-	public Object getElementAt(int index) {
+	public Object getElementAt(final int index) {
 		return domain.allPotentialValues().get(index);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void setSelectedItem(Object anItem) {
+	public void setSelectedItem(final Object anItem) {
 		if (var != null)
 			var.set((T) anItem);
 	}
 
 	@Override
 	public Object getSelectedItem() {
-		return val.getValue();
+		try {
+			return val.getValue();
+		} catch (final Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

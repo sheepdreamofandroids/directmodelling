@@ -30,14 +30,19 @@ public class UninitializedException extends RuntimeException {
 		this.var = v;
 	}
 
+	public Value<?> getVar() {
+		return var;
+	}
+
 	@Override
 	public String getMessage() {
-		final StringBuilder sb = new StringBuilder("Uninitialized value in ");
-		sb.append(var.getClass().getSimpleName());
+		final StringBuilder sb = new StringBuilder("Reading uninitialized value in ");
+		sb.append(var.getClass().getName());
 		if (var instanceof HasKey) {
 			sb.append(" with key ");
 			sb.append(((HasKey) var).getKey());
 		}
+		sb.append(var);
 		return sb.toString();
 	}
 }

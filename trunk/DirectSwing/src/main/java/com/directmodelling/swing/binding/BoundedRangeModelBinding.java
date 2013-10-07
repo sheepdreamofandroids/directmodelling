@@ -16,7 +16,7 @@
  *******************************************************************************/
 package com.directmodelling.swing.binding;
 
-import javax.swing.DefaultBoundedRangeModel;
+import javax.swing.BoundedRangeModel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -24,39 +24,51 @@ import javax.swing.event.ChangeListener;
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
-import com.directmodelling.impl.util.AbstractBinder;
+import com.directmodelling.properties.HasMaximum;
+import com.directmodelling.properties.HasMinimum;
 
-public class BoundedRangeModelBinding<T> extends AbstractBinder<T, Integer> implements ChangeListener {
+public class BoundedRangeModelBinding<T extends Comparable<T>> extends AbstractBinder<T, Integer> implements
+		ChangeListener {
 
-	final DefaultBoundedRangeModel brm;
+	private BoundedRangeModel bmr;
 
-	public BoundedRangeModelBinding(final Value<T> val, final Converter<T, Integer> toWidget,
-					final Converter<Integer, T> toVar) {
+	public BoundedRangeModelBinding(final Value<T> val, final BoundedRangeModel bmr,
+			final Converter<T, Integer> toWidget, final Converter<Integer, T> toVar) {
 		super(val, toWidget, toVar);
-		brm = new DefaultBoundedRangeModel();
-		brm.addChangeListener(this);
+		this.bmr = bmr;
+		bmr.addChangeListener(this);
 		Updates.registerForChanges(this);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void valuesChanged() {
-		brm.setValue(toWidget.convert(val.getValue()).intValue());
-	}
-
-	public DefaultBoundedRangeModel getModel() {
-		return brm;
+		super.valuesChanged();
+		if (val instanceof HasMinimum) {
+			bmr.setMinimum(toWidget.convert(((HasMinimum<T>) val).getMinimum()));
+		}
+		if (val instanceof HasMaximum) {
+			bmr.setMaximum(toWidget.convert(((HasMaximum<T>) val).getMaximum()));
+		}
 	}
 
 	@Override
 	public void stateChanged(final ChangeEvent e) {
-		if (var != null)
-			var.setValue(toVar.convert(brm.getValue()));
+		widgetChanged();
 	}
 
-	public static <T> BoundedRangeModelBinding<T> bind(final JSlider slider, final Value<T> var,
-					final Converter<T, Integer> toWidget, final Converter<Integer, T> toVar) {
-		final BoundedRangeModelBinding<T> bmr = new BoundedRangeModelBinding<T>(var, toWidget, toVar);
-		slider.setModel(bmr.getModel());
-		return bmr;
+	public static <T extends Comparable<T>> BoundedRangeModelBinding<T> bind(final JSlider slider, final Value<T> var,
+			final Converter<T, Integer> toWidget, final Converter<Integer, T> toVar) {
+		return new BoundedRangeModelBinding<T>(var, slider.getModel(), toWidget, toVar);
+	}
+
+	@Override
+	protected void setWidgetValue(final Integer v) {
+		bmr.setValue(v);
+	}
+
+	@Override
+	protected Integer getWidgetValue() {
+		return bmr.getValue();
 	}
 }

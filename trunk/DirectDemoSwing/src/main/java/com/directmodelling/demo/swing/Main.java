@@ -43,6 +43,7 @@ public class Main {
 		Binding.bind(f.slider, model.doub());
 		Binding.bind(f.textfield, model.doub());
 		SpinnerBinder.bindDouble(model.doub(), f.spinner, 1);
+		Calculator.bind(f.calculatorPanel, Calculator.MODEL);
 		// This is all presentation, no model necessary
 		f.startCalculator.setAction(new AbstractAction() {
 			@Override

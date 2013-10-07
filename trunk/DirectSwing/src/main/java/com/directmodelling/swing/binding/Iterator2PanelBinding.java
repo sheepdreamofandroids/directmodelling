@@ -32,12 +32,11 @@ import com.directmodelling.impl.util.FunctionCache;
  * a function to transform the data into components.
  */
 public class Iterator2PanelBinding<T> implements Receiver {
-	Container container;
-	Value<? extends Iterable<? extends T>> values;
-	Function<T, Component> factory;
+	protected final Container container;
+	protected final Value<? extends Iterable<? extends T>> values;
+	protected final Function<T, Component> factory;
 
-	public Iterator2PanelBinding(final Container container,
-			final Value<? extends Iterable<? extends T>> values,
+	public Iterator2PanelBinding(final Container container, final Value<? extends Iterable<? extends T>> values,
 			final Function<T, Component> factory) {
 		super();
 		this.container = container;
@@ -53,8 +52,35 @@ public class Iterator2PanelBinding<T> implements Receiver {
 		for (final T t : values.getValue()) {
 			final Component component = factory.apply(t);
 			// inserts new, moves or leaves alone
-			if (container.getComponentCount() <= index
-					|| container.getComponent(index) != component)
+			if (container.getComponentCount() <= index || container.getComponent(index) != component) {
+				container.add(component, index);
+				component.invalidate();
+			}
+			index++;
+		}
+
+		// remove superfluous children
+		while (container.getComponentCount() > index) {
+			container.remove(index);
+		}
+
+		// if (container instanceof JComponent) {
+		// ((JComponent) container).revalidate();
+		// } else {
+		container.invalidate();
+		// }
+	}
+
+	/**
+	 * Updates the container to contain the given content. Tries to do as few
+	 * inserts/removes as possible.
+	 */
+	public static void update(final Container container, final Iterable<Component> content) {
+		// TODO should attempt to change as little as possible
+		int index = 0;
+		for (final Component component : content) {
+			// inserts new, moves or leaves alone
+			if (container.getComponentCount() <= index || container.getComponent(index) != component)
 				container.add(component, index);
 			index++;
 		}

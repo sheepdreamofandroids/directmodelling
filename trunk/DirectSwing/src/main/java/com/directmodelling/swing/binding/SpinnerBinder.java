@@ -74,7 +74,10 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 
 	// @SuppressWarnings("unchecked")
 	public static SpinnerBinder<Integer> bind(final Value<Integer> val, final JSpinner spinner) {
-		return new SpinnerBinder<Integer>(val, spinner, Converter.ID_Integer, (Converter) Converter.ID_Integer) {
+		@SuppressWarnings({ "rawtypes" })
+		final Converter idInteger = Converter.ID_Integer;
+		@SuppressWarnings("unchecked")
+		final SpinnerBinder<Integer> a = new SpinnerBinder<Integer>(val, spinner, idInteger, idInteger) {
 
 			/**
 			 * @param v
@@ -94,6 +97,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 				return v.intValue() + 1;
 			}
 		};
+		return a;
 	}
 
 	public static SpinnerBinder<Double> bindDouble(final Value<Double> val, final JSpinner spinner, final double step) {
@@ -105,7 +109,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 			 */
 			@Override
 			protected Double decrement(final Double v) {
-				return v.doubleValue() - step;
+				return v - step;
 			}
 
 			/**
@@ -114,7 +118,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 			 */
 			@Override
 			protected Double increment(final Double v) {
-				return v.doubleValue() + step;
+				return v + step;
 			}
 		};
 	}

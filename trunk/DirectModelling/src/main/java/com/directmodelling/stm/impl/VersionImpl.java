@@ -70,7 +70,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 
 	@Override
 	public <T> void set(final Value.Mutable<T> m, final T val) {
-		// System.err.println(m + " := " + val);
+		System.err.println(m + " := " + val);
 		values.put(m, val == null ? nullMarker : val);
 		Updates.tracker.aValueChanged(m);
 	}
@@ -145,7 +145,8 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 		return values;
 	}
 
-	public void addValues(Map<Value.Mutable<?>, Object> values) {
+	@Override
+	public void addValues(final Map<Value.Mutable<?>, Object> values) {
 		this.values.putAll(values);
 	}
 
@@ -166,7 +167,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	}
 
 	@Override
-	public void bindProperty(Value<?> value) {
+	public void bindProperty(final Value<?> value) {
 		// TODO Auto-generated method stub
 
 	}
