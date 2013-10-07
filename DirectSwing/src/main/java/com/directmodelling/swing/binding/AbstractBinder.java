@@ -28,6 +28,7 @@ public abstract class AbstractBinder<TVal, TWidget> implements Receiver {
 		var = val instanceof Mutable ? (Mutable<TVal>) val : null;
 		this.toWidget = (Converter<? super TVal, ? extends TWidget>) (toWidget == null ? Converter.Util.id() : toWidget);
 		this.toVar = (Converter<? super TWidget, TVal>) (toVar == null ? Converter.Util.id() : toVar);
+		Updates.aValueChanged(null);
 	}
 
 	/** Will be called whenever the variable changed with the converted value. */
@@ -43,16 +44,16 @@ public abstract class AbstractBinder<TVal, TWidget> implements Receiver {
 	 */
 	protected void widgetChanged() {
 		if (var != null) {
-			final TVal value = val.getValue();
-			TWidget converted;
+			final TWidget value = getWidgetValue();
+			TVal converted;
 			try {
-				converted = toWidget.convert(value);
+				converted = toVar.convert(value);
 			} catch (final Exception e) {
 				lastConversionError = e;
 				log.debug("Cannot convert value " + value + " for widget ");
 				return;
 			}
-			setWidgetValue(converted);
+			var.setValue(converted);
 		}
 	}
 

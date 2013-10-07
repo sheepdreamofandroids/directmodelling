@@ -152,6 +152,12 @@
 				<artifactId>android</artifactId>
 				<version>1.6_r2</version>
 			</dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <scope>test</scope>
+                <version>4.10</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

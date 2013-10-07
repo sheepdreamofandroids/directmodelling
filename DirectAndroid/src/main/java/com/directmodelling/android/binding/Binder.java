@@ -64,11 +64,11 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 						: null), s, toView, toMutable);
 	}
 
-	protected Binder(HasStatus hs, final TView s) {
+	protected Binder(final HasStatus hs, final TView s) {
 		this(null, null, hs, s, null, null);
 	}
 
-	protected Binder(final Mutable<TMutableValue> m, Value<TMutableValue> value, HasStatus hs, final TView s,
+	protected Binder(final Mutable<TMutableValue> m, final Value<TMutableValue> value, final HasStatus hs, final TView s,
 					final Converter<TMutableValue, TViewValue> toView,
 					final Converter<TViewValue, TMutableValue> toMutable) {
 		this.mutable = m;
@@ -78,7 +78,7 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 		this.toView = toView;
 		this.fromView = toMutable;
 		Updates.registerForChanges(this);
-		Binder<?, ?, ?> previousBinder = bound.get(s);
+		final Binder<?, ?, ?> previousBinder = bound.get(s);
 		if (null != previousBinder)
 			previousBinder.unbind();
 		bound.put(s, this);
@@ -98,7 +98,7 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 				boolean viewIsCorrect = false;
 				try {
 					viewIsCorrect = equals(fromView.convert(getViewValue()), newValue);
-				} catch (Exception e1) {
+				} catch (final Exception e1) {
 					// cannot convert view contents back to value, must be wrong
 				}
 				try {
@@ -116,8 +116,8 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 		}
 
 		if (hasStatus != null) {
-			Status status = hasStatus.status();
-			setViewEnabled(status.enabled);
+			final Status status = hasStatus.status();
+			setViewEnabled(status.isEnabled());
 		}
 	}
 

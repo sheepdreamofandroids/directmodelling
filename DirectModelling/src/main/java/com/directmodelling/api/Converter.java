@@ -34,6 +34,13 @@ public interface Converter<From, To> {
 		}
 	};
 
+	public static final Converter<String, Long> String2Long = new Converter<String, Long>() {
+		@Override
+		public Long convert(final String value) {
+			return Long.valueOf(value);
+		}
+	};
+
 	public static final Converter<? extends Object, String> toString = new Converter<Object, String>() {
 
 		@Override
@@ -43,6 +50,7 @@ public interface Converter<From, To> {
 	};
 	public static final Converter<Double, String> Double2String = (Converter<Double, String>) toString;
 	public static final Converter<Integer, String> Integer2String = (Converter<Integer, String>) toString;
+	public static final Converter<Long, String> Long2String = (Converter<Long, String>) toString;
 
 	public abstract class Util {
 		@SuppressWarnings("unchecked")

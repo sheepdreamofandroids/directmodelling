@@ -18,19 +18,19 @@ public class ClickBinder extends Binder<View, Void, Void> implements OnClickList
 	};
 	private final Command command;
 
-	public ClickBinder(Command m, View upgradeButton) {
+	public ClickBinder(final Command m, final View upgradeButton) {
 		super(m, upgradeButton);
 		this.command = m;
 		upgradeButton.setOnClickListener(this);
 	}
 
 	@Override
-	protected void setViewEnabled(boolean b) {
+	protected void setViewEnabled(final boolean b) {
 		view.setEnabled(b);
 	}
 
 	@Override
-	protected void setViewValue(Void v, boolean force) {
+	protected void setViewValue(final Void v, final boolean force) {
 		// no value
 	}
 
@@ -41,8 +41,8 @@ public class ClickBinder extends Binder<View, Void, Void> implements OnClickList
 	}
 
 	@Override
-	public void onClick(View v) {
-		if (command.status().enabled)
+	public void onClick(final View v) {
+		if (command.status().isEnabled())
 			command.run();
 	}
 
