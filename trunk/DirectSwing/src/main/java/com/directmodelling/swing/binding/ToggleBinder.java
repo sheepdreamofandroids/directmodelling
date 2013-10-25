@@ -5,16 +5,14 @@ import java.awt.event.ItemListener;
 
 import javax.swing.AbstractButton;
 
-import com.directmodelling.api.Converter;
 import com.directmodelling.api.Value;
 
-public class ToggleBinder<TVal> extends AbstractBinder<TVal, Boolean> implements ItemListener {
+public class ToggleBinder extends AbstractBinder<Boolean> implements ItemListener {
 	private final AbstractButton c;
 	AbstractButton b;
 
-	public ToggleBinder(final Value<TVal> val, final Converter<? super TVal, Boolean> toWidget,
-			final Converter<Boolean, ? extends TVal> toVar, final AbstractButton c) {
-		super(val, toWidget, toVar);
+	public ToggleBinder(final Value<Boolean> val, final AbstractButton c) {
+		super(val);
 		c.addItemListener(this);
 		this.c = c;
 		b = c;

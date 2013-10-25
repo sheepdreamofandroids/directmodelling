@@ -16,10 +16,16 @@
  -->
 <module>
 	<inherits name='com.google.gwt.inject.Inject' />
+	<inherits name='DirectGWTEmulation' />
+	
+<!-- 	<replace-with class="com.directmodelling.impl.Variable_GWTCompatible"> -->
+<!-- 		<when-type-is class="com.directmodelling.impl.Variable" /> -->
+<!-- 	</replace-with> -->
 
 	<source path="api" />
-	<source path="gwt" />
-	<source path="impl" />
+	<source path="impl">
+<!-- 		<exclude name="**/Variable*" /> -->
+	</source>
 	<source path="stm" />
 	<source path="properties" />
 	<!-- For obvious reasons, do not source 'reflective' -->

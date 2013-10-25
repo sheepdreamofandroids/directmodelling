@@ -9,10 +9,10 @@
 	<g:Grid>
 		<g:row>
 			<g:customCell>
-				<direct:BoundSlider doubleVar="{functionApplication.right}"/>
-<!-- 				<direct:BoundTextbox doubleVar="{functionApplication.right}"
+				<!-- <direct:BoundSlider doubleVar="{functionApplication.right}"/> -->
+				<direct:BoundTextbox doubleVar="{functionApplication.right}"
 					alignment="RIGHT" />
- -->							</g:customCell>
+			</g:customCell>
 			<g:customCell>
 				<direct:BoundLabel val="{functionApplication.operator}"
 					styleName="operator" />

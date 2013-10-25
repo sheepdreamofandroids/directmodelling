@@ -2,15 +2,18 @@ package com.directmodelling.impl;
 
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Status.HasStatus;
+import com.directmodelling.api.Status.Invalid;
+import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
 
 /**
  * A conversion presents a wrapped {@link Value} as one of another type. It
  * converts both ways, so {@link #setValue()} should also work.
  */
-public abstract class Conversion<Outer, Inner> implements Value.Mutable<Outer>, HasStatus {
-	Value<Inner> wrapped;
-	boolean conversionFailed = false;
+public abstract class Conversion<Outer, Inner> implements Value.Mutable<Outer>,
+		HasStatus {
+	protected Value<Inner> wrapped;
+	private Invalid conversionFailure = null;
 	private Value.Mutable<Inner> writeable;
 
 	public Conversion(final Value<Inner> wrapped) {
@@ -27,19 +30,26 @@ public abstract class Conversion<Outer, Inner> implements Value.Mutable<Outer>, 
 	@Override
 	public void setValue(final Outer value) {
 		if (writeable == null)
-			throw new UnsupportedOperationException(wrapped + " is not mutable.");
+			throw new UnsupportedOperationException(wrapped
+					+ " is not mutable.");
 		try {
 			writeable.setValue(outer2inner(value));
-			conversionFailed = false;
+			conversionFailure = null;
+		} catch (final Invalid e) {
+			conversionFailure = e;
+			Updates.aValueChanged(null);
 		} catch (final Exception e) {
-			conversionFailed = true;
+			conversionFailure = new Invalid.Failure(e);
+			// otherwise nobody knows that the status changed
+			Updates.aValueChanged(null);
 		}
 	}
 
 	@Override
 	public Status status() {
-		return conversionFailed ? Status.invalid : (writeable == null ? Status.readonly : Status.writeable)
-				.unlessFrom(wrapped);
+		return conversionFailure != null ? conversionFailure
+				: (writeable == null ? Status.readonly : Status.writeable)
+						.unlessFrom(wrapped);
 	}
 
 	@Override

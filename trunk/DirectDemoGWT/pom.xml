@@ -30,6 +30,21 @@
 		<outputDirectory>war/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
+			    <!-- Clean up leftovers from devmode. Try this when devmode gets mysterious errors. -->
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/gwt-unitCache</directory>
+						</fileset>
+						<fileset>
+							<directory>src/main/webapp/directdemo</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.1</version>
@@ -63,6 +78,13 @@
 			<artifactId>DirectGWT</artifactId>
 			<version>${project.version}</version>
 			<type>jar</type>
+			<classifier>sources</classifier>
+			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>DirectGWTEmulation</artifactId>
+			<version>${project.version}</version>
 			<classifier>sources</classifier>
 			<optional>false</optional>
 		</dependency>

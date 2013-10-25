@@ -16,7 +16,7 @@
  *******************************************************************************/
 package com.directmodelling.properties;
 
-public interface HasMaximum<T extends Comparable<T>> {
+public interface HasMaximum<T extends Comparable<? super T>> {
 	T getMaximum();
 
 	// void setMaximum(T max);

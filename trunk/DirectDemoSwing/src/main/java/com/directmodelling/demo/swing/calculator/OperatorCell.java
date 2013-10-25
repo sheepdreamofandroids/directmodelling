@@ -11,9 +11,9 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
-import com.directmodelling.api.Converter;
 import com.directmodelling.api.Value;
 import com.directmodelling.demo.shared.FunctionApplication;
+import com.directmodelling.impl.conversion.TextFromDouble;
 import com.directmodelling.swing.binding.DocumentBinder;
 import com.directmodelling.swing.binding.ListModelBinding;
 import com.directmodelling.swing.binding.ReadOnlyBinding;
@@ -37,55 +37,46 @@ public class OperatorCell extends JPanel {
 		initComponents();
 	}
 
-	public OperatorCell(FunctionApplication in) {
+	public OperatorCell(final FunctionApplication in) {
 		this();
-		new DocumentBinder<Double>(textField, in.right(), Converter.String2Double, Converter.Double2String);
+		new DocumentBinder(textField, new TextFromDouble(in.right()));
 		// label.setText(in.operator().getValue().name);
 		ReadOnlyBinding.bind(lblNewLabel, in);
 		ListModelBinding.bind(operatorChooser, in.operator());
 	}
 
-	public OperatorCell(Value<Double> in) {
+	public OperatorCell(final Value<Double> in) {
 		this();
-		new DocumentBinder<Double>(textField, in, Converter.String2Double, Converter.Double2String);
+		new DocumentBinder(textField, new TextFromDouble(in));
 		// label.setText(in.operator().getValue().name);
 		ReadOnlyBinding.bind(lblNewLabel, in);
 		operatorChooser.setVisible(false);
 	}
 
 	private void initComponents() {
-		GroupLayout groupLayout = new GroupLayout(this);
+		final GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-			groupLayout
-							.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(
-								operatorChooser,
-								GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE,
+				groupLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(operatorChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 								GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED).addComponent(label_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(99, Short.MAX_VALUE)));
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED).addComponent(label_1)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(99, Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-			groupLayout
-							.createSequentialGroup()
-							.addGroup(
+				groupLayout
+						.createSequentialGroup()
+						.addGroup(
 								groupLayout
-												.createParallelGroup(Alignment.BASELINE)
-												.addComponent(
-													operatorChooser,
-													GroupLayout.PREFERRED_SIZE,
-													GroupLayout.DEFAULT_SIZE,
-													GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-													textField,
-													GroupLayout.PREFERRED_SIZE,
-													GroupLayout.DEFAULT_SIZE,
-													GroupLayout.PREFERRED_SIZE).addComponent(label_1)
-												.addComponent(lblNewLabel)).addContainerGap(8, Short.MAX_VALUE)));
+										.createParallelGroup(Alignment.BASELINE)
+										.addComponent(operatorChooser, GroupLayout.PREFERRED_SIZE,
+												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE).addComponent(label_1)
+										.addComponent(lblNewLabel)).addContainerGap(8, Short.MAX_VALUE)));
 		setLayout(groupLayout);
 	}
 }
