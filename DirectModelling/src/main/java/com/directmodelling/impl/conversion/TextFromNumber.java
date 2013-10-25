@@ -3,22 +3,26 @@ package com.directmodelling.impl.conversion;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+import com.directmodelling.api.Value;
 import com.directmodelling.impl.Conversion;
 
-public class TextFromNumber extends Conversion<String, Number> {
-	public TextFromNumber(final com.directmodelling.api.Value.Mutable<Number> wrapped) {
+public abstract class TextFromNumber<T extends Number> extends Conversion<String, T> {
+	public TextFromNumber(final Value<T> wrapped) {
 		super(wrapped);
 	}
 
-	NumberFormat numberFormatter =  NumberFormat.getInstance();
+	NumberFormat numberFormatter = NumberFormat.getInstance();
 
 	@Override
-	public Number outer2inner(final String value) throws ParseException {
-		return numberFormatter.parse(value);
+	public T outer2inner(final String value) throws ParseException {
+		return number2inner(numberFormatter.parse(value));
 	}
 
+	/** extract intended format from number */
+	protected abstract T number2inner(Number number);
+
 	@Override
-	public String inner2outer(final Number inner) {
+	public String inner2outer(final T inner) {
 		return numberFormatter.format(inner);
 	}
 

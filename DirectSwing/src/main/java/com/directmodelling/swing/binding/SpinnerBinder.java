@@ -4,12 +4,11 @@ import javax.swing.AbstractSpinnerModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 
-import com.directmodelling.api.Converter;
 import com.directmodelling.api.Value;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
 
-public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
+public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal> {
 	protected abstract TVal increment(final TVal v);
 
 	protected abstract TVal decrement(final TVal v);
@@ -25,7 +24,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 		@Override
 		public void setValue(final Object value) {
 			if (var != null) {
-				var.setValue(toVar.convert(value));
+				var.setValue((TVal) value);
 				fireStateChanged();
 			}
 		}
@@ -57,9 +56,8 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 	// public final JSpinner spinnerx;
 	// public final JTextField spinner = new JTextField();
 
-	private SpinnerBinder(final Value<TVal> val, final JSpinner spinner, final Converter<? super TVal, ?> toWidget,
-			final Converter<? super Object, ? extends TVal> toVar) {
-		super(val, toWidget, toVar);
+	private SpinnerBinder(final Value<TVal> val, final JSpinner spinner) {
+		super(val);
 		spinner.setModel(sm);
 		// spinnerx = new JSpinner() {
 		// @Override
@@ -74,24 +72,18 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 
 	// @SuppressWarnings("unchecked")
 	public static SpinnerBinder<Integer> bind(final Value<Integer> val, final JSpinner spinner) {
-		@SuppressWarnings({ "rawtypes" })
-		final Converter idInteger = Converter.ID_Integer;
 		@SuppressWarnings("unchecked")
-		final SpinnerBinder<Integer> a = new SpinnerBinder<Integer>(val, spinner, idInteger, idInteger) {
+		final SpinnerBinder<Integer> a = new SpinnerBinder<Integer>(val, spinner) {
 
-			/**
-			 * @param v
-			 * @return v-1
-			 */
+			/** @param v
+			 * @return v-1 */
 			@Override
 			protected Integer decrement(final Integer v) {
 				return v.intValue() - 1;
 			}
 
-			/**
-			 * @param v
-			 * @return v+1
-			 */
+			/** @param v
+			 * @return v+1 */
 			@Override
 			protected Integer increment(final Integer v) {
 				return v.intValue() + 1;
@@ -101,21 +93,17 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 	}
 
 	public static SpinnerBinder<Double> bindDouble(final Value<Double> val, final JSpinner spinner, final double step) {
-		return new SpinnerBinder<Double>(val, spinner, Converter.ID_Double, (Converter) Converter.ID_Double) {
+		return new SpinnerBinder<Double>(val, spinner) {
 
-			/**
-			 * @param v
-			 * @return v-step
-			 */
+			/** @param v
+			 * @return v-step */
 			@Override
 			protected Double decrement(final Double v) {
 				return v - step;
 			}
 
-			/**
-			 * @param v
-			 * @return v+step
-			 */
+			/** @param v
+			 * @return v+step */
 			@Override
 			protected Double increment(final Double v) {
 				return v + step;
@@ -125,29 +113,18 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 
 	public static <T extends Enum<T>> SpinnerBinder<T> bindEnum(final Value<T> val, final JSpinner spinner,
 			final T[] values) {
-		final Converter<T, T> converter = new Converter<T, T>() {
+		return new SpinnerBinder<T>(val, spinner) {
 
-			@Override
-			public T convert(final T value) {
-				return value;
-			}
-		};
-		return new SpinnerBinder<T>(val, spinner, converter, (Converter) converter) {
-
-			/**
-			 * @param v
-			 * @return v-step
-			 */
+			/** @param v
+			 * @return v-step */
 			@Override
 			protected T decrement(final T v) {
 				final int ordinal = v.ordinal();
 				return ordinal <= 0 ? null : values[ordinal - 1];
 			}
 
-			/**
-			 * @param v
-			 * @return v+step
-			 */
+			/** @param v
+			 * @return v+step */
 			@Override
 			protected T increment(final T v) {
 				final int ordinal = v.ordinal() + 1;
@@ -157,12 +134,12 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal, Object> {
 	}
 
 	@Override
-	protected void setWidgetValue(final Object v) {
+	protected void setWidgetValue(final TVal v) {
 		sm.setValue(v);
 	}
 
 	@Override
-	protected Object getWidgetValue() {
-		return sm.getValue();
+	protected TVal getWidgetValue() {
+		return (TVal) sm.getValue();
 	}
 }

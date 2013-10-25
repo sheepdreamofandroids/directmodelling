@@ -12,64 +12,64 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:rct="urn:import:com.directmodelling.gwt">
 	<ui:style>
 		.gwt-Button {
-			width: 15em;
+		width: 15em;
 		}
-		
-		/* Applied to SliderBar.				 */
+
+		/* Applied to SliderBar. */
 		.gwt-SliderBar-shell {
-			height: 34pt;
-			width: 50%;
+		height: 34pt;
+		width: 50%;
 		}
-		
+
 		.gwt-SliderBar-shell .gwt-SliderBar-line {
-			border: 1px solid black;
-			background-color: white;
-			height: 4px;
-			width: 95%;
-			top: 22pt;
-			overflow: hidden;
+		border: 1px solid black;
+		background-color: white;
+		height: 4px;
+		width: 95%;
+		top: 22pt;
+		overflow: hidden;
 		}
-		
+
 		.gwt-SliderBar-shell .gwt-SliderBar-line-disabled {
-			border: 1px solid gray;
+		border: 1px solid gray;
 		}
-		
+
 		.gwt-SliderBar-shell .gwt-SliderBar-knob {
-			top: 14pt;
-			width: 11px;
-			height: 21px;
-			z-index: 1;
-			cursor: pointer;
+		top: 14pt;
+		width: 11px;
+		height: 21px;
+		z-index: 1;
+		cursor: pointer;
 		}
-		
+
 		.gwt-SliderBar-shell .gwt-SliderBar-tick {
-			top: 16pt;
-			width: 1px;
-			height: 6pt;
-			background: black;
-			overflow: hidden;
+		top: 16pt;
+		width: 1px;
+		height: 6pt;
+		background: black;
+		overflow: hidden;
 		}
-		
+
 		.gwt-SliderBar-shell .gwt-SliderBar-tick-disabled {
-			background: gray;
+		background: gray;
 		}
-		
+
 		.gwt-SliderBar-shell .gwt-SliderBar-label {
-			top: 2pt;
-			font-size: 8pt;
-			cursor: default;
+		top: 2pt;
+		font-size: 8pt;
+		cursor: default;
 		}
-		
+
 		.gwt-SliderBar-shell-focused {
-			
+
 		}
-		
+
 		.gwt-SliderBar-shell .gwt-SliderBar-line-sliding {
-			cursor: pointer;
+		cursor: pointer;
 		}
-		
+
 		.fullWidth {
-			width: 100%;
+		width: 100%;
 		}
 	</ui:style>
 	<ui:with field="model" type="com.directmodelling.demo.shared.IDemoModel" />
@@ -81,25 +81,25 @@
 		<rct:BoundLabel stringVar="{model.var}" />
 		<rct:BoundSlider doubleVar="{model.doub}" />
 		<rct:BoundTextbox doubleVar="{model.doub}" />
-		
-<!-- 		<g:HorizontalPanel width="100%"> -->
-			<g:Label>A:</g:Label>
-			<rct:BoundSlider doubleVar="{model.a}" />
-			<rct:BoundLabel doubleVar="{model.a}" />
-<!-- 		</g:HorizontalPanel> -->
-		
-<!-- 		<g:HorizontalPanel width="100%"> -->
-			<g:Label>B:</g:Label>
-			<rct:BoundSlider doubleVar="{model.b}" />
-			<rct:BoundLabel doubleVar="{model.b}" />
-<!-- 		</g:HorizontalPanel> -->
-		
-<!-- 		<g:HorizontalPanel width="100%"> -->
-			<g:Label>Sum:</g:Label>
-			<rct:BoundSlider doubleVal="{model.sum}" />
-			<rct:BoundLabel doubleVal="{model.sum}" />
-<!-- 		</g:HorizontalPanel> -->
-		
+
+		<!-- <g:HorizontalPanel width="100%"> -->
+		<g:Label>A:</g:Label>
+		<rct:BoundSlider doubleVar="{model.a}" />
+		<rct:BoundLabel doubleVar="{model.a}" />
+		<!-- </g:HorizontalPanel> -->
+
+		<!-- <g:HorizontalPanel width="100%"> -->
+		<g:Label>B:</g:Label>
+		<rct:BoundSlider doubleVar="{model.b}" />
+		<rct:BoundLabel doubleVar="{model.b}" />
+		<!-- </g:HorizontalPanel> -->
+
+		<!-- <g:HorizontalPanel width="100%"> -->
+		<g:Label>Sum:</g:Label>
+		<rct:BoundSlider doubleVal="{model.sum}" />
+		<rct:BoundLabel doubleVal="{model.sum}" />
+		<!-- </g:HorizontalPanel> -->
+
 		<!-- <rct:CommandButton command="{system.commit}">Commit</rct:CommandButton> -->
 		<!-- <rct:CommandButton command="{system.restore}">Restore</rct:CommandButton> -->
 	</g:HTMLPanel>

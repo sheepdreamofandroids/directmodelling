@@ -32,6 +32,7 @@
 		<module>DirectDemoAndroid</module>
 		<module>DirectDemoGWT</module>
 		<module>DirectDemoSwing</module>
+		<module>DirectGWTEmulation</module>
 	</modules>
 
 	<build>

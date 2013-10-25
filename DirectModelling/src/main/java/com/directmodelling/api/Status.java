@@ -16,6 +16,9 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * States that an entity or a value of an entity can be in. In order of
  * increasing urgency:
@@ -54,9 +57,15 @@ public interface Status {
 
 		@Override
 		public Status unlessFrom(final Object possiblyHasStatus) {
-			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus).status() : this;
+			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus)
+					.status() : this;
 		}
 
+		public static Status statusFrom(Object possiblyHasStatus,
+				Invalid fallback) {
+			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus)
+					.status() : fallback;
+		}
 	}
 
 	/** A hint for the GUI whether to show this status as enabled. */
@@ -89,11 +98,75 @@ public interface Status {
 	Status suspect = new Default(false);
 	/** Readable and writable. The current value is valid. */
 	Status writeable = new Default(true);
-	/**
-	 * Readable and writable. The current value is not valid and needs to be
-	 * corrected.
-	 */
-	Status invalid = new Default(true);
+
+	public static class Invalid extends RuntimeException implements Status,
+			HasArguments {
+		public static class Format extends Invalid {
+
+		}
+
+		protected Invalid(Throwable t) {
+			super(t);
+		}
+
+		protected Invalid() {
+		}
+
+		public static class TooLow extends Invalid {
+			public TooLow(Object minimum) {
+				withArgument("minimum", minimum);
+			}
+		}
+
+		public static class TooHigh extends Invalid {
+			public TooHigh(Object maximum) {
+				withArgument("maximum", maximum);
+			}
+		}
+
+		public static class Failure extends Invalid {
+			public Failure(Throwable t) {
+				super(t);
+			}
+		}
+
+		/** A required value is missing. */
+		public static class Missing extends Invalid {
+		}
+
+		Map<String, Object> arguments = null;
+
+		/** @return true. How would you correct the problem otherwise? */
+		@Override
+		public boolean isEnabled() {
+			return true;
+		}
+
+		public Invalid withArgument(String key, Object value) {
+			if (arguments == null)
+				arguments = new HashMap<String, Object>();
+			arguments.put(key, value);
+			return this;
+		}
+
+		@Override
+		public Status unlessFrom(Object possiblyHasStatus) {
+			return Default.statusFrom(possiblyHasStatus, this);
+		}
+
+		public static Invalid tooHigh(Object maximum) {
+			return new TooHigh(maximum);
+		}
+
+		public static Invalid tooLow(Object minimum) {
+			return new Invalid().withArgument("minimum", minimum);
+		}
+
+		@Override
+		public Object getArgument(String key) {
+			return arguments == null ? null : arguments.get(key);
+		}
+	}
 
 	/**
 	 * In practice states like enabled, hidden, invalid etc. are usually

@@ -19,17 +19,18 @@
  */
 package com.directmodelling.gwt;
 
-
 import com.directmodelling.impl.SingleThreadedUpdateTracker;
-import com.google.gwt.user.client.DeferredCommand;
-import com.google.gwt.user.client.IncrementalCommand;
 
-public final class GWTUpdateTracker extends SingleThreadedUpdateTracker implements IncrementalCommand {
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.RepeatingCommand;
+
+public final class GWTUpdateTracker extends SingleThreadedUpdateTracker implements RepeatingCommand {
 	@Override
 	protected void schedule() {
-		DeferredCommand.addCommand(this);
+		Scheduler.get().scheduleIncremental(this);
 	}
 
+	@Override
 	public boolean execute() {
 		return updateSome();
 	}

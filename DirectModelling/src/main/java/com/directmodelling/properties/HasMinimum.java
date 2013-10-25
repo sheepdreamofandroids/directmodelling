@@ -16,7 +16,7 @@
  *******************************************************************************/
 package com.directmodelling.properties;
 
-public interface HasMinimum<T extends Comparable<T>> {
+public interface HasMinimum<T extends Comparable<? super T>> {
 	T getMinimum();
 
 	// void setMinimum(T max);

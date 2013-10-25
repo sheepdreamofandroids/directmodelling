@@ -26,17 +26,15 @@ import com.google.gwt.user.client.ui.HasWidgets.ForIsWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * Binds the list of subcomponents of a panel to a list of arbitrary data, using
- * a function to transform the data into components.
- */
+/** Binds the list of subcomponents of a panel to a list of arbitrary data, using
+ * a function to transform the data into components. */
 public class Iterator2PanelBinding<T> implements Receiver {
 	ForIsWidget container;
 	Value<Iterable<T>> values;
 	Function<T, IsWidget> factory;
 
 	public Iterator2PanelBinding(final ForIsWidget container, final Value<Iterable<T>> values,
-					final Function<T, IsWidget> factory) {
+			final Function<T, IsWidget> factory) {
 		super();
 		this.container = container;
 		this.values = values;
@@ -44,12 +42,13 @@ public class Iterator2PanelBinding<T> implements Receiver {
 		Updates.registerForChanges(this);
 	}
 
+	@Override
 	public void valuesChanged() {
-		Iterator<Widget> cont = container.iterator();
-		Iterator<T> vals = values.getValue().iterator();
+		final Iterator<Widget> cont = container.iterator();
+		final Iterator<T> vals = values.getValue().iterator();
 
 		while (vals.hasNext() && cont.hasNext()) {
-			IsWidget newWidget = factory.apply(vals.next());
+			final IsWidget newWidget = factory.apply(vals.next());
 			while (cont.hasNext() && cont.next() != newWidget)
 				cont.remove();
 			if (!cont.hasNext()) {

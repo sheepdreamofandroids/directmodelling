@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.directmodelling.api.Status;
 import com.directmodelling.api.Value;
 import com.directmodelling.impl.Conversion;
 
@@ -19,7 +20,16 @@ public class TextFromEnum<T extends Enum<?>> extends Conversion<String, T> {
 
 	@Override
 	public T outer2inner(final String value) throws ParseException {
-		return valueOfString.get(value);
+		final T t = valueOfString.get(value);
+		if (t == null)
+			throw new RuntimeException("\"" + value + "\" is not recognized.");
+		return t;
+	}
+
+	@Override
+	public Status status() {
+		// TODO Auto-generated method stub
+		return super.status();
 	}
 
 	@Override

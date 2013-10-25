@@ -15,15 +15,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
  -->
 <module>
-	<inherits name='com.google.gwt.inject.Inject' />
-	<inherits name='com.directmodelling.Value' />
-	<inherits name='com.google.gwt.user.User' />
+
+	<source path="java" />
+	<!-- <source path="io"/> -->
+	<!-- <source path="lang"/> -->
 
 
-	<inherits name='com.google.gwt.dom.DOM' />
-
-	<source path="gwt" />
-	<super-source path="gwtemul"/>
-
-	
 </module>

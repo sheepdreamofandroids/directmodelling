@@ -21,20 +21,17 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.directmodelling.api.Converter;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
 
-public class BoundedRangeModelBinding<T extends Comparable<T>> extends AbstractBinder<T, Integer> implements
-		ChangeListener {
+public class BoundedRangeModelBinding extends AbstractBinder<Integer> implements ChangeListener {
 
-	private BoundedRangeModel bmr;
+	private final BoundedRangeModel bmr;
 
-	public BoundedRangeModelBinding(final Value<T> val, final BoundedRangeModel bmr,
-			final Converter<T, Integer> toWidget, final Converter<Integer, T> toVar) {
-		super(val, toWidget, toVar);
+	public BoundedRangeModelBinding(final Value<Integer> val, final BoundedRangeModel bmr) {
+		super(val);
 		this.bmr = bmr;
 		bmr.addChangeListener(this);
 		Updates.registerForChanges(this);
@@ -45,10 +42,10 @@ public class BoundedRangeModelBinding<T extends Comparable<T>> extends AbstractB
 	public void valuesChanged() {
 		super.valuesChanged();
 		if (val instanceof HasMinimum) {
-			bmr.setMinimum(toWidget.convert(((HasMinimum<T>) val).getMinimum()));
+			bmr.setMinimum(((HasMinimum<Integer>) val).getMinimum());
 		}
 		if (val instanceof HasMaximum) {
-			bmr.setMaximum(toWidget.convert(((HasMaximum<T>) val).getMaximum()));
+			bmr.setMaximum(((HasMaximum<Integer>) val).getMaximum());
 		}
 	}
 
@@ -57,9 +54,8 @@ public class BoundedRangeModelBinding<T extends Comparable<T>> extends AbstractB
 		widgetChanged();
 	}
 
-	public static <T extends Comparable<T>> BoundedRangeModelBinding<T> bind(final JSlider slider, final Value<T> var,
-			final Converter<T, Integer> toWidget, final Converter<Integer, T> toVar) {
-		return new BoundedRangeModelBinding<T>(var, slider.getModel(), toWidget, toVar);
+	public static BoundedRangeModelBinding bind(final JSlider slider, final Value<Integer> var) {
+		return new BoundedRangeModelBinding(var, slider.getModel());
 	}
 
 	@Override

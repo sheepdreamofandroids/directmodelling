@@ -1,6 +1,7 @@
 package com.directmodelling.demo.gwt.client.calculator;
 
 import com.directmodelling.demo.shared.FunctionApplication;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -16,7 +17,7 @@ public class FunctionApplicationPanel extends Composite {
 	interface FunctionApplicationPanelUiBinder extends UiBinder<Widget, FunctionApplicationPanel> {
 	}
 
-	public FunctionApplicationPanel(FunctionApplication functionApplication) {
+	public FunctionApplicationPanel(final FunctionApplication functionApplication) {
 		this.functionApplication = functionApplication;
 		initWidget(uiBinder.createAndBindUi(this));
 	}

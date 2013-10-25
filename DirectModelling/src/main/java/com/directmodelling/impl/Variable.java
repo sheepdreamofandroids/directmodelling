@@ -17,9 +17,7 @@
 package com.directmodelling.impl;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
-import java.io.StringWriter;
 
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Status;
@@ -30,99 +28,100 @@ import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
 
 public abstract class Variable<T> extends Function<T> implements Value.Mutable<T>, HasKey, HasStorage, Serializable {
-    public Variable() {
-        super();
-    }
+	public Variable() {
+		super();
+	}
 
-    public Variable(final T v) {
-        setValue(v);
-    }
+	public Variable(final T v) {
+		setValue(v);
+	}
 
-    public Variable(final Applicable<Object> as[]) {
-        for (final Applicable<Object> applicable : as) {
-            applicable.applyTo(this);
-        }
-    }
+	public Variable(final Applicable<Object> as[]) {
+		for (final Applicable<Object> applicable : as) {
+			applicable.applyTo(this);
+		}
+	}
 
-    @Override
-    public Status status() {
-        return Status.writeable;
-    }
+	@Override
+	public Status status() {
+		return Status.writeable;
+	}
 
-    @Override
-    public T getValue() {
-        return storage.get(this);
-    }
+	@Override
+	public T getValue() {
+		return storage.get(this);
+	}
 
-    @Override
-    public void setValue(final T value) {
-        storage.set(this, value);
-        Updates.aValueChanged(this);
-    }
+	@Override
+	public void setValue(final T value) {
+		storage.set(this, value);
+		Updates.aValueChanged(this);
+	}
 
-    // Make sure (de-)serialized vars refer to the same values
-    private transient int hash = 0;
-    private static int uniqueHash = 0;
-    private transient Storage storage = Util.current.it();
+	// Make sure (de-)serialized vars refer to the same values
+	private transient int hash = 0;
+	private static int uniqueHash = 0;
+	private transient Storage storage = Util.current.it();
 
-    // private final String id = UUID.uuid();
+	// private final String id = UUID.uuid();
 
-    /**
-     * Initialize transient fields.
-     */
-    private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        hash = 0;
-        storage = Util.current.it();
-    }
+	/** Initialize transient fields. */
+	private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		in.defaultReadObject();
+		hash = 0;
+		storage = Util.current.it();
+	}
 
-    @Override
-    public int hashCode() {
-        if (0 == hash)
-            hash = ++uniqueHash;
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		if (0 == hash)
+			hash = ++uniqueHash;
+		return hash;
+	}
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj instanceof Variable)
-            return obj.hashCode() == hash;
-        return super.equals(obj);
-    }
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj instanceof Variable)
+			return obj.hashCode() == hash;
+		return super.equals(obj);
+	}
 
-    @Override
-    public String getKey() {
-        return Registry.get(this);
-    }
+	@Override
+	public String getKey() {
+		return Registry.get(this);
+	}
 
-    @Override
-    public void setStorage(final Storage s) {
-        this.storage = s;
-    }
+	@Override
+	public void setStorage(final Storage s) {
+		this.storage = s;
+	}
 
-    @Override
-    public Storage getStorage() {
-        return storage;
-    }
+	@Override
+	public Storage getStorage() {
+		return storage;
+	}
 
-    @Override
-    public String toString() {
-        String val = "UNINITIALIZED";
-        try {
-            T value = storage.get(this);
-            val = value == null ? "NULL" : value.getClass().getSimpleName();
-//            val = String.valueOf(value);
-        } catch (final Exception e) {
-            // no reason to throw
-        }
-        final StringWriter stringWriter = new StringWriter();
-        stackTrace.printStackTrace(new PrintWriter(stringWriter));
-        return "(Var " + hash + " '" + getKey() + "' = " + val +/* " initialized at:" + stringWriter + */")";
-    }
+	@Override
+	public String toString() {
+		String val = "UNINITIALIZED";
+		try {
+			final T value = storage.get(this);
+			val = value == null ? "NULL" : value.getClass().getName();
+			// val = String.valueOf(value);
+		} catch (final Exception e) {
+			// no reason to throw
+		}
+		// final StringWriter stringWriter = new StringWriter();
+		// stackTrace.printStackTrace(new PrintWriter(stringWriter));
+		return "(Var " + hash + " '" + getKey() + "' = " + val + /* " initialized at:"
+																 * +
+																 * stringWriter
+																 * + */")";
+	}
 
-    {
-        System.err.println("CREATEVAR #" + hashCode());
-    }
+	{
+		System.err.println("CREATEVAR #" + hashCode());
+	}
 
-    private final Throwable stackTrace = new Exception().fillInStackTrace();
+	private final Throwable stackTrace = new Exception().fillInStackTrace();
 }
