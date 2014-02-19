@@ -2,7 +2,7 @@
 
 = Direct Modelling =
 
-The axiom of DM is that the structure of the code of your model should reflect the structure of your thoughts about the functionality of your application. This may seem obvious or even implied by the word “model”, yet in practice it is often forgotten or simply ignored.
+The axiom of DM is that the code of your model should reflect the [http://www.nngroup.com/articles/mental-models/ mental model] of the user. This may seem obvious or even implied by the word “model”, yet in practice it is often forgotten or simply ignored.
 
 http://lh4.googleusercontent.com/V9vXWqJvAqf4nW9KKM4peRuPjdZC9uvG0YlDdgNBUIWWReMIsZbSq7fDJcDWyCdFBpblEhIWitxA6o6tz-OSb4MB8HKRUvca9EF-tGOeD6sT0Y2Btg?.png
 
