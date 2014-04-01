@@ -16,57 +16,52 @@
  *******************************************************************************/
 package com.directmodelling.gwt;
 
-import java.util.Iterator;
-
-import com.directmodelling.api.Updates;
-import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value;
-import com.directmodelling.impl.util.Function;
-import com.google.gwt.user.client.ui.HasWidgets.ForIsWidget;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.google.common.base.Function;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 
-/** Binds the list of subcomponents of a panel to a list of arbitrary data, using
- * a function to transform the data into components. */
-public class Iterator2PanelBinding<T> implements Receiver {
-	ForIsWidget container;
-	Value<Iterable<T>> values;
-	Function<T, IsWidget> factory;
+//import com.google.gwt.user.client.ui.IsWidget;
 
-	public Iterator2PanelBinding(final ForIsWidget container, final Value<Iterable<T>> values,
-			final Function<T, IsWidget> factory) {
-		super();
-		this.container = container;
-		this.values = values;
-		this.factory = new FunctionCache<T, IsWidget>(factory);
-		Updates.registerForChanges(this);
+/**
+ * Binds the list of subcomponents of a panel to a list of arbitrary data, using
+ * a function to transform the data into components.
+ */
+public abstract class Iterator2PanelBinding<T> extends
+		IteratorBinding<T, Widget> implements Function<T, Widget> {
+	private final HasWidgets addToContainer;
+
+	public static <T> Iterator2PanelBinding<T> bind(final HasWidgets container,
+			final Value<? extends Iterable<T>> values,
+			final Function<T, ? extends Widget> factory) {
+		return new Iterator2PanelBinding<T>(container, values) {
+
+			@Override
+			public Widget apply(final T input) {
+				return factory.apply(input);
+			}
+
+		};
+
+	}
+
+	/**
+	 * 
+	 * @param container
+	 *            should have a functional {@link Panel#add(Widget)}
+	 * @param values
+	 *            mutating list of values
+	 */
+	public Iterator2PanelBinding(final HasWidgets container,
+			final Value<? extends Iterable<T>> values) {
+		super(container, values);
+		addToContainer = container;
+
 	}
 
 	@Override
-	public void valuesChanged() {
-		final Iterator<Widget> cont = container.iterator();
-		final Iterator<T> vals = values.getValue().iterator();
-
-		while (vals.hasNext() && cont.hasNext()) {
-			final IsWidget newWidget = factory.apply(vals.next());
-			while (cont.hasNext() && cont.next() != newWidget)
-				cont.remove();
-			if (!cont.hasNext()) {
-				container.add(newWidget);
-				while (vals.hasNext())
-					container.add(factory.apply(vals.next())); // end of panel
-				return;
-			}
-		}
-
-		// remove superfluous children
-		while (cont.hasNext()) {
-			cont.next();
-			cont.remove();
-		}
-
-		while (vals.hasNext())
-			container.add(factory.apply(vals.next())); // end of panel
-
+	protected void addWidget(final Widget newWidget, final T val) {
+		addToContainer.add(newWidget);
 	}
 }

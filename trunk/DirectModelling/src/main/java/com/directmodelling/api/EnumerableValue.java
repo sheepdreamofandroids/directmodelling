@@ -16,14 +16,14 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
-import com.directmodelling.impl.NamedDomain;
+import com.directmodelling.impl.EnumerableDomain;
 
 /**
  * Convenience interface when you want to express explicitly that your variable
  * or function can enumerate its domain.
  */
-public interface EnumValue<T extends Enum<T>> extends EnumerableValue<T>, NamedDomain<T> {
+public interface EnumerableValue<T> extends ObjectValue<T>, EnumerableDomain<T> {
 
-	public interface Mutable<T extends Enum<T>> extends EnumValue<T>, EnumerableValue.Mutable<T> {
+	public interface Mutable<T> extends EnumerableValue<T>, ObjectValue.Mutable<T> {
 	}
 }

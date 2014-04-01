@@ -1,7 +1,7 @@
 /**
  * 
  */
-/**Different {@link com.directmodelling.impl.Conversion} implementations.
+/**Different {@link com.directmodelling.impl.ValueConversionrsion} implementations.
  * @author guus
  *
  */

@@ -1,12 +1,14 @@
 package com.directmodelling.swing.binding;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
+
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractBinder<TVal> implements Receiver {
 
@@ -17,6 +19,8 @@ public abstract class AbstractBinder<TVal> implements Receiver {
 	{
 		Updates.registerForChanges(this);
 	}
+	private Object currentWidgetValue = this;// special value meaning
+												// uninitialized
 
 	@SuppressWarnings("unchecked")
 	public AbstractBinder(final Value<TVal> val) {
@@ -31,21 +35,19 @@ public abstract class AbstractBinder<TVal> implements Receiver {
 	/** Will be called to retrieve the value the user has set. */
 	protected abstract TVal getWidgetValue();
 
-	/** Install a listener in your constructor and call this whenever the widget
+	/**
+	 * Install a listener in your constructor and call this whenever the widget
 	 * changed. It's up to you how often this gets called. E.g. for a textfield
-	 * this might be called on every keystroke or only when it loses focus. */
+	 * this might be called on every keystroke or only when it loses focus.
+	 */
 	protected void widgetChanged() {
 		if (var != null) {
 			final TVal value = getWidgetValue();
-			TVal converted;
-			try {
-				converted = value;
-			} catch (final Exception e) {
-				lastConversionError = e;
-				log.debug("Cannot convert value " + value + " for widget ");
-				return;
+			// avoid setting value redundantly
+			if (currentWidgetValue == this || !Objects.equals(currentWidgetValue, value)) {
+				var.setValue(value);
+				currentWidgetValue = value;
 			}
-			var.setValue(converted);
 		}
 	}
 

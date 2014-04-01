@@ -16,16 +16,18 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
-import java.io.IOException;
-import java.io.Serializable;
-
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
+import com.directmodelling.gwt.GwtIncompatible;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
+
+import java.io.IOException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 
 public abstract class Variable<T> extends Function<T> implements Value.Mutable<T>, HasKey, HasStorage, Serializable {
 	public Variable() {
@@ -52,6 +54,10 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 		return storage.get(this);
 	}
 
+	protected Object serializedValue() {
+		return getValue();
+	}
+
 	@Override
 	public void setValue(final T value) {
 		storage.set(this, value);
@@ -66,8 +72,24 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 	// private final String id = UUID.uuid();
 
 	/** Initialize transient fields. */
+	@GwtIncompatible("Only to be used by native serialization.")
 	private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
+		final T val = (T) in.readObject();
+		hash = 0;
+		storage = Util.current.it();
+		setValue(val);
+	}
+
+	@GwtIncompatible("Only to be used by native serialization.")
+	private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
+		out.writeObject(serializedValue());
+	}
+
+	@GwtIncompatible("Only to be used by native serialization.")
+	@SuppressWarnings("unused")
+	private void readObjectNoData() throws ObjectStreamException {
 		hash = 0;
 		storage = Util.current.it();
 	}
@@ -113,15 +135,17 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 		}
 		// final StringWriter stringWriter = new StringWriter();
 		// stackTrace.printStackTrace(new PrintWriter(stringWriter));
-		return "(Var " + hash + " '" + getKey() + "' = " + val + /* " initialized at:"
+		return "(Var " + hash + " '" + getKey() + "' = " + val + /*
+																 * " initialized at:"
 																 * +
 																 * stringWriter
-																 * + */")";
+																 * +
+																 */")";
 	}
 
 	{
 		System.err.println("CREATEVAR #" + hashCode());
 	}
 
-	private final Throwable stackTrace = new Exception().fillInStackTrace();
+//	private final transient Throwable stackTrace = new Exception().fillInStackTrace();
 }

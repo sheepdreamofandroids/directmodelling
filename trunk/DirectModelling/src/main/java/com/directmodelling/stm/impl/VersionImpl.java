@@ -38,9 +38,10 @@ import com.directmodelling.stm.Version;
  * 
  */
 public class VersionImpl extends AbstractStorage implements Version, Serializable {
-	protected final Storage parent;
-	protected final Map<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
-	protected static final Object nullMarker = "NULL MARKER";
+	/** Where to attempt reading when no value is found here?*/
+	protected final transient Storage parent;
+	protected Map<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
+	protected static final Object nullMarker = "NULL MARKER".intern();
 
 	// TODO use specific hashtables for primitive types
 	public VersionImpl() {
@@ -154,7 +155,7 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 		values.clear();
 	}
 
-	private final Date token = new Date();
+	private Date token = new Date();
 
 	@Override
 	public String toString() {

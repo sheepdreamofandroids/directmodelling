@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.api.Value;
-import com.directmodelling.impl.util.Function;
 import com.directmodelling.impl.util.FunctionCache;
+import com.google.common.base.Function;
 
 /**
  * Binds the list of subcomponents of a panel to a list of arbitrary data, using
@@ -36,8 +36,8 @@ public class Iterator2PanelBinding<T> implements Receiver {
 	Value<Iterable<T>> values;
 	Function<T, View> factory;
 
-	public Iterator2PanelBinding(final ViewGroup container, final Value<Iterable<T>> values,
-					final Function<T, View> factory) {
+	public Iterator2PanelBinding(final ViewGroup container,
+			final Value<Iterable<T>> values, final Function<T, View> factory) {
 		super();
 		this.container = container;
 		this.values = values;
@@ -45,13 +45,15 @@ public class Iterator2PanelBinding<T> implements Receiver {
 		Updates.registerForChanges(this);
 	}
 
+	@Override
 	public void valuesChanged() {
 		int index = 0;
-		Iterator<T> vals = values.getValue().iterator();
+		final Iterator<T> vals = values.getValue().iterator();
 
 		while (vals.hasNext() && index < container.getChildCount()) {
-			View newWidget = factory.apply(vals.next());
-			while (index < container.getChildCount() && container.getChildAt(index) != newWidget)
+			final View newWidget = factory.apply(vals.next());
+			while (index < container.getChildCount()
+					&& container.getChildAt(index) != newWidget)
 				container.removeViewAt(index);
 			if (index >= container.getChildCount())
 				container.addView(newWidget);

@@ -16,7 +16,7 @@
  -->
 <module>
 
-	<source path="java" />
+<!-- 	<source path="java" /> -->
 	<!-- <source path="io"/> -->
 	<!-- <source path="lang"/> -->
 

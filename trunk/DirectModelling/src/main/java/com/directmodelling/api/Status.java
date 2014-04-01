@@ -45,9 +45,11 @@ public interface Status {
 	public class Default implements Status {
 
 		public final boolean enabled;
+		private String name;
 
-		public Default(final boolean enabled) {
+		public Default(final boolean enabled, final String name) {
 			this.enabled = enabled;
+			this.name = name;
 		}
 
 		@Override
@@ -57,14 +59,16 @@ public interface Status {
 
 		@Override
 		public Status unlessFrom(final Object possiblyHasStatus) {
-			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus)
-					.status() : this;
+			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus).status() : this;
 		}
 
-		public static Status statusFrom(Object possiblyHasStatus,
-				Invalid fallback) {
-			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus)
-					.status() : fallback;
+		public static Status statusFrom(final Object possiblyHasStatus, final Invalid fallback) {
+			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus).status() : fallback;
+		}
+
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 
@@ -82,30 +86,29 @@ public interface Status {
 	 * Currently this data is meaningless. Treat it as if it didn't exist. A
 	 * typical GUI might hide this. Reading and writing could fail.
 	 */
-	Status irrelevant = new Default(false);
+	Status irrelevant = new Default(false, "Irrelevant");
 	/**
 	 * This data is being calculated right now. The result will be available
 	 * soon and an update will be issued to notify you. The result of get() and
 	 * getValue() will be outdated. A GUI could show a progress bar or throbber.
 	 */
-	Status pending = new Default(false);
+	Status pending = new Default(false, "Pending");
 	/**
 	 * This data is calculated. The get() or getValue() methods will return
 	 * current data. Set() or setValue() might fail.
 	 */
-	Status readonly = new Default(false);
+	Status readonly = new Default(false, "ReadOnly");
 	/** Like readonly but at least one input is invalid or wrong. */
-	Status suspect = new Default(false);
+	Status suspect = new Default(false, "Suspect");
 	/** Readable and writable. The current value is valid. */
-	Status writeable = new Default(true);
+	Status writeable = new Default(true, "Writeable");
 
-	public static class Invalid extends RuntimeException implements Status,
-			HasArguments {
+	public static class Invalid extends RuntimeException implements Status, HasArguments {
 		public static class Format extends Invalid {
 
 		}
 
-		protected Invalid(Throwable t) {
+		protected Invalid(final Throwable t) {
 			super(t);
 		}
 
@@ -113,19 +116,19 @@ public interface Status {
 		}
 
 		public static class TooLow extends Invalid {
-			public TooLow(Object minimum) {
+			public TooLow(final Object minimum) {
 				withArgument("minimum", minimum);
 			}
 		}
 
 		public static class TooHigh extends Invalid {
-			public TooHigh(Object maximum) {
+			public TooHigh(final Object maximum) {
 				withArgument("maximum", maximum);
 			}
 		}
 
 		public static class Failure extends Invalid {
-			public Failure(Throwable t) {
+			public Failure(final Throwable t) {
 				super(t);
 			}
 		}
@@ -142,7 +145,7 @@ public interface Status {
 			return true;
 		}
 
-		public Invalid withArgument(String key, Object value) {
+		public Invalid withArgument(final String key, final Object value) {
 			if (arguments == null)
 				arguments = new HashMap<String, Object>();
 			arguments.put(key, value);
@@ -150,21 +153,26 @@ public interface Status {
 		}
 
 		@Override
-		public Status unlessFrom(Object possiblyHasStatus) {
+		public Status unlessFrom(final Object possiblyHasStatus) {
 			return Default.statusFrom(possiblyHasStatus, this);
 		}
 
-		public static Invalid tooHigh(Object maximum) {
+		public static Invalid tooHigh(final Object maximum) {
 			return new TooHigh(maximum);
 		}
 
-		public static Invalid tooLow(Object minimum) {
+		public static Invalid tooLow(final Object minimum) {
 			return new Invalid().withArgument("minimum", minimum);
 		}
 
 		@Override
-		public Object getArgument(String key) {
+		public Object getArgument(final String key) {
 			return arguments == null ? null : arguments.get(key);
+		}
+
+		@Override
+		public String toString() {
+			return getClass().getName() + (getCause() == null ? "" : " because " + getCause().getMessage());
 		}
 	}
 

@@ -28,7 +28,7 @@ public interface Value<T> extends Serializable {
 	enum Type {
 		tBoolean, tByte, tShort, tInteger, tLong, tCharacter, tFloat, tDouble, tObject;
 
-		public static Type fromClass(Class<?> c) {
+		public static Type fromClass(final Class<?> c) {
 			if (c == Boolean.class || c == Boolean.TYPE)
 				return tBoolean;
 			if (c == Byte.class || c == Byte.TYPE)

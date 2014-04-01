@@ -4,13 +4,16 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 
 import com.directmodelling.api.Value;
-import com.directmodelling.impl.Conversion;
+import com.directmodelling.impl.StringVar;
+import com.directmodelling.impl.ValueConversion;
 
-public abstract class TextFromNumber<T extends Number> extends Conversion<String, T> {
+public abstract class TextFromNumber<T extends Number> extends
+		ValueConversion<String, T> {
 	public TextFromNumber(final Value<T> wrapped) {
 		super(wrapped);
 	}
 
+	// TODO make format configurable
 	NumberFormat numberFormatter = NumberFormat.getInstance();
 
 	@Override
@@ -25,5 +28,7 @@ public abstract class TextFromNumber<T extends Number> extends Conversion<String
 	public String inner2outer(final T inner) {
 		return numberFormatter.format(inner);
 	}
+
+	public final StringVar format = new StringVar("no format");
 
 }

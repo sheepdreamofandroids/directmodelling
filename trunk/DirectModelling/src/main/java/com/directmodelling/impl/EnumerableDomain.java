@@ -1,19 +1,23 @@
 package com.directmodelling.impl;
 
-import java.util.List;
+//TODO move to api
 
 import com.directmodelling.api.Value;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList;
 
 /** Describes a finite set of values that is completely known at runtime */
 public interface EnumerableDomain<T> {
 	/**
 	 * I don't like this name too much but it's the most descriptive I can come
-	 * up with right now.
+	 * up with right now. <br>
+	 * TODO This list can change over time. Should it be a ListVar? How about
+	 * enable/disabled per item?
 	 * 
 	 * @return all values that this {@link Value} can have in their natural
-	 *         order. DO NOT MODIFY!
+	 *      ImmutableList<T>O NOT MODIFY!
 	 * @see EnumVar
 	 */
-	List<T> allPotentialValues();
+	ImmutableList<T> allPotentialValues();
 
 }

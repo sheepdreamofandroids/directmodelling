@@ -1,5 +1,6 @@
 package com.directmodelling.impl;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public interface NamedDomain<T> {
 	T valueOf(String name);
 
 	/** Utility for creating a name => value mapping. */
-	public static class Name2Value<T> {
+	public static class Name2Value<T> implements Serializable {
 		private final Map<String, T> map = new HashMap<String, T>();
 
 		public Name2Value(final NamedDomain<T> nd, final T... values) {

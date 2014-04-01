@@ -1,5 +1,6 @@
 package com.directmodelling.impl;
 
+import com.directmodelling.api.Conversion;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Status.HasStatus;
 import com.directmodelling.api.Status.Invalid;
@@ -10,13 +11,13 @@ import com.directmodelling.api.Value;
  * A conversion presents a wrapped {@link Value} as one of another type. It
  * converts both ways, so {@link #setValue()} should also work.
  */
-public abstract class Conversion<Outer, Inner> implements Value.Mutable<Outer>,
-		HasStatus {
+public abstract class ValueConversion<Outer, Inner> implements
+		Value.Mutable<Outer>, HasStatus, Conversion<Outer, Inner> {
 	protected Value<Inner> wrapped;
 	private Invalid conversionFailure = null;
 	private Value.Mutable<Inner> writeable;
 
-	public Conversion(final Value<Inner> wrapped) {
+	public ValueConversion(final Value<Inner> wrapped) {
 		this.wrapped = wrapped;
 		if (wrapped instanceof Value.Mutable)
 			writeable = ((Value.Mutable<Inner>) wrapped);
@@ -57,8 +58,20 @@ public abstract class Conversion<Outer, Inner> implements Value.Mutable<Outer>,
 		return Type.tObject;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.directmodelling.impl.Conversion#outer2inner(Outer)
+	 */
+	@Override
 	public abstract Inner outer2inner(Outer value) throws Exception;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.directmodelling.impl.Conversion#inner2outer(Inner)
+	 */
+	@Override
 	public abstract Outer inner2outer(final Inner inner);
 
 }
