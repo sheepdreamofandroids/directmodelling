@@ -1,11 +1,12 @@
 package com.directmodelling.impl.conversion;
 
 import com.directmodelling.api.Value;
-import com.directmodelling.impl.Conversion;
+import com.directmodelling.impl.ValueConversion;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
 
-public class IntegerFromDouble extends Conversion<Integer, Double> implements HasMaximum<Integer>, HasMinimum<Integer> {
+public class IntegerFromDouble extends ValueConversion<Integer, Double>
+		implements HasMaximum<Integer>, HasMinimum<Integer> {
 
 	public IntegerFromDouble(final Value<Double> wrapped) {
 		super(wrapped);
@@ -24,15 +25,15 @@ public class IntegerFromDouble extends Conversion<Integer, Double> implements Ha
 	@SuppressWarnings("unchecked")
 	@Override
 	public Integer getMinimum() {
-		return wrapped instanceof HasMinimum ? ((HasMinimum<Integer>) wrapped).getMinimum().intValue()
-				: Integer.MIN_VALUE;
+		return wrapped instanceof HasMinimum ? ((HasMinimum<Integer>) wrapped)
+				.getMinimum().intValue() : Integer.MIN_VALUE;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Integer getMaximum() {
-		return wrapped instanceof HasMaximum ? ((HasMaximum<Integer>) wrapped).getMaximum().intValue()
-				: Integer.MAX_VALUE;
+		return wrapped instanceof HasMaximum ? ((HasMaximum<Integer>) wrapped)
+				.getMaximum().intValue() : Integer.MAX_VALUE;
 	}
 
 }

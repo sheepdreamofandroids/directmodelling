@@ -36,13 +36,15 @@ public class DirectDemo implements EntryPoint {
 	 * returns an error.
 	 */
 	private static final String SERVER_ERROR = "An error occurred while "
-					+ "attempting to contact the server. Please check your network " + "connection and try again.";
+			+ "attempting to contact the server. Please check your network "
+			+ "connection and try again.";
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+	private final GreetingServiceAsync greetingService = GWT
+			.create(GreetingService.class);
 
 	/**
 	 * This is the entry point method.
@@ -73,20 +75,21 @@ public class DirectDemo implements EntryPoint {
 	/** dummy code to work around some serialization issues */
 	public void makeSerializable() {
 		if (Document.get() == null) {
-			greetingService.dummy(new MakeSerializable(), new AsyncCallback<MakeSerializable>() {
+			greetingService.dummy(new MakeSerializable(),
+					new AsyncCallback<MakeSerializable>() {
 
-				@Override
-				public void onFailure(final Throwable caught) {
-					// TODO Auto-generated method stub
+						@Override
+						public void onFailure(final Throwable caught) {
+							// TODO Auto-generated method stub
 
-				}
+						}
 
-				@Override
-				public void onSuccess(final MakeSerializable result) {
-					// TODO Auto-generated method stub
+						@Override
+						public void onSuccess(final MakeSerializable result) {
+							// TODO Auto-generated method stub
 
-				}
-			});
+						}
+					});
 		}
 	}
 
@@ -94,8 +97,8 @@ public class DirectDemo implements EntryPoint {
 		popup(new CalculatorPanel(new Calculator()), "Calculator");
 	}
 
-	public void popup(final Widget calc, String title) {
-		DialogBox popupPanel = new DialogBox(false, false);
+	public void popup(final Widget calc, final String title) {
+		final DialogBox popupPanel = new DialogBox(false, false);
 		popupPanel.setTitle(title);
 		popupPanel.setText("title");
 		popupPanel.add(calc);

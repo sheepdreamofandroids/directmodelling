@@ -16,6 +16,13 @@
  *******************************************************************************/
 package com.directmodelling.swing.binding;
 
+import com.directmodelling.api.EnumValue;
+import com.directmodelling.api.Value;
+import com.directmodelling.impl.EnumerableDomain;
+import com.directmodelling.impl.conversion.IntegerFromDouble;
+import com.directmodelling.impl.conversion.TextFromDouble;
+import com.directmodelling.impl.conversion.TextFromInteger;
+
 import java.awt.Component;
 
 import javax.swing.AbstractButton;
@@ -24,23 +31,19 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.text.JTextComponent;
 
-import com.directmodelling.api.EnumValue;
-import com.directmodelling.api.Value;
-import com.directmodelling.impl.conversion.IntegerFromDouble;
-import com.directmodelling.impl.conversion.TextFromDouble;
-import com.directmodelling.impl.conversion.TextFromInteger;
-
-/** Just a couple of convenience methods for binding different combinations of
+/**
+ * Just a couple of convenience methods for binding different combinations of
  * {@link Component}s and {@link Value}s.
  * 
- * @author guus */
+ * @author guus
+ */
 public class Binding {
 
 	public static void bindDouble(final JSlider slider, final Value<Double> doubleVal) {
 		BoundedRangeModelBinding.bind(slider, new IntegerFromDouble(doubleVal));
 	}
 
-	public static void bindEnum(final JComboBox comboBox, final EnumValue val) {
+	public static <T, P extends Value<T> & EnumerableDomain<T>> void bindEnum(final JComboBox comboBox, final P val) {
 		ListModelBinding.bind(comboBox, val);
 	}
 
@@ -87,20 +90,24 @@ public class Binding {
 		}
 	}
 
-	/** @param toggle
+	/**
+	 * @param toggle
 	 * @param value
-	 * @return */
+	 * @return
+	 */
 	public static AbstractButton bindToggle(final AbstractButton toggle, final Value<Boolean> value) {
 		new ToggleBinder(value, toggle);
 		return toggle;
 	}
 
-	/** @param m
+	/**
+	 * @param m
 	 * @param text
 	 *            TODO
 	 * @param doubleVar
 	 *            TODO
-	 * @return */
+	 * @return
+	 */
 	public static DocumentBinder bindInteger(final JTextComponent text, final Value<Integer> doubleVar) {
 		return new DocumentBinder(text, new TextFromInteger(doubleVar));
 	}

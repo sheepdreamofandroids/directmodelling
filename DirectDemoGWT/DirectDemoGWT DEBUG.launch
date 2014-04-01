@@ -29,8 +29,8 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="com.google.gdt.eclipse.maven.mavenClasspathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.DevMode"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -logLevel TRACE -port auto -codeServerPort auto -war src/main/webapp com.directmodelling.demo.gwt.DirectDemoGWT"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-codeServerPort auto -war src/main/webapp"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="DirectDemoGWT"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XstartOnFirstThread -Xmx512m"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-javaagent:/Volumes/Data/Users/guus/Apps/eclipseEE431_64/plugins/com.google.appengine.eclipse.sdkbundle_1.8.9/appengine-java-sdk-1.8.9/lib/agent/appengine-agent.jar -XstartOnFirstThread -Xmx512m -Xbootclasspath/p:/Volumes/Data/Users/guus/Apps/eclipseEE431_64/plugins/com.google.appengine.eclipse.sdkbundle_1.8.9/appengine-java-sdk-1.8.9/lib/override/appengine-dev-jdk-overrides.jar"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:DirectDemoGWT}"/>
 </launchConfiguration>

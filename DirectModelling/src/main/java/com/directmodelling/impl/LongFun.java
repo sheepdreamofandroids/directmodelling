@@ -14,16 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.api;
+package com.directmodelling.impl;
 
-import com.directmodelling.impl.NamedDomain;
+import com.directmodelling.api.LongValue;
 
-/**
- * Convenience interface when you want to express explicitly that your variable
- * or function can enumerate its domain.
- */
-public interface EnumValue<T extends Enum<T>> extends EnumerableValue<T>, NamedDomain<T> {
+/** A calculated Long. */
+public abstract class LongFun extends Function<Long> implements LongValue {
 
-	public interface Mutable<T extends Enum<T>> extends EnumValue<T>, EnumerableValue.Mutable<T> {
+	@Override
+	public Type type() {
+		return Type.tLong;
+	}
+
+	@Override
+	public Long getValue() {
+		return get();
 	}
 }

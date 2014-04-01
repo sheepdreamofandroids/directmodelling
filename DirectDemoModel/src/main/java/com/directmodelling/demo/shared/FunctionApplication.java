@@ -2,6 +2,7 @@ package com.directmodelling.demo.shared;
 
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.EnumValue;
+import com.directmodelling.gwt.GwtTransient;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.EnumVar;
 
@@ -41,5 +42,6 @@ public class FunctionApplication extends DoubleFunction {
 
 	private DoubleValue left;
 	private DoubleValue right;
+	@GwtTransient
 	private final EnumVar<Operator> operator = new EnumVar<Operator>(Operator.values());
 }

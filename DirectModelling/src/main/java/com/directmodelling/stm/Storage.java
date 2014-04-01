@@ -23,13 +23,12 @@ import com.directmodelling.api.Context;
 import com.directmodelling.api.Value;
 import com.directmodelling.impl.EntityUtil;
 import com.directmodelling.impl.SimpleContext;
-import com.google.inject.Inject;
 
 public interface Storage extends Serializable {
 	public static abstract class Util {
 
-		@Inject
-		public static Context<Storage> current = new SimpleContext<Storage>(null);
+		public static Context<Storage> current = new SimpleContext<Storage>(
+				null);
 	}
 
 	<T> T get(Value<T> v);
@@ -49,11 +48,10 @@ public interface Storage extends Serializable {
 	public void addValues(Map<Value.Mutable<?>, Object> values);
 
 	public abstract class AbstractStorage implements Storage {
-		@Inject
 		EntityUtil entityInfo;
 
 		@Override
-		public void bind(Object bean) {
+		public void bind(final Object bean) {
 			entityInfo.store(bean, this);
 		}
 	}

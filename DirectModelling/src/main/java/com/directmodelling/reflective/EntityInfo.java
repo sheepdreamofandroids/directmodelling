@@ -12,9 +12,7 @@ import com.directmodelling.impl.Applicable;
 import com.directmodelling.impl.EntityUtil;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
-import com.google.inject.Singleton;
 
-@Singleton
 public class EntityInfo implements EntityUtil {
 
 	/*
@@ -25,7 +23,8 @@ public class EntityInfo implements EntityUtil {
 	 * com.directmodelling.impl.Applicable)
 	 */
 	@Override
-	public void forAllProperties(final Object entity, final Applicable<Value<?>> code) {
+	public void forAllProperties(final Object entity,
+			final Applicable<Value<?>> code) {
 		if (null != entity)
 			try {
 				final Class<? extends Object> clazz = entity.getClass();
@@ -53,12 +52,15 @@ public class EntityInfo implements EntityUtil {
 		final Class<? extends Object> clazz = entity.getClass();
 		for (final Method method : clazz.getMethods()) {
 			method.setAccessible(true);
-			if (method.getParameterTypes().length == 0 && Value.class.isAssignableFrom(method.getReturnType()))
+			if (method.getParameterTypes().length == 0
+					&& Value.class.isAssignableFrom(method.getReturnType()))
 				try {
 					result.add((Value<?>) method.invoke(entity));
 				} catch (final Exception e) {
-					throw new RuntimeException("While trying to retrieve property '" + method.getName()
-							+ "' from method on:" + entity, e);
+					throw new RuntimeException(
+							"While trying to retrieve property '"
+									+ method.getName() + "' from method on:"
+									+ entity, e);
 				}
 		}
 		for (final Field field : clazz.getFields()) {
@@ -67,8 +69,10 @@ public class EntityInfo implements EntityUtil {
 				try {
 					result.add((Value<?>) field.get(entity));
 				} catch (final Exception e) {
-					throw new RuntimeException("While trying to retrieve property '" + field.getName()
-							+ "' from field on:" + entity, e);
+					throw new RuntimeException(
+							"While trying to retrieve property '"
+									+ field.getName() + "' from field on:"
+									+ entity, e);
 				}
 		}
 		return result;
@@ -96,7 +100,8 @@ public class EntityInfo implements EntityUtil {
 	public static void registerKeys(final Object o) {
 		final Field[] fields = o.getClass().getFields();
 		for (final Field f : fields) {
-			if (Modifier.isFinal(f.getModifiers()) && Modifier.isPublic(f.getModifiers()))
+			final int mods = f.getModifiers();
+			if (Modifier.isFinal(mods) && Modifier.isPublic(mods))
 				try {
 					final Object o2 = f.get(o);
 					final boolean containsKey = Registry.names.containsKey(o2);

@@ -35,13 +35,15 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 	private boolean running;
 
 	/**
-	 * Trigger a limited set of updates. At this time 'limited' means '10'.
-	 * Maybe this should be 'until 100ms have elapsed' or so.
+	 * Run a limited set of updates. At this time 'limited' means '10'. Maybe
+	 * this should be 'until 100ms have elapsed' or so.
 	 * 
 	 * @return whether more updates are needed
 	 */
 	protected boolean updateSome() {
 		if (null == iterator) {
+			RECEIVERS.addAll(newReceivers);
+			newReceivers.clear();
 			iterator = RECEIVERS.iterator();
 		}
 		boolean hasNext;
@@ -50,7 +52,7 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 				iterator.next().valuesChanged();
 			} catch (final ConcurrentModificationException cme) {
 				iterator = null;// can't keep using this one
-				cme.printStackTrace();
+				// cme.printStackTrace();
 				break;
 			} catch (final Throwable e) {
 				// TODO Need logging
@@ -58,12 +60,17 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 			}
 		}
 		if (!hasNext) {
+			RECEIVERS.removeAll(removedReceivers);
+			removedReceivers.clear();
 			if (newReceivers.isEmpty()) {
 				iterator = null;
 				running = false;
 			} else {
 				RECEIVERS.addAll(newReceivers);
+				// do the new receivers first before those that were done in
+				// this batch
 				iterator = newReceivers.iterator();
+				// cannot clear() newReceivers because of the iterator
 				newReceivers = new HashSet<Receiver>();
 			}
 		}
@@ -76,9 +83,13 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 	// receivers added during update batch
 	private Set<Updates.Receiver> newReceivers = new HashSet<Updates.Receiver>();
 
+	// receivers removed during update batch
+	private final Set<Updates.Receiver> removedReceivers = new HashSet<Updates.Receiver>();
+
 	// private boolean notifyStarted;
 
 	/** Call this to notify the rest of the system of a changed value */
+	@Override
 	public void aValueChanged(final Value<?> v) {
 		if (!running) {
 			running = true;
@@ -89,18 +100,29 @@ public abstract class SingleThreadedUpdateTracker implements Tracker {
 	protected abstract void schedule();
 
 	/** Register a change listener */
+	@Override
 	public void registerForChanges(final Updates.Receiver ru) {
-		// RECEIVERS.add(ru);
-		if (!RECEIVERS.contains(ru))
-			newReceivers.add(ru);
+		if (running) {
+			if (RECEIVERS.contains(ru))
+				removedReceivers.remove(ru);
+			else
+				newReceivers.add(ru);
+		} else
+			RECEIVERS.add(ru);
 	}
 
 	@Override
 	public void unregister(final Receiver ru) {
-		RECEIVERS.remove(ru);
-		newReceivers.remove(ru);
+		if (running) {
+			if (RECEIVERS.contains(ru))
+				removedReceivers.add(ru);
+			else
+				newReceivers.remove(ru);
+		} else
+			RECEIVERS.remove(ru);
 	}
 
+	@Override
 	public void runUpdates() {
 		running = true;
 		while (updateSome())
