@@ -19,12 +19,10 @@ package com.directmodelling.gwt;
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.ui.Label;
 
-public class BoundLabel extends Label implements HasValue<String> {
+public class BoundLabel extends Label implements TakesValue<String> {
 	private final TextBinder binder = new TextBinder(this);
 
 	private Mutable<String> var;
@@ -36,11 +34,11 @@ public class BoundLabel extends Label implements HasValue<String> {
 		binder.setStringVar(var);
 	}
 
-	public void setDoubleVar(Mutable<Double> var) {
+	public void setDoubleVar(final Mutable<Double> var) {
 		binder.setDoubleVar(var);
 	}
 
-	public void setDoubleVal(Value<Double> var) {
+	public void setDoubleVal(final Value<Double> var) {
 		binder.setDoubleVal(var);
 	}
 
@@ -48,19 +46,14 @@ public class BoundLabel extends Label implements HasValue<String> {
 		binder.setVal(var, Converter.toString);
 	}
 
+	@Override
 	public String getValue() {
 		return getText();
 	}
 
-	public void setValue(String value) {
+	@Override
+	public void setValue(final String value) {
 		setText(value);
 	}
 
-	public void setValue(String value, boolean fireEvents) {
-		setText(value);
-	}
-
-	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
-		return null;
-	}
 }

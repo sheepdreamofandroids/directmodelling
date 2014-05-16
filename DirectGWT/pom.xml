@@ -40,7 +40,6 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>DirectModelling</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -57,7 +56,6 @@
 		<dependency>
 			<groupId>com.googlecode.gwt.inject</groupId>
 			<artifactId>gin</artifactId>
-			<version>1.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>gwt-servlet</artifactId>
@@ -68,17 +66,29 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gwtx</groupId>
 			<artifactId>gwtx</artifactId>
-			<version>1.5.3</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-gwt</artifactId>
-			<version>16.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.timepedia.exporter</groupId>
+			<artifactId>gwtexporter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.timepedia.exporter</groupId>
+			<artifactId>gwtexporter</artifactId>
+			<classifier>sources</classifier>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>${project.groupId}</groupId> -->
+<!-- 			<artifactId>DirectGWTEmulation</artifactId> -->
+<!-- 			<version>${project.version}</version> -->
+<!-- 			<classifier>sources</classifier> -->
+<!-- 		</dependency> -->
 	</dependencies>
 </project>

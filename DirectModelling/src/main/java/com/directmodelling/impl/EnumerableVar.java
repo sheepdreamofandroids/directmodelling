@@ -45,7 +45,7 @@ public class EnumerableVar<T> extends ObjectVar<T> implements
 	}
 
 	@Override
-	public ImmutableList<T> allPotentialValues() {
+	public List<T> allPotentialValues() {
 		return ImmutableList.copyOf(values);
 	}
 

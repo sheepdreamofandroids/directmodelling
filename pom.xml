@@ -32,7 +32,7 @@
 		<module>DirectDemoAndroid</module>
 		<module>DirectDemoGWT</module>
 		<module>DirectDemoSwing</module>
-		<module>DirectGWTEmulation</module>
+		<!-- <module>DirectGWTEmulation</module> -->
 	</modules>
 
 	<build>
@@ -42,8 +42,12 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
+					<!-- For GWT super-source -->
+					<excludes>
+						<value>**/emul/**/*.java</value>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -73,7 +77,8 @@
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>8.1.10.v20130312</version>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -146,32 +151,65 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<properties>
-		<maven.compiler.target>1.6</maven.compiler.target>
-		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.7</maven.compiler.source>
 		<gwt.version>2.6.0</gwt.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.directmodelling</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>DirectModelling</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.directmodelling</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>DirectDemoModel</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.directmodelling</groupId>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>DirectDemoModel</artifactId>
+				<classifier>sources</classifier>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>DirectGWT</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.directmodelling</groupId>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>DirectGWT</artifactId>
+				<classifier>sources</classifier>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>DirectAndroid</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>DirectSwing</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- <dependency> -->
+			<!-- <groupId>${project.groupId}</groupId> -->
+			<!-- <artifactId>DirectGWTEmulation</artifactId> -->
+			<!-- <version>${project.version}</version> -->
+			<!-- </dependency> -->
+			<dependency>
+				<groupId>org.timepedia.exporter</groupId>
+				<artifactId>gwtexporter</artifactId>
+				<version>2.5.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.timepedia.exporter</groupId>
+				<artifactId>gwtexporter</artifactId>
+				<version>2.5.1</version>
+				<classifier>sources</classifier>
 			</dependency>
 			<dependency>
 				<groupId>org.roboguice</groupId>
@@ -183,12 +221,60 @@
 				<artifactId>android</artifactId>
 				<version>1.6_r2</version>
 			</dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <scope>test</scope>
-                <version>4.10</version>
-            </dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<scope>test</scope>
+				<version>4.10</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>16.0.1</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.googlecode.gwt.inject</groupId>
+				<artifactId>gin</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-user</artifactId>
+				<version>${gwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-servlet</artifactId>
+				<version>${gwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.gwtx</groupId>
+				<artifactId>gwtx</artifactId>
+				<version>1.5.3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava-gwt</artifactId>
+				<version>16.0.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.inject.extensions</groupId>
+				<artifactId>guice-assisted-inject</artifactId>
+				<version>2.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.swinglabs</groupId>
+				<artifactId>swing-layout</artifactId>
+				<version>1.0.3</version>
+			</dependency>
+
+
+
+
 		</dependencies>
 	</dependencyManagement>
 </project>

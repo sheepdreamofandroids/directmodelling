@@ -18,11 +18,11 @@ package com.directmodelling.gwt;
 
 import com.directmodelling.api.Converter;
 import com.directmodelling.api.Value;
-import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.TakesValue;
 
 public class TextBinder extends Binder<String, Object> {
 
-	public TextBinder(final HasValue<String> gwtValue) {
+	public TextBinder(final TakesValue<String> gwtValue) {
 		super(gwtValue);
 	}
 
@@ -32,6 +32,10 @@ public class TextBinder extends Binder<String, Object> {
 
 	public final void setStringVar(final Value<String> var) {
 		setVar(var, Converter.ID_String, Converter.ID_String);
+	}
+
+	public final void setIntVar(final Value<Integer> var) {
+		setVar(var, Converter.String2Integer, Converter.Integer2String);
 	}
 
 	public final void setDoubleVar(final Value<Double> var) {

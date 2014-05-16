@@ -16,18 +16,20 @@
  *******************************************************************************/
 package com.directmodelling.gwt;
 
+import com.directmodelling.api.Updates;
+import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.impl.Command;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 
-
-public class CommandButton extends Button implements ClickHandler {
+public class CommandButton extends Button implements ClickHandler, Receiver {
 	private Command command;
 
 	public CommandButton() {
 		super();
+		Updates.registerForChanges(this);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -58,7 +60,13 @@ public class CommandButton extends Button implements ClickHandler {
 		return command;
 	}
 
+	@Override
 	public void onClick(final ClickEvent event) {
 		command.run();
+	}
+
+	@Override
+	public void valuesChanged() {
+		setEnabled(command.status().isEnabled());
 	}
 }

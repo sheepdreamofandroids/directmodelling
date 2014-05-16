@@ -16,25 +16,31 @@
  -->
 <module>
 	<inherits name='com.google.gwt.inject.Inject' />
-<!-- 	<inherits name='com.directmodelling.Value' /> -->
+	<!-- <inherits name='com.directmodelling.Value' /> -->
 	<inherits name='com.google.gwt.user.User' />
 
 
 	<inherits name='com.google.gwt.dom.DOM' />
-	
-<!-- 	<inherits name="com.googlecode.gwtx.java.text.Text"/> -->
+
+<!-- 	<inherits name='DirectGWTEmulation' /> -->
+	<!-- <inherits name="com.googlecode.gwtx.java.text.Text"/> -->
 
 	<source path="gwt" />
-	<super-source path="jre"/>
+	<super-source path="emul" />
 
 
 	<source path="api" />
-	<source path="impl"/>
-<!-- 		<exclude name="**/Variable*" /> -->
-<!-- 	</source> -->
+	<source path="impl" />
+	<!-- <exclude name="**/Variable*" /> -->
+	<!-- </source> -->
 	<source path="stm" />
 	<source path="properties" />
 	<!-- For obvious reasons, do not source 'reflective' -->
 
-	
+	<!-- Export the api to javascript -->
+	<inherits name='org.timepedia.exporter.Exporter' />
+	<set-property name="export" value="yes" />
+
+	<inherits name="com.google.common.base.Base" />
+	<inherits name="com.google.common.collect.Collect" />
 </module>

@@ -6,4 +6,10 @@
     <version>0.0.2-SNAPSHOT</version>
   </parent>
   <artifactId>DirectGWTEmulation</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.google.gwt</groupId>
+  		<artifactId>gwt-user</artifactId>
+  	</dependency>
+  </dependencies>
 </project>

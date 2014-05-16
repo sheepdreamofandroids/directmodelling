@@ -1,6 +1,7 @@
 package com.directmodelling.gwt;
 
 import java.util.Iterator;
+import java.util.List;
 
 import com.directmodelling.api.EnumerableValue;
 import com.directmodelling.api.EnumerableValue.Mutable;
@@ -9,7 +10,6 @@ import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.impl.util.FunctionCache;
 import com.directmodelling.impl.util.Sync;
 import com.google.common.base.Function;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -60,7 +60,7 @@ public abstract class BoundOptions<T> extends Widget implements Receiver,
 		}
 	}
 
-	protected ImmutableList<T> options() {
+	protected List<T> options() {
 		return var.allPotentialValues();
 	}
 

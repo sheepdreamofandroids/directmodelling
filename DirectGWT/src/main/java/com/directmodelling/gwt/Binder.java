@@ -24,33 +24,47 @@ import com.directmodelling.api.Value.Mutable;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.ui.HasValue;
 
 /** Binds variables to widgets. */
-public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHandler<WidgetDomain> {
+public class Binder<WidgetDomain, VarDomain> implements Receiver,
+		ValueChangeHandler<WidgetDomain> {
 
-	private final HasValue<WidgetDomain> gwtValue;
+	private final TakesValue<WidgetDomain> gwtValue;
+	private final HasValue<WidgetDomain> hasValue;
 	private Mutable<VarDomain> var;
 	private Value<VarDomain> val;
 	private final HandlerRegistration addValueChangeHandler;
 	private Converter<? super WidgetDomain, ? extends VarDomain> toVar;
 	private Converter<? super VarDomain, ? extends WidgetDomain> toWidget;
 
-	public Binder(final HasValue<WidgetDomain> gwtValue) {
+	public Binder(final TakesValue<WidgetDomain> gwtValue) {
 		assert null != gwtValue;
 		this.gwtValue = gwtValue;
 		Updates.registerForChanges(this);
-		addValueChangeHandler = gwtValue.addValueChangeHandler(this);
+		if (gwtValue instanceof HasValue) {
+			hasValue = (HasValue<WidgetDomain>) gwtValue;
+			this.addValueChangeHandler = hasValue.addValueChangeHandler(this);
+		} else {
+			hasValue = null;
+			addValueChangeHandler = null;
+		}
 	}
 
 	// A mutable changed
+	@Override
 	public void valuesChanged() {
 		if (null != val) {
-			gwtValue.setValue(toWidget.convert(val.getValue()), false);
+			if (hasValue != null)
+				hasValue.setValue(toWidget.convert(val.getValue()), false);
+			else
+				gwtValue.setValue(toWidget.convert(val.getValue()));
 		}
 	}
 
 	// The widget changed
+	@Override
 	public void onValueChange(final ValueChangeEvent<WidgetDomain> event) {
 		if (null != var) {
 			var.setValue(toVar.convert(event.getValue()));
@@ -63,12 +77,14 @@ public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHan
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> void setVar(final Value<T> var, final Converter<? super WidgetDomain, T> toVar,
-					final Converter<? super T, WidgetDomain> toWidget) {
+	public <T> void setVar(final Value<T> var,
+			final Converter<? super WidgetDomain, T> toVar,
+			final Converter<? super T, WidgetDomain> toWidget) {
 		this.val = (Value<VarDomain>) var;
 		if (val instanceof Value.Mutable)
 			this.var = (Mutable<VarDomain>) var;
-		this.toVar = this.var == null ? null : (Converter<WidgetDomain, VarDomain>) toVar;
+		this.toVar = this.var == null ? null
+				: (Converter<WidgetDomain, VarDomain>) toVar;
 		this.toWidget = (Converter<VarDomain, WidgetDomain>) toWidget;
 	}
 
@@ -84,7 +100,8 @@ public class Binder<WidgetDomain, VarDomain> implements Receiver, ValueChangeHan
 	// }
 
 	@SuppressWarnings("unchecked")
-	public void setVal(final Value<? extends VarDomain> var, final Converter<? extends VarDomain, WidgetDomain> toWidget) {
+	public void setVal(final Value<? extends VarDomain> var,
+			final Converter<? extends VarDomain, WidgetDomain> toWidget) {
 		this.val = (Value<VarDomain>) var;
 		this.var = null;
 		this.toVar = null;
