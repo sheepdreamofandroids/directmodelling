@@ -26,7 +26,7 @@ public class RadioBinder<TVal, Val extends Value<TVal> & EnumerableDomain<TVal>>
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	public static <T, Val extends Value<T> & EnumerableDomain<T>> RadioBinder<T, Val> bind(
-			final Val val, final Function<Val, WrappedButton> factory,
+			final Val val, final Function<T, WrappedButton> factory,
 			final Container cont) {
 		return new RadioBinder(val, factory, cont);
 	}

@@ -28,6 +28,10 @@ public class BoundTextbox extends TextBox {
 		binder.setStringVar(var);
 	}
 
+	public final void setIntVar(final Mutable<Integer> var) {
+		binder.setIntVar(var);
+	}
+
 	public void setDoubleVar(final Value<Double> var) {
 		binder.setDoubleVar(var);
 	}

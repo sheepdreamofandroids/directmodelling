@@ -18,7 +18,11 @@ package com.directmodelling.api;
 
 import java.io.Serializable;
 
-public interface Value<T> extends Serializable {
+import org.timepedia.exporter.client.Export;
+import org.timepedia.exporter.client.Exportable;
+
+@Export
+public interface Value<T> extends Serializable, Exportable {
 	/** @return Boxed value */
 	T getValue();
 

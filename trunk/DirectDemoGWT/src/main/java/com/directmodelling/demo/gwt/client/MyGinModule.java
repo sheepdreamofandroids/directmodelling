@@ -19,7 +19,6 @@
  */
 package com.directmodelling.demo.gwt.client;
 
-
 import com.directmodelling.api.Updates;
 import com.directmodelling.gwt.GWTUpdateTracker;
 import com.google.gwt.inject.client.AbstractGinModule;

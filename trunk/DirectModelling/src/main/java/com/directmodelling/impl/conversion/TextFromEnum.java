@@ -8,7 +8,7 @@ import com.directmodelling.api.Status;
 import com.directmodelling.api.Value;
 import com.directmodelling.impl.ValueConversion;
 
-public class TextFromEnum<T extends Enum<T>> extends ValueConversion<String, T> {
+public class TextFromEnum<T extends Enum<?>> extends ValueConversion<String, T> {
 	private final Map<String, T> valueOfString = new HashMap<String, T>();
 
 	public TextFromEnum(final Value<T> wrapped, final T... values) {
@@ -37,8 +37,11 @@ public class TextFromEnum<T extends Enum<T>> extends ValueConversion<String, T> 
 		return inner.name();
 	}
 
-	public static abstract class NoTypeParameters<T extends Enum<T>> extends
-			TextFromEnum<T> {
+	private enum WhoCares {
+	}
+
+	public static abstract class NoTypeParameters extends
+			TextFromEnum<WhoCares> {
 		private NoTypeParameters() {
 			super(null, null);
 		}

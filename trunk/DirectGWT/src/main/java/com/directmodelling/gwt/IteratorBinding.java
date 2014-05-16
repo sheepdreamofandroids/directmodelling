@@ -13,14 +13,14 @@ public abstract class IteratorBinding<In, Out> implements Receiver,
 
 	protected final Iterable<Out> container;
 	protected final Value<? extends Iterable<In>> values;
-	protected final Function<In, Out> factory;
+	protected final Function<In, Out> cache;
 
 	public IteratorBinding(final Iterable<Out> container,
 			final Value<? extends Iterable<In>> values,
 			final Function<In, Out> factory) {
 		this.container = container;
 		this.values = values;
-		this.factory = new FunctionCache<In, Out>(factory);
+		this.cache = new FunctionCache<In, Out>(factory);
 		Updates.registerForChanges(this);
 	}
 
@@ -28,7 +28,7 @@ public abstract class IteratorBinding<In, Out> implements Receiver,
 			final Value<? extends Iterable<In>> values) {
 		this.container = container;
 		this.values = values;
-		this.factory = new FunctionCache<In, Out>(this);
+		this.cache = new FunctionCache<In, Out>(this);
 		Updates.registerForChanges(this);
 	}
 
@@ -60,14 +60,14 @@ public abstract class IteratorBinding<In, Out> implements Receiver,
 
 		while (vals.hasNext() && cont.hasNext()) {
 			In val = vals.next();
-			final Out newWidget = factory.apply(val);
+			final Out newWidget = cache.apply(val);
 			while (cont.hasNext() && cont.next() != newWidget)
 				cont.remove();
 			if (!cont.hasNext()) {
 				addWidget(newWidget, val);
 				while (vals.hasNext()) {
 					val = vals.next();
-					addWidget(factory.apply(val), val); // end of panel
+					addWidget(cache.apply(val), val); // end of panel
 				}
 				return;
 			}
@@ -81,7 +81,7 @@ public abstract class IteratorBinding<In, Out> implements Receiver,
 
 		while (vals.hasNext()) {
 			final In val = vals.next();
-			addWidget(factory.apply(val), val); // end of panel
+			addWidget(cache.apply(val), val); // end of panel
 		}
 	}
 
