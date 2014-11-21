@@ -62,10 +62,10 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.timepedia.exporter</groupId>
-			<artifactId>gwtexporter</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.timepedia.exporter</groupId> -->
+<!-- 			<artifactId>gwtexporter</artifactId> -->
+<!-- 		</dependency> -->
 	</dependencies>
 	<scm>
 		<connection>scm:svn:http://directmodelling.googlecode.com/svn/trunk//DirectModelling</connection>

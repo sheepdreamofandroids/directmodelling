@@ -1,0 +1,197 @@
+<!-- Copyright (c) 2010 Guus C. Bloemsma. This program is free software: 
+	you can redistribute it and/or modify it under the terms of the GNU General 
+	Public License as published by the Free Software Foundation, either version 
+	3 of the License, or (at your option) any later version. This program is 
+	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See the GNU General Public License for more details. You should 
+	have received a copy of the GNU General Public License along with this program. 
+	If not, see <http://www.gnu.org/licenses /> -->
+
+<!-- The simplest way to run this app is by running the following commandline -->
+<!-- from inside this directory and pointing the browser to http://localhost:8080/index.html -->
+
+<!-- mvn -Pwith-gwt clean jetty:run-exploded -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>com.directmodelling</groupId>
+		<artifactId>DirectModellingParent</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>DirectDemoAngular</artifactId>
+	<packaging>war</packaging>
+
+	<build>
+		<outputDirectory>war/WEB-INF/classes</outputDirectory>
+		<plugins>
+			<plugin>
+				<!-- Clean up leftovers from devmode. Try this when devmode gets mysterious 
+					errors. -->
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/gwt-unitCache</directory>
+						</fileset>
+						<fileset>
+							<directory>src/main/webapp/directdemo</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<systemProperties>
+						<systemProperty>
+							<!-- Make rpc servlets read the policy files from the codeserver so 
+								you don't have to do a full compile when they change. -->
+							<name>gwt.codeserver.port</name>
+							<value>9876</value>
+						</systemProperty>
+					</systemProperties>
+					<baseAppFirst>true</baseAppFirst>
+					<stopKey>STOP!</stopKey>
+					<stopPort>6666</stopPort>
+					<waitForChild>false</waitForChild>
+					<scanIntervalSeconds>1</scanIntervalSeconds>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>DirectGWT</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>DirectGWT</artifactId>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-assisted-inject</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-user</artifactId>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.gwt</groupId> -->
+		<!-- <artifactId>gwt-dev</artifactId> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>DirectDemoModel</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-codeserver</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>DirectDemoModel</artifactId>
+			<classifier>sources</classifier>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.ow2.asm</groupId> -->
+		<!-- <artifactId>asm</artifactId> -->
+		<!-- <version>5.0.3</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.gwt</groupId> -->
+		<!-- <artifactId>gwt</artifactId> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.fusesource.restygwt</groupId>
+			<artifactId>restygwt</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>jsr311-api</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<profile>
+			<id>with-gwt</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>gwt-maven-plugin</artifactId>
+						<version>2.7.0-beta1</version>
+						<configuration>
+							<module>com.directmodelling.demo.angular.DirectDemoAngular</module>
+							<!-- <strict>true</strict> -->
+							<!-- <logLevel>DEBUG</logLevel> -->
+							<!-- Really nasty hack to sneak in new arguments -->
+							<!-- <style>OBF' '-XjsInteropMode' 'JS</style> -->
+							<!-- <style>OBF' '-XjsInteropMode' 'JS' '-XcompilePerFile</style> -->
+							<inplace>true</inplace>
+							<jsInteropMode>JS</jsInteropMode>
+							<incrementalCompileWarnings>true</incrementalCompileWarnings>
+							<incremental>true</incremental>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>compile</goal>
+								</goals>
+							</execution>
+						</executions>
+						<dependencies>
+							<!-- <dependency> -->
+							<!-- <groupId>com.google.gwt</groupId> -->
+							<!-- <artifactId>gwt-user</artifactId> -->
+							<!-- <version>${gwt.version}</version> -->
+							<!-- </dependency> -->
+							<!-- <dependency> -->
+							<!-- <groupId>com.google.gwt</groupId> -->
+							<!-- <artifactId>gwt-dev</artifactId> -->
+							<!-- <version>${gwt.version}</version> -->
+							<!-- </dependency> -->
+							<dependency>
+								<groupId>com.google.gwt</groupId>
+								<artifactId>gwt-codeserver</artifactId>
+								<version>${gwt.version}</version>
+							</dependency>
+							<dependency>
+								<groupId>org.ow2.asm</groupId>
+								<artifactId>asm</artifactId>
+								<version>5.0.3</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

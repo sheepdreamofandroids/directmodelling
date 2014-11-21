@@ -18,8 +18,8 @@ public class Util {
 	 *         actual types.
 	 */
 	@SuppressWarnings({ "unchecked" })
-	public static <Base, Sub extends Base> Class<?> typeArgument(final Class<Sub> sub, final Class<Base> base,
-									final int index) {
+	public static <Base, Sub extends Base> Class<?> typeArgument(
+			final Class<Sub> sub, final Class<Base> base, final int index) {
 		// find the direct subclass of base
 		// Class<? extends Sub> directSub = sub;
 		// while (directSub.getSuperclass() != base)
@@ -38,17 +38,19 @@ public class Util {
 			return (Class<?>) ((ParameterizedType) type).getRawType();
 
 		if (type instanceof TypeVariable<?>) {
-			final TypeVariable<?>[] typeParameters = pair.sub.getTypeParameters();
+			final TypeVariable<?>[] typeParameters = pair.sub
+					.getTypeParameters();
 			for (int i = 0; i < typeParameters.length; i++) {
 				if (typeParameters[i] == type)
 					return typeArgument(sub, pair.sub, i);
 			}
 		}
-		throw new RuntimeException("Cannot resolve typeParam " + index + " from base " + base + ".");
+		throw new RuntimeException("Cannot resolve typeParam " + index
+				+ " from base " + base + " when used from " + sub + ".");
 	}
 
 	private static final class Pair<Base, Sub extends Base> {
-		private Class<Base> base;
+		private final Class<Base> base;
 		private Class<Base> origin;
 		public Class<?> sub;
 		// public Class<?> argumentSourceClass;
@@ -72,7 +74,8 @@ public class Util {
 		public final boolean parameterizedType(final Class<?> newsub) {
 			final Class<?> superclass = newsub.getSuperclass();
 			if (superclass == base) {
-				this.parameterizedType = (ParameterizedType) newsub.getGenericSuperclass();
+				this.parameterizedType = (ParameterizedType) newsub
+						.getGenericSuperclass();
 				sub = newsub;
 				return true;
 			}
@@ -85,7 +88,8 @@ public class Util {
 				final Class<?>[] interfaces = newsub.getInterfaces();
 				for (int i = 0; i < interfaces.length; i++) {
 					if (interfaces[i] == base) {
-						this.parameterizedType = (ParameterizedType) newsub.getGenericInterfaces()[i];
+						this.parameterizedType = (ParameterizedType) newsub
+								.getGenericInterfaces()[i];
 						sub = newsub;
 						return true;
 					}

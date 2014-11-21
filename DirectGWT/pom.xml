@@ -67,22 +67,13 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.google.code.gwtx</groupId>
-			<artifactId>gwtx</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.google.code.gwtx</groupId> -->
+<!-- 			<artifactId>gwtx</artifactId> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-gwt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.timepedia.exporter</groupId>
-			<artifactId>gwtexporter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.timepedia.exporter</groupId>
-			<artifactId>gwtexporter</artifactId>
-			<classifier>sources</classifier>
 		</dependency>
 <!-- 		<dependency> -->
 <!-- 			<groupId>${project.groupId}</groupId> -->

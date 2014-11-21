@@ -4,7 +4,8 @@ import com.directmodelling.api.Status;
 import com.directmodelling.api.Status.HasStatus;
 import com.directmodelling.api.Value;
 
-public abstract class Function<T> implements Value<T>, HasStatus {
+public abstract class Function<T> extends AbstractValue<T> implements Value<T>,
+		HasStatus {
 	/**
 	 * @return <dl>
 	 *         <dt>readonly</dt>

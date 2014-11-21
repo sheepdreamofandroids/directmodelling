@@ -20,7 +20,7 @@ import com.directmodelling.api.Context;
 
 public class SimpleContext<T> implements Context<T> {
 
-	private T value;
+	protected T value;
 
 	public SimpleContext() {
 	}
@@ -30,7 +30,10 @@ public class SimpleContext<T> implements Context<T> {
 		this.value = value;
 	}
 
+	@Override
 	public T it() {
+		if (value == null)
+			throw new IllegalStateException("Uninitialized Context");
 		return value;
 	}
 

@@ -16,20 +16,23 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
+import java.io.IOException;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.Status;
+import com.directmodelling.api.Status.HasStatus;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
 import com.directmodelling.gwt.GwtIncompatible;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
+import com.directmodelling.stm.impl.UninitializedException;
 
-import java.io.IOException;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
-public abstract class Variable<T> extends Function<T> implements Value.Mutable<T>, HasKey, HasStorage, Serializable {
+public abstract class Variable<T> extends AbstractMutable<T> implements
+		HasStatus, Value.Mutable<T>, HasKey, HasStorage, Serializable {
 	public Variable() {
 		super();
 	}
@@ -45,7 +48,7 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 	}
 
 	@Override
-	public Status status() {
+	public Status status() {// TODO move up?
 		return Status.writeable;
 	}
 
@@ -54,8 +57,22 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 		return storage.get(this);
 	}
 
-	protected Object serializedValue() {
+	@Override
+	public T value(final T newValue) {
+		if (newValue != null)
+			setValue(newValue);
 		return getValue();
+	}
+
+	private static final Serializable UNINITIALIZED = new Serializable() {
+	};
+
+	protected Object serializedValue() {
+		try {
+			return getValue();
+		} catch (final UninitializedException e) {
+			return UNINITIALIZED;
+		}
 	}
 
 	@Override
@@ -73,16 +90,19 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 
 	/** Initialize transient fields. */
 	@GwtIncompatible("Only to be used by native serialization.")
-	private void readObject(final java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+	private void readObject(final java.io.ObjectInputStream in)
+			throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		final T val = (T) in.readObject();
 		hash = 0;
 		storage = Util.current.it();
-		setValue(val);
+		if (val != UNINITIALIZED)
+			setValue(val);
 	}
 
 	@GwtIncompatible("Only to be used by native serialization.")
-	private void writeObject(final java.io.ObjectOutputStream out) throws IOException {
+	private void writeObject(final java.io.ObjectOutputStream out)
+			throws IOException {
 		out.defaultWriteObject();
 		out.writeObject(serializedValue());
 	}
@@ -147,5 +167,6 @@ public abstract class Variable<T> extends Function<T> implements Value.Mutable<T
 		System.err.println("CREATEVAR #" + hashCode());
 	}
 
-//	private final transient Throwable stackTrace = new Exception().fillInStackTrace();
+	// private final transient Throwable stackTrace = new
+	// Exception().fillInStackTrace();
 }

@@ -20,7 +20,9 @@ import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.ListValue;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.Variable;
+import com.google.gwt.core.client.js.JsType;
 
+@JsType
 public interface IDemoModel {
 
 	public Variable<String> var();

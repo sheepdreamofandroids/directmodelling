@@ -37,10 +37,6 @@
 	<source path="properties" />
 	<!-- For obvious reasons, do not source 'reflective' -->
 
-	<!-- Export the api to javascript -->
-	<inherits name='org.timepedia.exporter.Exporter' />
-	<set-property name="export" value="yes" />
-
 	<inherits name="com.google.common.base.Base" />
 	<inherits name="com.google.common.collect.Collect" />
 </module>

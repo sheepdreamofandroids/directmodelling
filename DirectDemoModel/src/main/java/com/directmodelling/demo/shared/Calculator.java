@@ -1,5 +1,6 @@
 package com.directmodelling.demo.shared;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,8 +12,12 @@ import com.directmodelling.impl.Command;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.ObjectFun;
 import com.directmodelling.impl.ObjectVar;
+import com.google.gwt.core.client.js.JsType;
 
-public class Calculator {
+@JsType
+public class Calculator implements Serializable {
+	public Calculator() {
+	}
 
 	/** Link to outermost (rightmost) operator. Initially link to first value. */
 	public final Mutable<DoubleValue> calculation = new ObjectVar<DoubleValue>();
@@ -34,7 +39,7 @@ public class Calculator {
 
 		@Override
 		public Iterable<DoubleValue> get() {
-			ArrayList<DoubleValue> result = new ArrayList<DoubleValue>();
+			final ArrayList<DoubleValue> result = new ArrayList<DoubleValue>();
 			DoubleValue o = calculation.getValue();
 			while (o instanceof FunctionApplication) {
 				result.add(o);
@@ -59,7 +64,7 @@ public class Calculator {
 	private final class DoAppendOperator extends Command {
 		private final Operator op;
 
-		public DoAppendOperator(Operator op) {
+		public DoAppendOperator(final Operator op) {
 			this.op = op;
 		}
 
@@ -67,7 +72,8 @@ public class Calculator {
 		public void run() {
 			final DoubleVar right = new DoubleVar();
 			right.set(0);
-			calculation.setValue(new FunctionApplication(calculation.getValue(), right, op));
+			calculation.setValue(new FunctionApplication(
+					calculation.getValue(), right, op));
 		}
 	}
 

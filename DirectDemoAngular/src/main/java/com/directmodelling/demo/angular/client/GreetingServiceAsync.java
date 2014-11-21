@@ -14,17 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.api;
+package com.directmodelling.demo.angular.client;
 
-import com.directmodelling.impl.BranchingDomain;
+import com.directmodelling.demo.angular.client.GreetingService.MakeSerializable;
+import com.directmodelling.stm.impl.TransactionImpl;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- * Convenience interface when you want to express explicitly that your variable
- * or function can enumerate its domain.
+ * The client side stub for the RPC service.
  */
-public interface BranchingValue<T> extends ObjectValue<T>, BranchingDomain<T> {
+public interface GreetingServiceAsync {
 
-	public interface Mutable<T> extends BranchingValue<T>,
-			ObjectValue.Mutable<T> {
-	}
+	void update(TransactionImpl t, AsyncCallback<Void> callback);
+
+	void getInitial(AsyncCallback<IInit> callback);
+
+	void dummy(MakeSerializable dummy, AsyncCallback<MakeSerializable> callback);
+
 }

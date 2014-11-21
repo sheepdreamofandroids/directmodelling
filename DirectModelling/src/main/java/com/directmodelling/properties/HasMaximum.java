@@ -16,6 +16,9 @@
  *******************************************************************************/
 package com.directmodelling.properties;
 
+import com.google.gwt.core.client.js.JsType;
+
+@JsType
 public interface HasMaximum<T extends Comparable<? super T>> {
 	T getMaximum();
 
