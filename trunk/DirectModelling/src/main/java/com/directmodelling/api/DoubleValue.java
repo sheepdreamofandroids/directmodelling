@@ -16,9 +16,13 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
+import com.google.gwt.core.client.js.JsType;
+
+@JsType
 public interface DoubleValue extends Value<Double> {
 	double get();
 
+	@JsType
 	public interface Mutable extends DoubleValue, Value.Mutable<Double> {
 		DoubleValue.Mutable set(double value);
 	}

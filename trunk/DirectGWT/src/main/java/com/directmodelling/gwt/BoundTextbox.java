@@ -16,19 +16,35 @@
  *******************************************************************************/
 package com.directmodelling.gwt;
 
+import com.directmodelling.api.DoubleValue;
+import com.directmodelling.api.IntValue;
 import com.directmodelling.api.Value;
-import com.directmodelling.api.Value.Mutable;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class BoundTextbox extends TextBox {
 
 	private final TextBinder binder = new TextBinder(this);
 
-	public final void setStringVar(final Mutable<String> var) {
+	public BoundTextbox() {
+	}
+
+	public BoundTextbox(final Value var) {
+		setStringVar(var);
+	}
+
+	public BoundTextbox(final IntValue var) {
+		setIntVar(var);
+	}
+
+	public BoundTextbox(final DoubleValue var) {
+		setDoubleVar(var);
+	}
+
+	public final void setStringVar(final Value<String> var) {
 		binder.setStringVar(var);
 	}
 
-	public final void setIntVar(final Mutable<Integer> var) {
+	public final void setIntVar(final Value<Integer> var) {
 		binder.setIntVar(var);
 	}
 

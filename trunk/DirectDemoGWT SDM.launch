@@ -23,14 +23,12 @@
 <listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/DirectModelling/src/main/java&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;"/>
 <listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/DirectDemoModel/src/main/java&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;"/>
 <listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry id=&quot;org.eclipse.jdt.launching.classpathentry.defaultClasspath&quot;&gt;&#10;&lt;memento exportedEntriesOnly=&quot;false&quot; project=&quot;DirectDemoGWT&quot;/&gt;&#10;&lt;/runtimeClasspathEntry&gt;&#10;"/>
-<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry containerPath=&quot;M2_REPO/com/google/gwt/gwt-dev/2.5.1/gwt-dev-2.5.1.jar&quot; path=&quot;3&quot; type=&quot;3&quot;/&gt;&#10;"/>
-<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/DirectGWTEmulation/src/main/java&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="com.google.gdt.eclipse.maven.mavenClasspathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.DevMode"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-codeServerPort auto -war src/main/webapp"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-nosuperDevMode -remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -logLevel TRACE -port auto -codeServerPort auto com.directmodelling.demo.gwt.DirectDemoGWT"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="DirectDemoGWT"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-javaagent:/Volumes/Data/Users/guus/Apps/eclipseEE431_64/plugins/com.google.appengine.eclipse.sdkbundle_1.8.9/appengine-java-sdk-1.8.9/lib/agent/appengine-agent.jar -XstartOnFirstThread -Xmx512m -Xbootclasspath/p:/Volumes/Data/Users/guus/Apps/eclipseEE431_64/plugins/com.google.appengine.eclipse.sdkbundle_1.8.9/appengine-java-sdk-1.8.9/lib/override/appengine-dev-jdk-overrides.jar"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XstartOnFirstThread -Xmx512m"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:DirectDemoGWT}"/>
 </launchConfiguration>

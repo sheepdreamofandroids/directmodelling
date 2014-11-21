@@ -11,8 +11,8 @@ import com.directmodelling.api.Value;
  * A conversion presents a wrapped {@link Value} as one of another type. It
  * converts both ways, so {@link #setValue()} should also work.
  */
-public abstract class ValueConversion<Outer, Inner> implements
-		Value.Mutable<Outer>, HasStatus, Conversion<Outer, Inner> {
+public abstract class ValueConversion<Outer, Inner> extends
+		AbstractMutable<Outer> implements HasStatus, Conversion<Outer, Inner> {
 	protected Value<Inner> wrapped;
 	private Invalid conversionFailure = null;
 	private Value.Mutable<Inner> writeable;

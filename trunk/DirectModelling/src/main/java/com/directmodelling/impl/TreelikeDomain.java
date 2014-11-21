@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableList;
  * Describes a finite set of values in a tree-like form that is completely known
  * at runtime.
  */
-public interface BranchingDomain<T> {
+public interface TreelikeDomain<T> {
 	// TODO Come up with a better name?
 	/**
 	 * All branches under the current node.

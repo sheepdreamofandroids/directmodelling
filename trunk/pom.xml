@@ -33,6 +33,7 @@
 		<module>DirectDemoGWT</module>
 		<module>DirectDemoSwing</module>
 		<!-- <module>DirectGWTEmulation</module> -->
+		<module>DirectDemoAngular</module>
 	</modules>
 
 	<build>
@@ -73,9 +74,9 @@
 					<version>2.1.1</version>
 				</plugin>
 				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
+					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
-					<version>8.1.10.v20130312</version>
+					<version>9.2.3.v20140905</version>
 				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->
@@ -120,6 +121,20 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>google-snapshots</id>
+			<name>google snapshots</name>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
 		</repository>
 	</repositories>
 
@@ -153,7 +168,7 @@
 	<properties>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
-		<gwt.version>2.6.0</gwt.version>
+		<gwt.version>2.7.0-rc1</gwt.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencyManagement>
@@ -230,7 +245,7 @@
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>16.0.1</version>
+				<version>18.0</version>
 			</dependency>
 
 
@@ -239,15 +254,33 @@
 				<artifactId>gin</artifactId>
 				<version>1.0</version>
 			</dependency>
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.google.gwt</groupId> -->
+<!-- 				<artifactId>gwt-user</artifactId> -->
+<!-- 				<version>${gwt.version}</version> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.google.gwt</groupId> -->
+<!-- 				<artifactId>gwt-dev</artifactId> -->
+<!-- 				<version>${gwt.version}</version> -->
+<!-- 				<scope>test</scope> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.google.gwt</groupId> -->
+<!-- 				<artifactId>gwt-servlet</artifactId> -->
+<!-- 				<version>${gwt.version}</version> -->
+<!-- 			</dependency> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.google.gwt</groupId> -->
+<!-- 				<artifactId>gwt-codeserver</artifactId> -->
+<!-- 				<version>${gwt.version}</version> -->
+<!-- 			</dependency> -->
 			<dependency>
 				<groupId>com.google.gwt</groupId>
-				<artifactId>gwt-user</artifactId>
+				<artifactId>gwt</artifactId>
 				<version>${gwt.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.google.gwt</groupId>
-				<artifactId>gwt-servlet</artifactId>
-				<version>${gwt.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>com.google.code.gwtx</groupId>

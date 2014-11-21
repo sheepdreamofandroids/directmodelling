@@ -16,6 +16,8 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
+import com.directmodelling.impl.SingleAssignContext;
+
 /**
  * <p>
  * Context's allow use of services without depending on injection.
@@ -49,6 +51,7 @@ package com.directmodelling.api;
  * 
  * @param <T>
  */
+// TODO simply use Value?? rename it() to get()
 public interface Context<T> {
 	/** Get the appropriate service */
 	T it();
@@ -57,28 +60,31 @@ public interface Context<T> {
 		<T> Context<T> create(T initialValue);
 	}
 
+	SingleAssignContext<Factory> perUser = new SingleAssignContext<Context.Factory>();
+	SingleAssignContext<Factory> singleton = new SingleAssignContext<Context.Factory>();
+
 	/**
 	 * Implementations should create the appropriate, initialized Context
 	 * implementation for a given service. Make sure to implement all cases that
 	 * can possibly occur.
 	 */
-	public interface Initializer {
-		<T> Context<T> create(Class<T> t);
-	}
+	// public interface Initializer {
+	// <T> Context<T> create(Class<T> t);
+	// }
 
-	public abstract class It {
-		/**
-		 * init ASAP after program start.
-		 */
-		// public static void initialize(final Context<? extends Initializer>
-		// ini) {
-		// It.it = ini;
-		// }
-
-		public static <T> Context<T> create(final Class<T> t) {
-			return It.it.it().create(t);
-		};
-
-		private static Context<? extends Initializer> it = null;
-	}
+	// public abstract class It {
+	// /**
+	// * init ASAP after program start.
+	// */
+	// // public static void initialize(final Context<? extends Initializer>
+	// // ini) {
+	// // It.it = ini;
+	// // }
+	//
+	// public static <T> Context<T> create(final Class<T> t) {
+	// return It.it.it().create(t);
+	// };
+	//
+	// private static Context<? extends Initializer> it = null;
+	// }
 }

@@ -16,7 +16,6 @@
  *******************************************************************************/
 package com.directmodelling.demo.gwt.client;
 
-import com.directmodelling.api.Value;
 import com.directmodelling.demo.gwt.client.GreetingService.Init;
 import com.directmodelling.demo.gwt.client.GreetingService.MakeSerializable;
 import com.directmodelling.demo.gwt.client.calculator.CalculatorPanel;
@@ -52,7 +51,7 @@ public class DirectDemo implements EntryPoint {
 	 */
 	@Override
 	public void onModuleLoad() {
-		GWT.create(Value.class);
+		// GWT.create(Value.class);
 		makeSerializable();
 
 		final System system = new System();
@@ -64,6 +63,8 @@ public class DirectDemo implements EntryPoint {
 				system.doneInitializing();
 				popup(new DemoPanel(result.model, system), "sliders");
 				popup(new CalculatorPanel(new Calculator()), "Calculator");
+				show(result.model);
+				show(result.model.a());
 			}
 
 			@Override
@@ -72,6 +73,11 @@ public class DirectDemo implements EntryPoint {
 			}
 		});
 	}
+
+	public static native void show(Object o)/*-{
+		window.alert(o);
+		console.log(o);
+	}-*/;
 
 	/** dummy code to work around some serialization issues */
 	public void makeSerializable() {

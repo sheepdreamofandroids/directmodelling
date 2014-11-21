@@ -1,10 +1,10 @@
 package com.directmodelling.impl.util;
 
-import com.directmodelling.api.Value;
+import com.directmodelling.impl.Function;
 
-public class Constant<T> implements Value<T> {
+public class Constant<T> extends Function<T> {
 
-	private T value;
+	private final T value;
 
 	public Constant(final T value) {
 		this.value = value;

@@ -17,6 +17,7 @@
 package com.directmodelling.gwt;
 
 import com.directmodelling.api.Converter;
+import com.directmodelling.api.LongValue;
 import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
 import com.google.gwt.user.client.TakesValue;
@@ -26,6 +27,21 @@ public class BoundLabel extends Label implements TakesValue<String> {
 	private final TextBinder binder = new TextBinder(this);
 
 	private Mutable<String> var;
+
+	public BoundLabel() {
+	}
+
+	public BoundLabel(final Value<String> val) {
+		binder.setVal(val);
+	}
+
+	public BoundLabel(final LongValue val) {
+		binder.setVal(val);
+	}
+
+	public BoundLabel(final Value<?> val, final Converter<?, String> conv) {
+		binder.setVal(val, conv);
+	}
 
 	/**
 	 * @param var

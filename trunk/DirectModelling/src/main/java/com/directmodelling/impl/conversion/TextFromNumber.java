@@ -10,11 +10,17 @@ import com.directmodelling.impl.ValueConversion;
 public abstract class TextFromNumber<T extends Number> extends
 		ValueConversion<String, T> {
 	public TextFromNumber(final Value<T> wrapped) {
+		this(wrapped, NumberFormat.getInstance());
+	}
+
+	public TextFromNumber(final Value<T> wrapped,
+			final NumberFormat numberFormatter) {
 		super(wrapped);
+		this.numberFormatter = numberFormatter;
 	}
 
 	// TODO make format configurable
-	NumberFormat numberFormatter = NumberFormat.getInstance();
+	private final NumberFormat numberFormatter;
 
 	@Override
 	public T outer2inner(final String value) throws ParseException {

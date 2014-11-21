@@ -26,7 +26,8 @@ import com.directmodelling.impl.SimpleContext;
 
 public interface Storage extends Serializable {
 	public static abstract class Util {
-
+		// TODO move out of Util
+		// TODO ask Context to create Context
 		public static Context<Storage> current = new SimpleContext<Storage>(
 				null);
 	}

@@ -18,14 +18,16 @@ package com.directmodelling.api;
 
 import java.io.Serializable;
 
-import org.timepedia.exporter.client.Export;
-import org.timepedia.exporter.client.Exportable;
+import com.google.gwt.core.client.js.JsType;
 
-@Export
-public interface Value<T> extends Serializable, Exportable {
+//TODO rename to Signal
+@JsType
+public interface Value<T> extends Serializable {
 	/** @return Boxed value */
 	T getValue();
 
+	@Deprecated()
+	// Not used often enough to be in such a central spot.
 	Type type();
 
 	/** Indicate JVM type */
@@ -53,13 +55,17 @@ public interface Value<T> extends Serializable, Exportable {
 		}
 	}
 
+	@JsType
 	public interface Mutable<T> extends Value<T> {
 		/**
 		 * @param value
 		 *            Boxed value to be stored.
 		 */
 		void setValue(T value);
+
 		// a setter
+		/** angularjs style getterSetter */
+		T value(T newValue);
 	}
 
 	// public interface UserValue<T> extends Mutable<T>, HasStatus {

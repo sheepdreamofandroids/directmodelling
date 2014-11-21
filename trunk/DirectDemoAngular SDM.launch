@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.google.gdt.eclipse.suite.webapp">
+<stringAttribute key="com.google.gdt.eclipse.core.SERVER_PORT" value="8765"/>
+<stringAttribute key="com.google.gdt.eclipse.suiteMainTypeProcessor.PREVIOUSLY_SET_MAIN_TYPE_NAME" value="com.google.gwt.dev.DevMode"/>
+<booleanAttribute key="com.google.gdt.eclipse.suiteWarArgumentProcessor.IS_WAR_FROM_PROJECT_PROPERTIES" value="true"/>
+<stringAttribute key="com.google.gwt.eclipse.core.CODE_SERVER_PORT" value="9876"/>
+<listAttribute key="com.google.gwt.eclipse.core.ENTRY_POINT_MODULES">
+<listEntry value="com.directmodelling.demo.angular.DirectDemoAngular"/>
+</listAttribute>
+<booleanAttribute key="com.google.gwt.eclipse.core.SUPERDEVMODE_ENABLED" value="true"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/DirectDemoAngular"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="com.google.gdt.eclipse.maven.mavenClasspathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.DevMode"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-superDevMode -war /Volumes/Data/Users/guus/Documents/workspace/DirectModellingParent/DirectDemoAngular/target/DirectDemoAngular-0.0.2-SNAPSHOT -XjsInteropMode JS -remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -logLevel INFO -port 8765 -codeServerPort 9876 com.directmodelling.demo.angular.DirectDemoAngular"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="DirectDemoAngular"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XstartOnFirstThread -Xmx512m"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:DirectDemoAngular}"/>
+</launchConfiguration>
