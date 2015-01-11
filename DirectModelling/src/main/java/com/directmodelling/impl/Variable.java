@@ -21,6 +21,8 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 import com.directmodelling.api.HasKey;
+import com.directmodelling.api.ID;
+import com.directmodelling.api.Identifiable;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Status.HasStatus;
 import com.directmodelling.api.Updates;
@@ -30,9 +32,12 @@ import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
 import com.directmodelling.stm.Storage.Util;
 import com.directmodelling.stm.impl.UninitializedException;
+import com.google.gwt.core.client.js.JsType;
 
+@JsType
 public abstract class Variable<T> extends AbstractMutable<T> implements
-		HasStatus, Value.Mutable<T>, HasKey, HasStorage, Serializable {
+		Identifiable, HasStatus, ID, Value.Mutable<T>, HasKey, HasStorage,
+		Serializable {
 	public Variable() {
 		super();
 	}
@@ -54,7 +59,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 
 	@Override
 	public T getValue() {
-		return storage.get(this);
+		return storage.get(id);
 	}
 
 	@Override
@@ -62,6 +67,13 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 		if (newValue != null)
 			setValue(newValue);
 		return getValue();
+	}
+
+	private final ID id = ID.generator.it().createID();
+
+	@Override
+	public ID id() {
+		return id;
 	}
 
 	private static final Serializable UNINITIALIZED = new Serializable() {
@@ -77,12 +89,12 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 
 	@Override
 	public void setValue(final T value) {
-		storage.set(this, value);
+		storage.set(id, value);
 		Updates.aValueChanged(this);
 	}
 
 	// Make sure (de-)serialized vars refer to the same values
-	private transient int hash = 0;
+	private int hash = 0;
 	private static int uniqueHash = 0;
 	private transient Storage storage = Util.current.it();
 
@@ -155,12 +167,9 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 		}
 		// final StringWriter stringWriter = new StringWriter();
 		// stackTrace.printStackTrace(new PrintWriter(stringWriter));
-		return "(Var " + hash + " '" + getKey() + "' = " + val + /*
-																 * " initialized at:"
-																 * +
-																 * stringWriter
-																 * +
-																 */")";
+		return "(Var " + hash + " '" + getKey() + "' = " + val +
+		// " initialized at:" + stringWriter +
+				")";
 	}
 
 	{

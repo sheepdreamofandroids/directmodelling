@@ -3,7 +3,6 @@ package com.directmodelling.impl;
 import java.util.Collection;
 
 import com.directmodelling.api.Value;
-import com.directmodelling.stm.Storage;
 
 public interface EntityUtil {
 
@@ -14,6 +13,6 @@ public interface EntityUtil {
 	Collection<Value<?>> allProperties(Object entity);
 
 	/** Binds all properties in the bean to the storage. */
-	void store(Object bean, final Storage storage);
+	// void store(Object bean, final Storage storage);
 
 }

@@ -21,18 +21,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.directmodelling.api.Value;
+import com.directmodelling.api.ID;
+import com.directmodelling.collections.Delta.HasDeltas;
 import com.directmodelling.stm.Storage;
+import com.directmodelling.stm.Version;
 
 public class TransactionImpl extends VersionImpl {
-	protected HashMap<Value<?>, Object> reads = new HashMap<Value<?>, Object>();
+	protected HashMap<ID, Object> reads = new HashMap<ID, Object>();
 
 	public TransactionImpl() {
 		this(null);
 	}
 
-	public TransactionImpl(final Storage parentTransaction) {
+	public TransactionImpl(final Version parentTransaction) {
 		super(parentTransaction);
+		if (parentTransaction != null)
+			for (final Entry<ID, Object> entry : parentTransaction.getWrites()
+					.entrySet()) {
+				if (entry.getKey() instanceof HasDeltas)
+					((HasDeltas) entry.getKey()).getLastDelta();
+			}
 	}
 
 	@Override
@@ -69,7 +77,7 @@ public class TransactionImpl extends VersionImpl {
 	// }
 
 	@Override
-	public <T> T get(final Value<T> v) {
+	public <T> T get(final ID v) {
 		// TODO fail here when any parent received a commit
 		final Object a = values.get(v);
 		if (null != a) {
@@ -97,22 +105,32 @@ public class TransactionImpl extends VersionImpl {
 		return mergeAfter(t.getReads(), t.getWrites());
 	}
 
-	public HashMap<Value<?>, Object> getReads() {
+	public HashMap<ID, Object> getReads() {
 		return reads;
 	}
 
 	@Override
 	public void reset() {
+		System.err.println("Reset of " + this);
+		if (((VersionImpl) parent).values.size() < 2)
+			throw new RuntimeException("Missing values");// TODO remove
 		super.reset();
 		reads.clear();
+	}
+
+	@Override
+	public String toString() {
+		return "Transaction " + token + " : " + values + "   parent: " + parent;
 	}
 
 	/**
 	 * Like {@link TransactionImpl#mergeAfter(TransactionImpl)}, only reads and
 	 * writes are specified seperately.
 	 */
-	public boolean mergeAfter(final Map<Value<?>, Object> reads, final Map<Value.Mutable<?>, Object> writes) {
-		final boolean success = Collections.disjoint(getWrites().keySet(), reads.keySet());
+	public boolean mergeAfter(final Map<ID, Object> reads,
+			final Map<ID, Object> writes) {
+		final boolean success = Collections.disjoint(getWrites().keySet(),
+				reads.keySet());
 		// TODO Maybe a better criterion is checking whether all the read values
 		// are still the same so that writing without changing the value doesn't
 		// prohibit a commit.
@@ -127,10 +145,14 @@ public class TransactionImpl extends VersionImpl {
 	@Override
 	public void commitTo(final Storage other) {
 		// check that none of the reads have been modified
-		for (final Entry<Value<?>, Object> entry : reads.entrySet()) {
+		for (final Entry<ID, Object> entry : reads.entrySet()) {
 			if (!equals(other.get(entry.getKey()), entry.getValue())) {
-				throw new CommitAbortedException("Value of " + entry.getKey() + " was changed: expected ("
-								+ entry.getValue() + ") but got (" + other.get(entry.getKey()) + ").");
+				System.err.println("Value of " + entry.getKey()
+						+ " was changed: expected (" + entry.getValue()
+						+ ") but got (" + other.get(entry.getKey()) + ").");
+				// throw new CommitAbortedException("Value of " + entry.getKey()
+				// + " was changed: expected (" + entry.getValue()
+				// + ") but got (" + other.get(entry.getKey()) + ").");
 			}
 		}
 		// all input is still correct, now apply the output
@@ -145,5 +167,11 @@ public class TransactionImpl extends VersionImpl {
 			return false;
 		}
 		return a.equals(b);
+	}
+
+	public void moveTo(TransactionImpl t) {
+		super.moveTo(t);
+		t.reads = reads;
+		reads = new HashMap<ID, Object>();
 	}
 }

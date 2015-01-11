@@ -57,9 +57,13 @@
 
 		<div ng-controller="directDemoController">
 			<form name="userForm">
-					<p>A: <input type="number" ng-model="signal(demo.a())" ng-model-options="{ getterSetter: true }" />
-					<p>B: <input type="number" ng-model="signal(demo.b())" ng-model-options="{ getterSetter: true }" />
-					<p>Sum: {{demo.sum().get()}}</p>
+					<p><input type="number" ng-model="dmWrapSignal(zip.digits())" ng-model-options="{getterSetter: true}" size="4" /> {{zip.digits().get()}} {{zip.digits().status().toString()}}
+					 <input type="text" ng-model="dmWrapSignal(zip.letters())" ng-model-options="{getterSetter: true}" size="2" /> {{zip.letters().get()}} {{zip.letters().status().toString()}}</p>
+					 <p>{{zip.postcode().get()}}</p>
+					 <p>Huisnummer: <input type="number" ng-model="dmWrapSignal(zip.houseNumber())" ng-model-options="{getterSetter: true}" size="2" /> {{zip.houseNumber().get().toString()}} {{zip.houseNumber().status().toString()}}</p>
+					<p>Straat: {{zip.result().straat().get()}}</p>
+					<p>Stad: {{zip.result().stad().get()}}</p>
+					<div rabo-text dm-model='zip.letters()' label='Letters' />
 			</form>
 		</div>
 

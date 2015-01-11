@@ -21,10 +21,10 @@ public abstract class DoubleFun extends Function<Double> {
 
 	public abstract double get();
 
-	@Override
-	public Type type() {
-		return Type.tDouble;
-	}
+	// @Override
+	// public Type type() {
+	// return Type.tDouble;
+	// }
 
 	@Override
 	public Double getValue() {

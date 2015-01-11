@@ -17,11 +17,6 @@ public class IntConstant extends IntFun {
 	}
 
 	@Override
-	public com.directmodelling.api.Value.Type type() {
-		return Type.tInteger;
-	}
-
-	@Override
 	public int get() {
 		return value;
 	}

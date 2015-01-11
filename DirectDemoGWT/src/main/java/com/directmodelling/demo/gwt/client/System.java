@@ -16,12 +16,13 @@
  *******************************************************************************/
 package com.directmodelling.demo.gwt.client;
 
+import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
-import com.directmodelling.gwt.GWTContext;
 import com.directmodelling.gwt.GWTUpdateTracker;
 import com.directmodelling.impl.Command;
-import com.directmodelling.stm.Storage;
+import com.directmodelling.impl.SimpleIDGenerator;
 import com.directmodelling.stm.Storage.Util;
+import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.stm.impl.VersionImpl;
 import com.google.gwt.core.client.GWT;
@@ -29,12 +30,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /** Bits and pieces I don't have a good place for yet. */
 public class System {
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+	private final GreetingServiceAsync greetingService = GWT
+			.create(GreetingService.class);
 
 	final VersionImpl baseValues = new VersionImpl();// .storage;
 	{
-		Util.current = new GWTContext<Storage>(baseValues);
+		Util.current.init(baseValues);
 		Updates.tracker = new GWTUpdateTracker();
+		ID.generator.init(new SimpleIDGenerator());
 	}
 	final TransactionImpl changes = new TransactionImpl(baseValues);
 
@@ -77,11 +80,11 @@ public class System {
 	}
 
 	public void doneInitializing() {
-		Util.current = new GWTContext<Storage>(changes);
+		Util.current.init(changes);
 		Updates.tracker.runUpdates();
 	}
 
-	public void initializeValues(final VersionImpl storage) {
+	public void initializeValues(final Version storage) {
 		baseValues.initializeValues(storage);
 	}
 

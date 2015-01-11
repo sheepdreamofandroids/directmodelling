@@ -16,7 +16,8 @@
  *******************************************************************************/
 package com.directmodelling.android.demo;
 
-import com.directmodelling.android.demo.R;
+import static com.directmodelling.android.binding.Binding.bindCommand;
+import static com.directmodelling.android.binding.Binding.bindDouble;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 import android.content.Intent;
@@ -27,12 +28,8 @@ import android.widget.SeekBar;
 
 import com.directmodelling.demo.shared.DemoModel;
 import com.directmodelling.impl.Command;
-import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.VersionImpl;
-
-import static com.directmodelling.android.binding.Binding.bindCommand;
-import static com.directmodelling.android.binding.Binding.bindDouble;
 
 public class DirectDemoAndroid extends RoboActivity {
 	// Enjoy this typesafety thank to the excellent RoboGuice
@@ -56,12 +53,13 @@ public class DirectDemoAndroid extends RoboActivity {
 		bindCommand(startCalculator, new Command() {
 			@Override
 			public void run() {
-				startActivity(new Intent(DirectDemoAndroid.this, CalculatorActivity.class));
+				startActivity(new Intent(DirectDemoAndroid.this,
+						CalculatorActivity.class));
 			}
 		});
 	}
 
 	private void initAndroid() {
-		Storage.Util.current = new SimpleContext<Storage>(new VersionImpl());
+		Storage.Util.current.init(new VersionImpl());
 	}
 }

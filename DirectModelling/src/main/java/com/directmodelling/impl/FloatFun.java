@@ -21,12 +21,8 @@ import com.directmodelling.api.FloatValue;
 /** A calculated float. */
 public abstract class FloatFun extends Function<Float> implements FloatValue {
 
-	public abstract float get();
-
 	@Override
-	public Type type() {
-		return Type.tFloat;
-	}
+	public abstract float get();
 
 	@Override
 	public Float getValue() {

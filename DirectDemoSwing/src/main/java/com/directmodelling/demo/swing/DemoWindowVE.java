@@ -33,7 +33,6 @@ import javax.swing.SwingConstants;
 import com.directmodelling.demo.shared.DemoModel;
 import com.directmodelling.swing.binding.Binding;
 
-
 public class DemoWindowVE extends JFrame {
 
 	/**
@@ -50,8 +49,8 @@ public class DemoWindowVE extends JFrame {
 	}
 
 	public void bind(final DemoModel m) {
-		Binding.bind(getJSlider(), m.doub());
-		Binding.bind(getJTextField(), m.doub());
+		Binding.bindDouble(getJSlider(), m.doub());
+		Binding.bindDouble(getJTextField(), m.doub());
 	}
 
 	private static final long serialVersionUID = 1L;

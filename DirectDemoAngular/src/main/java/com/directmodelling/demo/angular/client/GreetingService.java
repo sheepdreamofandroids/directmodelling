@@ -16,6 +16,11 @@
  *******************************************************************************/
 package com.directmodelling.demo.angular.client;
 
+import java.util.Set;
+
+import com.directmodelling.api.ID;
+import com.directmodelling.demo.angular.shared.IsCalculating;
+import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -27,9 +32,11 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
 
-	void update(TransactionImpl t);
+	TransactionImpl update(TransactionImpl t, Set<ID> toCalc);
 
-	IInit getInitial();
+	TransactionImpl longPoll();
+
+	Init getInitial();
 
 	public static class MakeSerializable implements IsSerializable {
 		// Value<?> value;
@@ -44,6 +51,9 @@ public interface GreetingService extends RemoteService {
 		// VersionImpl dummy4;
 		//
 		// DemoModel.MyDoubleVar dummy5;
+		public ID id;
+		public PostcodeLookupResult result;
+		IsCalculating isCalculating;
 	}
 
 	MakeSerializable dummy(MakeSerializable dummy);

@@ -20,7 +20,9 @@
 package com.directmodelling.impl;
 
 import com.directmodelling.api.IntValue;
+import com.google.gwt.core.client.js.JsType;
 
+@JsType
 public class IntVar extends Variable<Integer> implements IntValue.Mutable {
 
 	@Override
@@ -31,11 +33,6 @@ public class IntVar extends Variable<Integer> implements IntValue.Mutable {
 	@Override
 	public int get() {
 		return getValue();
-	}
-
-	@Override
-	public Type type() {
-		return Type.tInteger;
 	}
 
 	public IntVar _(final Applicable<? super IntVar> a) {

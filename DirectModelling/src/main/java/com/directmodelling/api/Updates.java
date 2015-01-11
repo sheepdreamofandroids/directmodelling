@@ -16,11 +16,11 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
-
 /**
- * Handle dependencies. Register to receive notifications whenever any data
- * changes. This means you might get more notifications than you're actually
- * interested in. Handle it.
+ * Handles dependencies. Keeping track of all dependencies between values takes
+ * a lot of overhead which is not done. Register to receive notifications
+ * whenever ANY data changes. This means you might get more notifications than
+ * you're actually interested in. Handle it.
  */
 public abstract class Updates {
 	/** IMplemented by receivers of notifications. */
@@ -65,6 +65,7 @@ public abstract class Updates {
 		Updates.tracker.unregister(ru);
 	}
 
+	// TODO make this a context
 	public static Tracker tracker;
 
 }

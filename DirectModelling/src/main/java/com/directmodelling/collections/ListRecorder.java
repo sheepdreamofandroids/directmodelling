@@ -155,10 +155,10 @@ public class ListRecorder<T> extends
 		return delegate.subList(arg0, arg1);
 	}
 
-	@Override
-	public com.directmodelling.api.Value.Type type() {
-		return Type.tObject;
-	}
+	// @Override
+	// public com.directmodelling.api.Value.Type type() {
+	// return Type.tObject;
+	// }
 
 	@Override
 	public boolean retainAll(final java.util.Collection<?> c) {

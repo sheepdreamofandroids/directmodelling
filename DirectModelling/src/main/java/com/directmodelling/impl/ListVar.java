@@ -169,9 +169,4 @@ public abstract class ListVar<T> extends ArrayList<T> implements
 		return this;
 	}
 
-	@Override
-	public Type type() {
-		return Type.tObject; // TODO have a tCollection?
-	}
-
 }

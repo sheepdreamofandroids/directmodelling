@@ -8,9 +8,8 @@ import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.Updates;
 import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.ExplicitUpdatesTracker;
-import com.directmodelling.impl.SimpleContext;
-import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.Util;
+import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.VersionImpl;
 
 public class CalculatorTest {
@@ -19,8 +18,8 @@ public class CalculatorTest {
 
 	@Before
 	public void setup() {
-		final VersionImpl baseData = new VersionImpl();
-		Util.current = new SimpleContext<Storage>(new VersionImpl(baseData));
+		final Version baseData = new VersionImpl();
+		Util.current.init(new VersionImpl(baseData));
 		Updates.tracker = new ExplicitUpdatesTracker();
 	}
 
@@ -29,7 +28,8 @@ public class CalculatorTest {
 		final Calculator calculator = new Calculator();
 
 		Assert.assertTrue(calculator.calculation.getValue() instanceof DoubleVar);
-		final DoubleValue.Mutable firstNumber = (DoubleValue.Mutable) calculator.calculation.getValue();
+		final DoubleValue.Mutable firstNumber = (DoubleValue.Mutable) calculator.calculation
+				.getValue();
 		Assert.assertEquals(0, firstNumber.get(), 0);
 		Assert.assertEquals(0, calculator.calculation.getValue().get(), 0);
 
@@ -40,11 +40,12 @@ public class CalculatorTest {
 		calculator.plus().run();
 		Assert.assertTrue(calculator.calculation.getValue() instanceof FunctionApplication);
 
-		final FunctionApplication lastFunction = (FunctionApplication) calculator.calculation.getValue();
+		final FunctionApplication lastFunction = (FunctionApplication) calculator.calculation
+				.getValue();
 		Assert.assertSame(lastFunction.left(), firstNumber);
 		// Assert.assertTrue(lastFunction.right instanceof DoubleVar);
 
-		final DoubleValue.Mutable secondNumber = (DoubleValue.Mutable) lastFunction.right();
+		final DoubleValue.Mutable secondNumber = lastFunction.right();
 		Assert.assertEquals(12.3, calculator.calculation.getValue().get(), E);
 
 		secondNumber.set(-5.5);

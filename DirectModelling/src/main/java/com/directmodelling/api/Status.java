@@ -19,6 +19,8 @@ package com.directmodelling.api;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.core.client.js.JsType;
+
 /**
  * States that an entity or a value of an entity can be in. In order of
  * increasing urgency:
@@ -41,6 +43,8 @@ import java.util.Map;
  * <dd>A read/write field with an invalid value.</dd>
  * </dl>
  */
+@JsType
+// to export toString()
 public interface Status {
 	public class Default implements Status {
 
@@ -59,21 +63,35 @@ public interface Status {
 
 		@Override
 		public Status unlessFrom(final Object possiblyHasStatus) {
-			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus).status() : this;
+			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus)
+					.status() : this;
 		}
 
-		public static Status statusFrom(final Object possiblyHasStatus, final Invalid fallback) {
-			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus).status() : fallback;
+		public static Status statusFrom(final Object possiblyHasStatus,
+				final Invalid fallback) {
+			return possiblyHasStatus instanceof HasStatus ? ((HasStatus) possiblyHasStatus)
+					.status() : fallback;
 		}
 
 		@Override
 		public String toString() {
 			return name;
 		}
+
+		@Override
+		public boolean isValid() {
+			return true;
+		}
 	}
 
 	/** A hint for the GUI whether to show this status as enabled. */
 	boolean isEnabled();
+
+	/**
+	 * Valid means that the user did NOT make a mistake. @see #suspect for
+	 * machine-made errors.
+	 */
+	boolean isValid();
 
 	/**
 	 * If possiblyHasStatus implements {@link HasStatus}, possiblyHasStatus's
@@ -98,12 +116,16 @@ public interface Status {
 	 * current data. Set() or setValue() might fail.
 	 */
 	Status readonly = new Default(false, "ReadOnly");
-	/** Like readonly but at least one input is invalid or wrong. */
+	/**
+	 * Like readonly but at least one input is invalid or wrong. This means a
+	 * machine mistake, NOT a user mistake.
+	 */
 	Status suspect = new Default(false, "Suspect");
 	/** Readable and writable. The current value is valid. */
 	Status writeable = new Default(true, "Writeable");
 
-	public static class Invalid extends RuntimeException implements Status, HasArguments {
+	public static class Invalid extends RuntimeException implements Status,
+			HasArguments {
 		public static class Format extends Invalid {
 
 		}
@@ -162,7 +184,7 @@ public interface Status {
 		}
 
 		public static Invalid tooLow(final Object minimum) {
-			return new Invalid().withArgument("minimum", minimum);
+			return new TooLow(minimum);
 		}
 
 		@Override
@@ -172,7 +194,14 @@ public interface Status {
 
 		@Override
 		public String toString() {
-			return getClass().getName() + (getCause() == null ? "" : " because " + getCause().getMessage());
+			return getClass().getName()
+					+ (getCause() == null ? "" : " because "
+							+ getCause().getMessage());
+		}
+
+		@Override
+		public boolean isValid() {
+			return false;
 		}
 	}
 

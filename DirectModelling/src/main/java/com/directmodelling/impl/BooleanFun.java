@@ -21,10 +21,10 @@ public abstract class BooleanFun extends Function<Boolean> {
 
 	public abstract boolean get();
 
-	@Override
-	public Type type() {
-		return Type.tBoolean;
-	}
+	// @Override
+	// public Type type() {
+	// return Type.tBoolean;
+	// }
 
 	@Override
 	public Boolean getValue() {

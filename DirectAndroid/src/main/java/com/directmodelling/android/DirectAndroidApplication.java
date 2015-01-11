@@ -19,7 +19,6 @@ package com.directmodelling.android;
 import roboguice.RoboGuice;
 import android.app.Application;
 
-import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.VersionImpl;
 import com.google.inject.util.Modules;
@@ -31,7 +30,7 @@ import com.google.inject.util.Modules;
 public class DirectAndroidApplication extends Application {
 	public DirectAndroidApplication() {
 		super();
-		Storage.Util.current = new SimpleContext<Storage>(new VersionImpl());// FIXME
+		Storage.Util.current.init(new VersionImpl());// FIXME
 	}
 
 	@Override

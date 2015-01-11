@@ -1,6 +1,8 @@
 package com.directmodelling.impl.util;
 
 /*
+ @see http://www.pst.ifi.lmu.de/~rauschma/download/UUID.java
+
  File: Math.uuid.js
  Version: 1.3
  Change History:

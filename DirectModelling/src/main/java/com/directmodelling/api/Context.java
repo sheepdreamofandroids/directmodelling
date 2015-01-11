@@ -16,7 +16,9 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
+import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.impl.SingleAssignContext;
+import com.google.common.base.Supplier;
 
 /**
  * <p>
@@ -57,11 +59,43 @@ public interface Context<T> {
 	T it();
 
 	public interface Factory {
-		<T> Context<T> create(T initialValue);
+		public static final class Default implements Factory {
+			public static final Default INSTANCE = new Default();
+
+			@Override
+			public <T> Context<T> constant(final T initialValue) {
+				return new SimpleContext<T>(initialValue);
+			}
+
+			@Override
+			public <T> Context<T> create(final Supplier<T> supplier) {
+				return new Context<T>() {
+					T value = null;
+
+					@Override
+					public T it() {
+						if (value == null)
+							value = supplier.get();
+						return value;
+					}
+				};
+			}
+
+			@Override
+			public <T> SingleAssignContext<T> create() {
+				return new SingleAssignContext<T>();
+			}
+		}
+
+		<T> Context<T> constant(T initialValue);
+
+		<T> Context<T> create(Supplier<T> supplier);
+
+		<T> SingleAssignContext<T> create();
 	}
 
-	SingleAssignContext<Factory> perUser = new SingleAssignContext<Context.Factory>();
-	SingleAssignContext<Factory> singleton = new SingleAssignContext<Context.Factory>();
+	SingleAssignContext<Factory> SESSION = new SingleAssignContext<Context.Factory>();
+	SingleAssignContext<Factory> GLOBAL = new SingleAssignContext<Context.Factory>();
 
 	/**
 	 * Implementations should create the appropriate, initialized Context

@@ -1,13 +1,13 @@
 package com.directmodelling.api;
 
 import com.directmodelling.impl.ExplicitUpdatesTracker;
-import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.VersionImpl;
 
 public final class DirectModelling {
-	public static void init(Storage storage, Updates.Tracker updatesTracker) {
-		Storage.Util.current = new SimpleContext<Storage>(storage);
+	public static void init(final Storage storage,
+			final Updates.Tracker updatesTracker) {
+		Storage.Util.current.init(storage);
 		Updates.tracker = updatesTracker;
 	}
 

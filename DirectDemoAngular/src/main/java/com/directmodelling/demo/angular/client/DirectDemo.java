@@ -16,10 +16,10 @@
  *******************************************************************************/
 package com.directmodelling.demo.angular.client;
 
+import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
 import com.directmodelling.demo.angular.client.GreetingService.MakeSerializable;
-import com.directmodelling.demo.shared.Calculator;
-import com.directmodelling.demo.shared.DemoModel;
+import com.directmodelling.demo.angular.shared.PostcodeDemo;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.js.JsExport;
@@ -55,20 +55,26 @@ public class DirectDemo implements EntryPoint {
 		// GWT.create(Value.class);
 		makeSerializable();
 
-		final System system = new System();
-		greetingService.getInitial(new AsyncCallback<IInit>() {
+		final ClientInitializer system = new ClientInitializer();
+		final Synchronizer synchronizer = new Synchronizer(system.baseValues,
+				system.changes);
+		greetingService.getInitial(new AsyncCallback<Init>() {
 
 			@Override
-			public void onSuccess(final IInit result) {
-				system.initializeValues(result.getStorage());
-				system.doneInitializing();
-				show(result.getModel().a());
-				show(new Obfuscated());
-				show(new Pretty());
+			public void onSuccess(final Init result) {
+				system.baseValues.initializeValues(result.getStorage());
+				// Util.current.init(changes);
+				Updates.tracker.runUpdates();
+				// show(result.getModel().a());
+				// show(new Obfuscated());
+				// show(new Pretty());
 				// Element.as(Document.get().getParentNode()).setPropertyObject(
 				// "directDemoModel", result.model);
 				// setUpGetterSetter(result.model.a());
-				startAngular(result.getModel(), new Calculator());
+				startAngular(// result.getModel(), new Calculator(),
+				// result.postcodeDemo
+				system.demo);
+				synchronizer.poll();
 			}
 
 			@Override
@@ -82,8 +88,9 @@ public class DirectDemo implements EntryPoint {
 		console.log(o);
 	}-*/;
 
-	public static native void startAngular(DemoModel model, Calculator calc)/*-{
-		$wnd.gwtStarted(model, calc);
+	// DemoModel model, Calculator calc,
+	public static native void startAngular(final PostcodeDemo zip)/*-{
+		$wnd.gwtStarted(zip);
 	}-*/;
 
 	public static native void setUpGetterSetter(Value.Mutable<?> mut)/*-{

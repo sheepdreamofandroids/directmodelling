@@ -22,11 +22,6 @@ import com.directmodelling.api.LongValue;
 public abstract class LongFun extends Function<Long> implements LongValue {
 
 	@Override
-	public Type type() {
-		return Type.tLong;
-	}
-
-	@Override
 	public Long getValue() {
 		return get();
 	}

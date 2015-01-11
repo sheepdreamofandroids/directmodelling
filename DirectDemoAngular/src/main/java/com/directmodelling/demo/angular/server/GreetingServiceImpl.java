@@ -17,21 +17,19 @@
 package com.directmodelling.demo.angular.server;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
+import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.demo.angular.client.GreetingService;
-import com.directmodelling.demo.angular.client.IInit;
 import com.directmodelling.demo.angular.client.Init;
-import com.directmodelling.demo.shared.DemoModel;
-import com.directmodelling.impl.ExplicitUpdatesTracker;
-import com.directmodelling.impl.SimpleContext;
-import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.TransactionImpl;
-import com.directmodelling.stm.impl.VersionImpl;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -40,12 +38,23 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements
 		GreetingService {
-	public VersionImpl serverWorld = new VersionImpl(null);
-	{
-		Storage.Util.current = new SimpleContext<Storage>(serverWorld);
-		Updates.tracker = new ExplicitUpdatesTracker();
-	}
-	DemoModel model = new DemoModel();
+	/** attribute name of longpoll thread in session */
+	private static final String SESSION_THREAD = GreetingServiceImpl.class
+			.getName() + ".thread";
+	// Map<Object, Object> postcodes = new MapRecorder<Object, Object>();
+	final ServerInitializer initializer = new ServerInitializer();
+
+	// DemoModel model = new DemoModel();
+	// public Version serverValues = initializer.baseValues;
+	// public TransactionImpl serverChanges = initializer.changes;
+	// PostcodeLookupServerImpl postcodeLookupImpl = new
+	// PostcodeLookupServerImpl();
+	// {
+	// final ObjectVar<HashMap<String, PostcodeLookupResult>> postcodes = new
+	// ObjectVar<>(
+	// new HashMap<String, PostcodeLookupResult>());
+	// PostcodeLookup.impl.init(postcodeLookupImpl);
+	// }
 
 	/**
 	 * Escape an html string. Escaping data received from the client helps to
@@ -64,22 +73,36 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public void update(final TransactionImpl t) {
-		t.commitTo(serverWorld);
+	public TransactionImpl update(final TransactionImpl t, final Set<ID> toCalc) {
+		t.commitTo(initializer.changes);
+		initializer.changes.commitTo(initializer.baseValues);
+		// TODO, try opposite order?
+		initializer.changes.reset();
+		RemoteServerImpl.calculateAll(toCalc);// might cause new changes
+		TransactionImpl result = new TransactionImpl();
+		initializer.changes.moveTo(result);
+		initializer.changes.commitTo(initializer.baseValues);
+		initializer.changes.reset();
+		return result;
 	}
 
 	@Override
 	public MakeSerializable dummy(final MakeSerializable dummy) {
 		// TODO Auto-generated method stub
-		return null;
+		dummy.id = ID.generator.it().createID();
+		return dummy;
 	}
 
 	@Override
-	public IInit getInitial() {
-		// TODO Auto-generated method stub
+	public Init getInitial() {
+		// TODO use update() instead?
 		final Init init = new Init();
-		init.storage = serverWorld;
-		init.model = model;
+		// new PostcodeDemo();
+		initializer.changes.commitTo(initializer.baseValues);
+		init.storage = initializer.baseValues;
+		// init.model = model;
+		// init.postcodeCacheID = postcodeLookupImpl.id();
+		// init.postcodeDemo = new PostcodeDemo();
 		// init.calculator = new Calculator();
 
 		perThreadResponse.get().addHeader("Access-Control-Allow-Origin", "*");
@@ -89,7 +112,57 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	@Override
 	protected void doOptions(final HttpServletRequest req,
 			final HttpServletResponse res) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		super.doOptions(req, res);
 	}
+
+	@Override
+	public TransactionImpl longPoll() {
+		// TODO make async
+		HttpSession session = perThreadRequest.get().getSession(true);
+		session.setAttribute(SESSION_THREAD, Thread.currentThread());
+		try {
+			Thread.sleep(30000);
+		} catch (InterruptedException e) {
+		} finally {
+			session.removeAttribute(SESSION_THREAD);
+		}
+		TransactionImpl result = new TransactionImpl();
+		initializer.changes.moveTo(result);
+		initializer.changes.commitTo(initializer.baseValues);
+		initializer.changes.reset();
+		return result;
+	}
+
+	{
+		Updates.registerForChanges(new Receiver() {
+
+			@Override
+			public void valuesChanged() {
+				HttpSession session = SESSION.get();
+				Thread longPollThread = (Thread) session
+						.getAttribute(SESSION_THREAD);
+				if (longPollThread != null)
+					longPollThread.interrupt();
+			}
+		});
+	}
+
+	@Override
+	protected void service(HttpServletRequest arg0, HttpServletResponse arg1)
+			throws ServletException, IOException {
+		REQUEST.set(arg0);
+		RESPONSE.set(arg1);
+		SESSION.set(arg0.getSession(true));
+		try {
+			super.service(arg0, arg1);
+		} finally {
+			REQUEST.set(null);
+			RESPONSE.set(null);
+			SESSION.set(null);
+		}
+	}
+
+	public static final ThreadLocal<HttpSession> SESSION = new InheritableThreadLocal<>();
+	public static final ThreadLocal<HttpServletRequest> REQUEST = new InheritableThreadLocal<>();
+	public static final ThreadLocal<HttpServletResponse> RESPONSE = new InheritableThreadLocal<>();
 }

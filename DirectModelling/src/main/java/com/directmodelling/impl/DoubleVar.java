@@ -20,7 +20,9 @@
 package com.directmodelling.impl;
 
 import com.directmodelling.api.DoubleValue;
+import com.google.gwt.core.client.js.JsType;
 
+@JsType
 public class DoubleVar extends Variable<Double> implements DoubleValue.Mutable {
 
 	@Override
@@ -34,8 +36,8 @@ public class DoubleVar extends Variable<Double> implements DoubleValue.Mutable {
 		return getValue();
 	}
 
-	@Override
-	public Type type() {
-		return Type.tDouble;
-	}
+	// @Override
+	// public Type type() {
+	// return Type.tDouble;
+	// }
 }

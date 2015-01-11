@@ -1,27 +1,39 @@
 /**
  * Expose gwt model to angular.
  */
-
-window.gwtStarted = function(init, calc) {
-	console.log(init);
+dmWrapSignal = function(prop) {
+			// turns signal into getterSetter
+			return function(newVal) {
+				if (angular.isDefined(newVal)) {
+					prop.set(newVal);
+				}
+				return prop.get();
+			}
+		};
+window.gwtStarted = function(zip) {
 	angular.module('directDemo', [])
-		.controller('directDemoController',
-			[ '$scope', function($scope) {
-				$scope.demo = init.getModel(); //window.demo;
-				$scope.calculator = calc; //window.calc;
 
-				$scope.signal = function(prop) {
-					// turns signal into getterSetter
-					return function(newVal) {
-						if(angular.isDefined(newVal)) {
-							prop.set(newVal);
-						}
-						return prop.get();
-					}
-				};
-			} ]);
+	.controller('directDemoController', [ '$scope', function($scope) {
+		// $scope.demo = init; //window.demo;
+		// $scope.calculator = calc; //window.calc;
+		$scope.zip = zip;
+		$scope.dmWrapSignal = window.dmWrapSignal;
+		window.angularScope = $scope;
 
-	//window.demo = model;
-	//window.calc = calc;
-	angular.bootstrap(document,['directDemo']);
+	} ])
+
+	.directive('raboText', function() {
+		return {
+    		require: ['raboText', 'ngModel'],
+			scope : {
+				label : '@',
+				ngModel : '='
+			},
+			templateUrl : 'rabo-text.html'
+		}
+	})
+
+	// window.demo = model;
+	// window.calc = calc;
+	angular.bootstrap(document, [ 'directDemo' ]);
 };

@@ -17,7 +17,7 @@
 package com.directmodelling.demo.swing;
 
 import com.directmodelling.demo.shared.DemoModel;
-import com.directmodelling.swing.Init;
+import com.directmodelling.swing.DirectSwingInit;
 
 
 public class DemoWindow {
@@ -26,7 +26,7 @@ public class DemoWindow {
 	}
 
 	public static void main(final String[] args) {
-		Init.init();
+		DirectSwingInit.init();
 
 		final DemoWindowVE ve = new DemoWindowVE();
 		ve.bind(new DemoModel());
