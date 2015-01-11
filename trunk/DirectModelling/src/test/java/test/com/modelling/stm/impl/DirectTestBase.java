@@ -16,15 +16,8 @@
  *******************************************************************************/
 package test.com.modelling.stm.impl;
 
-import com.directmodelling.api.Updates;
-import com.directmodelling.impl.ExplicitUpdatesTracker;
-import com.directmodelling.impl.SimpleContext;
-import com.directmodelling.stm.Storage;
-import com.directmodelling.stm.impl.VersionImpl;
+import com.directmodelling.impl.DirectTestInit;
 
 public class DirectTestBase {
-	static {
-		Updates.tracker = new ExplicitUpdatesTracker();
-		Storage.Util.current = new SimpleContext<Storage>(new VersionImpl());
-	}
+	protected final DirectTestInit init = new DirectTestInit();
 }

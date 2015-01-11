@@ -21,7 +21,7 @@ public abstract class FunctionCache<T> extends Function<T> {
 	 *            updated and a new value retrieved.
 	 */
 	public FunctionCache(@Nonnull final Value<?>... dependencies) {
-		this.dependencies = dependencies;// Context.perUser.it().create();
+		this.dependencies = dependencies;// Context.SESSION.it().create();
 	}
 
 	@Override
@@ -49,12 +49,6 @@ public abstract class FunctionCache<T> extends Function<T> {
 	private void call(final Object[] lastArguments2) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public com.directmodelling.api.Value.Type type() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

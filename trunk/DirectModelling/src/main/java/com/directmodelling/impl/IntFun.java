@@ -19,15 +19,18 @@ package com.directmodelling.impl;
 import com.directmodelling.api.IntValue;
 
 /** A calculated integer. */
-public abstract class IntFun extends Function<Integer> implements IntValue {
-
-	@Override
-	public Type type() {
-		return Type.tInteger;
-	}
+public class IntFun extends Function<Integer> implements IntValue {
+	public IntFun() {
+	};
 
 	@Override
 	public Integer getValue() {
 		return get();
+	}
+
+	@Override
+	public int get() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

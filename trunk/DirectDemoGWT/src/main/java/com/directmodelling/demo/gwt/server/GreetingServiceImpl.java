@@ -20,8 +20,8 @@ import com.directmodelling.api.Updates;
 import com.directmodelling.demo.gwt.client.GreetingService;
 import com.directmodelling.demo.shared.DemoModel;
 import com.directmodelling.impl.ExplicitUpdatesTracker;
-import com.directmodelling.impl.SimpleContext;
 import com.directmodelling.stm.Storage;
+import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.stm.impl.VersionImpl;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -30,10 +30,11 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
-	public VersionImpl serverWorld = new VersionImpl(null);
+public class GreetingServiceImpl extends RemoteServiceServlet implements
+		GreetingService {
+	public Version serverWorld = new VersionImpl(null);
 	{
-		Storage.Util.current = new SimpleContext<Storage>(serverWorld);
+		Storage.Util.current.init(serverWorld);
 		Updates.tracker = new ExplicitUpdatesTracker();
 	}
 	DemoModel model = new DemoModel();
@@ -43,14 +44,15 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	 * prevent cross-site script vulnerabilities.
 	 * 
 	 * @param html
-	 *          the html string to escape
+	 *            the html string to escape
 	 * @return the escaped string
 	 */
 	private String escapeHtml(final String html) {
 		if (html == null) {
 			return null;
 		}
-		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+				.replaceAll(">", "&gt;");
 	}
 
 	@Override
@@ -67,7 +69,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	@Override
 	public Init getInitial() {
 		// TODO Auto-generated method stub
-		Init init = new Init();
+		final Init init = new Init();
 		init.storage = serverWorld;
 		init.model = model;
 		return init;

@@ -20,25 +20,29 @@ import java.io.Serializable;
 import java.util.Map;
 
 import com.directmodelling.api.Context;
-import com.directmodelling.api.Value;
+import com.directmodelling.api.ID;
 import com.directmodelling.impl.EntityUtil;
-import com.directmodelling.impl.SimpleContext;
+import com.directmodelling.impl.SingleAssignContext;
 
 public interface Storage extends Serializable {
 	public static abstract class Util {
 		// TODO move out of Util
 		// TODO ask Context to create Context
-		public static Context<Storage> current = new SimpleContext<Storage>(
-				null);
+		public static SingleAssignContext<Storage> current = Context.SESSION
+				.it().create();
 	}
 
-	<T> T get(Value<T> v);
+	// <T> T get(Value<T> v);
 
-	<T> void set(Value.Mutable<T> v, T val);
+	<T> T get(ID id);
 
-	public abstract void bind(Object bean);
+	// <T> void set(Value.Mutable<T> v, T val);
 
-	public abstract void bindProperty(Value<?> value);
+	<T> void set(ID id, T val);
+
+	// public abstract void bind(Object bean);
+
+	// public abstract void bindProperty(Value<?> value);
 
 	public interface HasStorage {
 		Storage getStorage();
@@ -46,15 +50,15 @@ public interface Storage extends Serializable {
 		void setStorage(Storage s);
 	}
 
-	public void addValues(Map<Value.Mutable<?>, Object> values);
+	public void addValues(Map<ID, Object> values);
 
 	public abstract class AbstractStorage implements Storage {
 		EntityUtil entityInfo;
 
-		@Override
-		public void bind(final Object bean) {
-			entityInfo.store(bean, this);
-		}
+		// @Override
+		// public void bind(final Object bean) {
+		// entityInfo.store(bean, this);
+		// }
 	}
 
 	// boolean get(BooleanValue.Mutable v);

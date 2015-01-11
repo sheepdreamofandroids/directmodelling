@@ -8,13 +8,13 @@ import com.directmodelling.collections.Delta.DeltaTracker;
 
 public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>>
 		implements Map<K, V> {
-	private final Map<K, V> delegate;
+	private final java.util.Map<K, V> delegate;
 
 	public MapRecorder() {
-		this((Map<K, V>) new HashMap<K, V>());
+		this(new HashMap<K, V>());
 	}
 
-	public MapRecorder(final Map<K, V> delegate) {
+	public MapRecorder(final java.util.Map<K, V> delegate) {
 		this.delegate = delegate;
 	}
 

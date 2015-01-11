@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.github.sdbg.debug.core.chromeLaunchConfig">
+<stringAttribute key="applicationArguments" value=""/>
+<stringAttribute key="applicationName" value=""/>
+<stringAttribute key="bad_container_name" value="DirectDemoAngular_SDBG"/>
+<booleanAttribute key="launchFile" value="false"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/DirectDemoAngular"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
+</listAttribute>
+<stringAttribute key="projectName" value="DirectDemoAngular"/>
+<booleanAttribute key="showLaunchOutput" value="true"/>
+<stringAttribute key="url" value="http://localhost:8765/"/>
+<stringAttribute key="urlQueryParams" value=""/>
+</launchConfiguration>

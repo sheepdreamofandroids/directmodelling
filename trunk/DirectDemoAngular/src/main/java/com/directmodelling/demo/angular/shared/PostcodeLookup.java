@@ -1,20 +1,52 @@
 package com.directmodelling.demo.angular.shared;
 
+import java.io.Serializable;
+
 import com.directmodelling.api.Context;
 import com.directmodelling.api.Value;
 import com.directmodelling.impl.Function;
 import com.directmodelling.impl.IntFun;
 import com.directmodelling.impl.ObjectFun;
-import com.google.common.base.Optional;
+import com.directmodelling.impl.SingleAssignContext;
+import com.google.gwt.core.client.js.JsType;
 
-public final class PostcodeLookup extends
+/**
+ * Operator taking a postcode as a String and asynchronously updating DB data
+ * about that postcode.
+ * 
+ * @author guus
+ *
+ */
+@JsType
+public class PostcodeLookup extends
 		RemoteFunction<String, PostcodeLookup.PostcodeLookupResult> {
-	// public static final Context<Impl> impl =
-	// Context.perUser.it().create(null);
+	private PostcodeLookup() {
+		postcode = null;
+	}
 
-	// public static interface Impl {
-	// void take(PostcodeLookup lookup);
-	// }
+	public IntFun minHuisnummer() {
+		return minHuisnummer;
+	}
+
+	public IntFun maxHuisnummer() {
+		return maxHuisnummer;
+	}
+
+	public Function<String> straat() {
+		return straat;
+	}
+
+	public Function<String> stad() {
+		return stad;
+	}
+
+	public Value<String> postcode() {
+		return postcode;
+	}
+
+	public static final SingleAssignContext<Impl<String, PostcodeLookupResult>> getImpl() {
+		return impl;
+	}
 
 	public final IntFun minHuisnummer = new IntFun() {
 		@Override
@@ -30,14 +62,14 @@ public final class PostcodeLookup extends
 		}
 	};
 
-	public final Function<String> straat = new ObjectFun<String>() {
+	public final ObjectFun<String> straat = new ObjectFun<String>() {
 		@Override
 		public String get() {
 			return PostcodeLookup.this.get().straat;
 		}
 	};
 
-	public final Function<String> stad = new ObjectFun<String>() {
+	public final ObjectFun<String> stad = new ObjectFun<String>() {
 		@Override
 		public String get() {
 			return PostcodeLookup.this.get().stad;
@@ -47,15 +79,20 @@ public final class PostcodeLookup extends
 	public final Value<String> postcode;
 
 	public PostcodeLookup(final Value<String> postcode) {
-		super(impl.it(), new PostcodeLookupResult("", "", 0, Integer.MAX_VALUE));
 		this.postcode = postcode;
 	}
 
-	public static class PostcodeLookupResult {
+	public static class PostcodeLookupResult implements Serializable {
 		public final String straat;
 		public final String stad;
 		public final int minHuisnummer;
 		public final int maxHuisnummer;
+
+		/** Dummy constructor for GWT serialization */
+		private PostcodeLookupResult() {
+			straat = stad = null;
+			minHuisnummer = maxHuisnummer = 0;
+		};
 
 		public PostcodeLookupResult(final String straat, final String stad,
 				final int minHuisnummer, final int maxHuisnummer) {
@@ -66,12 +103,22 @@ public final class PostcodeLookup extends
 		}
 	}
 
-	public static Context<com.google.common.base.Function<String, Optional<PostcodeLookupResult>>> impl = Context.perUser
-			.it().create(null);
+	public static final SingleAssignContext<Impl<String, PostcodeLookupResult>> impl = Context.SESSION
+			.it().create();
 
 	@Override
-	protected String argument() {
+	public String argument() {
 		return postcode.getValue();
+	}
+
+	@Override
+	protected Impl<String, PostcodeLookupResult> implementation() {
+		return impl.it();
+	}
+
+	@Override
+	protected PostcodeLookupResult initial() {
+		return new PostcodeLookupResult("", "", 0, Integer.MAX_VALUE);
 	}
 
 }

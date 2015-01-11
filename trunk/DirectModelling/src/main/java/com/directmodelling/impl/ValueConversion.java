@@ -53,11 +53,6 @@ public abstract class ValueConversion<Outer, Inner> extends
 						.unlessFrom(wrapped);
 	}
 
-	@Override
-	public com.directmodelling.api.Value.Type type() {
-		return Type.tObject;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

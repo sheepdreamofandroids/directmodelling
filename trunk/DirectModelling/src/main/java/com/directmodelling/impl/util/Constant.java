@@ -15,9 +15,4 @@ public class Constant<T> extends Function<T> {
 		return value;
 	}
 
-	@Override
-	public com.directmodelling.api.Value.Type type() {
-		return Type.tInteger;
-	}
-
 }

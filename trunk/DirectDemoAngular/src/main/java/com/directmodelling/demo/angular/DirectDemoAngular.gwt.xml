@@ -29,9 +29,9 @@
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
 	<source path='shared' />
-		
-	<inherits name="org.fusesource.restygwt.RestyGWT"/>
-	
+
+	<inherits name="org.fusesource.restygwt.RestyGWT" />
+
 
 	<set-configuration-property name="UiBinder.useSafeHtmlTemplates"
 		value="true" />
@@ -43,6 +43,9 @@
 	<set-property name="compiler.useSourceMaps" value="true" />
 
 	<set-property name="user.agent" value="safari" />
+
+	<!-- Finally! finals are serialized! -->
+	<set-property name="rpc.XserializeFinalFields" value="true" />
 
 	<collapse-all-properties />
 </module>

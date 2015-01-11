@@ -16,6 +16,9 @@
  *******************************************************************************/
 package com.directmodelling.demo.angular.client;
 
+import java.util.Set;
+
+import com.directmodelling.api.ID;
 import com.directmodelling.demo.angular.client.GreetingService.MakeSerializable;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -25,9 +28,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface GreetingServiceAsync {
 
-	void update(TransactionImpl t, AsyncCallback<Void> callback);
+	void update(TransactionImpl t, Set<ID> requestedValues,
+			AsyncCallback<TransactionImpl> callback);
 
-	void getInitial(AsyncCallback<IInit> callback);
+	void longPoll(AsyncCallback<TransactionImpl> callback);
+
+	void getInitial(AsyncCallback<Init> callback);
 
 	void dummy(MakeSerializable dummy, AsyncCallback<MakeSerializable> callback);
 

@@ -10,8 +10,6 @@ import com.directmodelling.api.HasKey.Registry;
 import com.directmodelling.api.Value;
 import com.directmodelling.impl.Applicable;
 import com.directmodelling.impl.EntityUtil;
-import com.directmodelling.stm.Storage;
-import com.directmodelling.stm.Storage.HasStorage;
 
 public class EntityInfo implements EntityUtil {
 
@@ -78,23 +76,23 @@ public class EntityInfo implements EntityUtil {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.directmodelling.impl.EntityUtil#bind(java.lang.Object,
-	 * com.directmodelling.stm.Storage)
-	 */
-	@Override
-	public void store(final Object bean, final Storage storage) {
-		forAllProperties(bean, new Applicable<Value<?>>() {
-			@Override
-			public void applyTo(final Value<?> value) {
-				if (value instanceof HasStorage)
-					((HasStorage) value).setStorage(storage);
-				storage.bindProperty(value);
-			}
-		});
-	}
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see com.directmodelling.impl.EntityUtil#bind(java.lang.Object,
+	// * com.directmodelling.stm.Storage)
+	// */
+	// @Override
+	// public void store(final Object bean, final Storage storage) {
+	// forAllProperties(bean, new Applicable<Value<?>>() {
+	// @Override
+	// public void applyTo(final Value<?> value) {
+	// if (value instanceof HasStorage)
+	// ((HasStorage) value).setStorage(storage);
+	// storage.bindProperty(value);
+	// }
+	// });
+	// }
 
 	/** Recursively register all names of properties as their field names. */
 	public static void registerKeys(final Object o) {

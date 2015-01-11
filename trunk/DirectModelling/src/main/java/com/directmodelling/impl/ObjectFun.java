@@ -16,14 +16,14 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
+import com.google.gwt.core.client.js.JsType;
+
 /** A calculated object. */
-public abstract class ObjectFun<T> extends Function<T> {
+@JsType
+public class ObjectFun<T> extends Function<T> {
 
-	public abstract T get();
-
-	@Override
-	public Type type() {
-		return Type.tObject;
+	public T get() {
+		return null;
 	}
 
 	@Override

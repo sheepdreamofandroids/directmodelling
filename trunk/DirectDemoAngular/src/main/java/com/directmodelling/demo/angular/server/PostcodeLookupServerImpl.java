@@ -1,34 +1,34 @@
 package com.directmodelling.demo.angular.server;
 
-import java.util.concurrent.Callable;
-
+import com.directmodelling.api.ID;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
-import com.google.common.base.Function;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.ListenableFutureTask;
 
-public class PostcodeLookupServerImpl implements
-		Function<String, ListenableFuture<PostcodeLookupResult>> {
-	// {PostcodeLookup.impl.
+public class PostcodeLookupServerImpl extends
+		RemoteServerImpl<String, PostcodeLookupResult> {
+
+	public PostcodeLookupServerImpl(ID id) {
+		super(id);
+	}
 
 	@Override
-	public ListenableFuture<PostcodeLookupResult> apply(final String zip) {
-		return ListenableFutureTask
-				.create(new Callable<PostcodeLookupResult>() {
-
-					@Override
-					public PostcodeLookupResult call() throws Exception {
-						try {
-							Thread.sleep(5000);
-						} catch (final InterruptedException e) {
-							e.printStackTrace();
-						}
-						final int minHuisNr = Integer.parseInt(zip.substring(0,
-								3));
-						return new PostcodeLookupResult(zip + "straat", zip
-								+ "stad", minHuisNr, minHuisNr + 10);
-					}
-				});
+	protected void calculate(final String zip) {
+		new Thread() {
+			@Override
+			public void run() {
+				int minHuisNr = 666;
+				try {
+					Thread.sleep(500);
+					minHuisNr = Integer.parseInt(zip.substring(0, 3));
+				} catch (final InterruptedException e) {
+					e.printStackTrace();
+				} catch (NumberFormatException nfe) {
+					minHuisNr = 0;
+				} finally {
+					setResult(zip, new PostcodeLookupResult(zip + "straat", zip
+							+ "stad", minHuisNr, minHuisNr + 10));
+				}
+			};
+		}.start();
 	}
 
 }

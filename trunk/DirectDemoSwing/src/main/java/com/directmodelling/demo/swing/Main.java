@@ -25,11 +25,10 @@ import javax.swing.AbstractAction;
 import com.directmodelling.api.Updates;
 import com.directmodelling.demo.shared.DemoModel;
 import com.directmodelling.demo.swing.calculator.Calculator;
-import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.Util;
+import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.stm.impl.VersionImpl;
-import com.directmodelling.swing.SwingContext;
 import com.directmodelling.swing.SwingUpdateTracker;
 import com.directmodelling.swing.binding.Binding;
 import com.directmodelling.swing.binding.SpinnerBinder;
@@ -40,8 +39,8 @@ public class Main {
 		startup();
 		final DemoModel model = new DemoModel();
 		final DemoFrame f = new DemoFrame();
-		Binding.bind(f.slider, model.doub());
-		Binding.bind(f.textfield, model.doub());
+		Binding.bindDouble(f.slider, model.doub());
+		Binding.bindDouble(f.textfield, model.doub());
 		SpinnerBinder.bindDouble(model.doub(), f.spinner, 1);
 		Calculator.bind(f.calculatorPanel, Calculator.MODEL);
 		// This is all presentation, no model necessary
@@ -56,8 +55,8 @@ public class Main {
 	}
 
 	public static void startup() {
-		final VersionImpl baseData = new VersionImpl();
-		Util.current = new SwingContext<Storage>(new TransactionImpl(baseData));
+		final Version baseData = new VersionImpl();
+		Util.current.init(new TransactionImpl(baseData));
 		Updates.tracker = new SwingUpdateTracker();
 	}
 }

@@ -16,9 +16,14 @@
  *******************************************************************************/
 package com.directmodelling.stm;
 
+import java.util.Map;
+
+import com.directmodelling.api.ID;
 
 public interface Version extends Storage {
 
 	Version createChild();
+
+	public abstract Map<ID, Object> getWrites();
 
 }

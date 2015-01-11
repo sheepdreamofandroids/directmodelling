@@ -33,11 +33,6 @@ public class FloatVar extends Variable<Float> implements FloatValue.Mutable {
 		return getValue();
 	}
 
-	@Override
-	public Type type() {
-		return Type.tFloat;
-	}
-
 	public FloatVar _(Applicable<? super FloatVar> a) {
 		a.applyTo(this);
 		return this;

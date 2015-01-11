@@ -23,11 +23,13 @@
 <!-- 	</replace-with> -->
 
 	<source path="api" />
-	<source path="impl"/>
+	<source path="collections" />
+		<source path="impl"/>
 <!-- 		<exclude name="**/Variable*" /> -->
 <!-- 	</source> -->
 	<source path="stm" />
-	<source path="properties" />
+	<source path="stm/impl" />
+		<source path="properties" />
 	<!-- For obvious reasons, do not source 'reflective' -->
 
 <!-- Export the api to javascript -->

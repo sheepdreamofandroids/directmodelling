@@ -22,7 +22,7 @@
 
 	<inherits name='com.google.gwt.dom.DOM' />
 
-<!-- 	<inherits name='DirectGWTEmulation' /> -->
+	<!-- <inherits name='DirectGWTEmulation' /> -->
 	<!-- <inherits name="com.googlecode.gwtx.java.text.Text"/> -->
 
 	<source path="gwt" />
@@ -34,6 +34,7 @@
 	<!-- <exclude name="**/Variable*" /> -->
 	<!-- </source> -->
 	<source path="stm" />
+	<source path="collections" />
 	<source path="properties" />
 	<!-- For obvious reasons, do not source 'reflective' -->
 

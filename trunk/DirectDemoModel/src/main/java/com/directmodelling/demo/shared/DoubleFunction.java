@@ -14,11 +14,6 @@ public abstract class DoubleFunction extends Function<Double> implements
 	}
 
 	@Override
-	public com.directmodelling.api.Value.Type type() {
-		return Type.tDouble;
-	}
-
-	@Override
 	public Status status() {
 		return Status.readonly;
 	}

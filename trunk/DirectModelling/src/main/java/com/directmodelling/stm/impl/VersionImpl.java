@@ -23,9 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.directmodelling.api.Updates;
-import com.directmodelling.api.Value;
-import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.api.ID;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.AbstractStorage;
 import com.directmodelling.stm.Version;
@@ -37,10 +35,11 @@ import com.directmodelling.stm.Version;
  * @author guus
  * 
  */
-public class VersionImpl extends AbstractStorage implements Version, Serializable {
-	/** Where to attempt reading when no value is found here?*/
+public class VersionImpl extends AbstractStorage implements Version,
+		Serializable {
+	/** Where to attempt reading when no value is found here? */
 	protected final transient Storage parent;
-	protected Map<Value.Mutable<?>, Object> values = new HashMap<Value.Mutable<?>, Object>();
+	protected Map<ID, Object> values = new HashMap<ID, Object>();
 	protected static final Object nullMarker = "NULL MARKER".intern();
 
 	// TODO use specific hashtables for primitive types
@@ -54,11 +53,20 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 
 	@Override
 	public Version createChild() {
+		freeze();
 		return new VersionImpl(this);
 	}
 
+	private void freeze() {// mark the latest delta's?
+		// final Set<Mutable<?>> a = values.keySet();
+		// for (final Mutable<?> mutable : a) {
+		//
+		// }
+
+	}
+
 	@Override
-	public <T> T get(final Value<T> v) {
+	public <T> T get(final ID v) {
 		if (values.containsKey(v)) {
 			final Object result = values.get(v);
 			return result == nullMarker ? null : (T) result;
@@ -70,10 +78,9 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	}
 
 	@Override
-	public <T> void set(final Value.Mutable<T> m, final T val) {
-		System.err.println(m + " := " + val);
+	public <T> void set(final ID m, final T val) {
+		System.err.println(m + " := " + val + "   in " + this);
 		values.put(m, val == null ? nullMarker : val);
-		Updates.tracker.aValueChanged(m);
 	}
 
 	/** Writes all values to the parent. */
@@ -83,7 +90,8 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 
 	/** Writes all values to the given storage. */
 	public void commitTo(final Storage t) {
-		for (final Entry<Mutable<Object>, ?> entry : (Set<Entry<Mutable<Object>, ?>>) (Set) values.entrySet()) {
+		for (final Entry<ID, ?> entry : (Set<Entry<ID, ?>>) (Set) values
+				.entrySet()) {
 			t.set(entry.getKey(), entry.getValue());
 		}
 	}
@@ -142,35 +150,42 @@ public class VersionImpl extends AbstractStorage implements Version, Serializabl
 	// Updates.tracker.aValueChanged(v);
 	// }
 
-	public Map<Value.Mutable<?>, Object> getWrites() {
+	@Override
+	public Map<ID, Object> getWrites() {
 		return values;
 	}
 
 	@Override
-	public void addValues(final Map<Value.Mutable<?>, Object> values) {
+	public void addValues(final Map<ID, Object> values) {
 		this.values.putAll(values);
 	}
 
 	public void reset() {
+		System.err.println("Reset " + this);
 		values.clear();
 	}
 
-	private Date token = new Date();
+	protected final transient Date token = new Date();
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return token.toString();
+		return "Version " + token + " : " + values + "   parent: " + parent;
 	}
 
-	public void initializeValues(final VersionImpl storage) {
-		values.putAll(storage.values);
+	public void initializeValues(final Version storage) {
+		values.putAll(storage.getWrites());
 	}
 
-	@Override
-	public void bindProperty(final Value<?> value) {
-		// TODO Auto-generated method stub
-
+	/** move data to param and reset */
+	public void moveTo(VersionImpl v) {
+		v.values = values;
+		values = new HashMap<ID, Object>();
 	}
+
+	// @Override
+	// public void bindProperty(final ID value) {
+	// // TODO Auto-generated method stub
+	//
+	// }
 
 }

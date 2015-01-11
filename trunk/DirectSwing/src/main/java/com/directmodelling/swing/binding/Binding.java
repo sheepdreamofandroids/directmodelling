@@ -16,13 +16,6 @@
  *******************************************************************************/
 package com.directmodelling.swing.binding;
 
-import com.directmodelling.api.EnumValue;
-import com.directmodelling.api.Value;
-import com.directmodelling.impl.EnumerableDomain;
-import com.directmodelling.impl.conversion.IntegerFromDouble;
-import com.directmodelling.impl.conversion.TextFromDouble;
-import com.directmodelling.impl.conversion.TextFromInteger;
-
 import java.awt.Component;
 
 import javax.swing.AbstractButton;
@@ -30,6 +23,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.text.JTextComponent;
+
+import com.directmodelling.api.Value;
+import com.directmodelling.impl.EnumerableDomain;
+import com.directmodelling.impl.conversion.IntegerFromDouble;
+import com.directmodelling.impl.conversion.TextFromDouble;
+import com.directmodelling.impl.conversion.TextFromInteger;
+import com.directmodelling.reflective.Util;
 
 /**
  * Just a couple of convenience methods for binding different combinations of
@@ -39,55 +39,18 @@ import javax.swing.text.JTextComponent;
  */
 public class Binding {
 
-	public static void bindDouble(final JSlider slider, final Value<Double> doubleVal) {
+	public static void bindDouble(final JSlider slider,
+			final Value<Double> doubleVal) {
 		BoundedRangeModelBinding.bind(slider, new IntegerFromDouble(doubleVal));
 	}
 
-	public static <T, P extends Value<T> & EnumerableDomain<T>> void bindEnum(final JComboBox comboBox, final P val) {
+	public static <T, P extends Value<T> & EnumerableDomain<T>> void bindEnum(
+			final JComboBox comboBox, final P val) {
 		ListModelBinding.bind(comboBox, val);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void bind(final JSlider slider, final Value<?> val) {
-		switch (val.type()) {
-		case tDouble:
-			bindDouble(slider, (Value<Double>) val);
-			return;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void bind(final JTextComponent text, final Value<?> val) {
-		switch (val.type()) {
-		case tDouble:
-			bindDouble(text, (Value<Double>) val);
-			return;
-		case tInteger:
-			bindInteger(text, (Value<Integer>) val);
-			return;
-		default:
-			bindString(text, (Value<String>) val);
-
-		}
 	}
 
 	public static void bind(final JLabel label, final Value<String> v) {
 		ReadOnlyBinding.bindString(label, v);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void bind(final Component c, final Value<?> val) {
-		if (c instanceof JSlider)
-			bind((JSlider) c, val);
-		else if (c instanceof JTextComponent)
-			bind((JTextComponent) c, val);
-		else if (c instanceof JComboBox && val instanceof EnumValue)
-			bindEnum((JComboBox) c, (EnumValue) val);
-		else if (c instanceof JLabel)
-			ReadOnlyBinding.bindString((JLabel) c, (Value<String>) val);
-		else if (c instanceof AbstractButton) {
-			bindToggle((AbstractButton) c, (Value<Boolean>) val);
-		}
 	}
 
 	/**
@@ -95,9 +58,22 @@ public class Binding {
 	 * @param value
 	 * @return
 	 */
-	public static AbstractButton bindToggle(final AbstractButton toggle, final Value<Boolean> value) {
+	public static AbstractButton bindToggle(final AbstractButton toggle,
+			final Value<Boolean> value) {
 		new ToggleBinder(value, toggle);
 		return toggle;
+	}
+
+	public static void bind(final JTextComponent text,
+			@SuppressWarnings("rawtypes") final Value v) {
+		Class<?> type = Util.typeArgument(v.getClass(), Value.class, 0);
+		if (Number.class.isAssignableFrom(type))
+			if (type == Float.class || type == Double.class)
+				bindDouble(text, v);
+			else
+				bindInteger(text, v);
+		else if (type == String.class)
+			bindString(text, v);
 	}
 
 	/**
@@ -108,7 +84,8 @@ public class Binding {
 	 *            TODO
 	 * @return
 	 */
-	public static DocumentBinder bindInteger(final JTextComponent text, final Value<Integer> doubleVar) {
+	public static DocumentBinder bindInteger(final JTextComponent text,
+			final Value<Integer> doubleVar) {
 		return new DocumentBinder(text, new TextFromInteger(doubleVar));
 	}
 
@@ -119,12 +96,14 @@ public class Binding {
 	// Converter.Long2String);
 	// }
 	//
-	public static DocumentBinder bindDouble(final JTextComponent text, final Value<Double> doubleVar) {
+	public static DocumentBinder bindDouble(final JTextComponent text,
+			final Value<Double> doubleVar) {
 		return new DocumentBinder(text, new TextFromDouble(doubleVar));
 	}
 
 	//
-	public static DocumentBinder bindString(final JTextComponent text, final Value<String> stringVar) {
+	public static DocumentBinder bindString(final JTextComponent text,
+			final Value<String> stringVar) {
 		return new DocumentBinder(text, stringVar);
 	}
 

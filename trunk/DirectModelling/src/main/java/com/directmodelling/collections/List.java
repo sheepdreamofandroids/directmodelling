@@ -9,7 +9,7 @@ import com.directmodelling.collections.List.ListReplace;
 public interface List<S> extends HasDeltas<ListReplace<S>>, java.util.List<S>
 /* , RCollection<S> */{
 
-	public static final class ListReplace<T> extends Delta {
+	public static final class ListReplace<T> extends Delta<List<T>> {
 		/** new elements */
 		public final Object elements[];
 		/** replaced range */

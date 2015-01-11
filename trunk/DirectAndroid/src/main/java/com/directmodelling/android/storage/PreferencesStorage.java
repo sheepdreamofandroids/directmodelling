@@ -11,17 +11,17 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.preference.PreferenceManager;
 
 import com.directmodelling.api.HasKey;
+import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
-import com.directmodelling.api.Value.Mutable;
-import com.directmodelling.api.Value.Type;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.AbstractStorage;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class PreferencesStorage extends AbstractStorage implements Storage, OnSharedPreferenceChangeListener {
+public class PreferencesStorage extends AbstractStorage implements Storage,
+		OnSharedPreferenceChangeListener {
 	private final SharedPreferences preferences;
 	// @Inject
 	// Application application;
@@ -32,7 +32,7 @@ public class PreferencesStorage extends AbstractStorage implements Storage, OnSh
 	private final Map<String, Value<?>> boundVars = new HashMap<String, Value<?>>();
 
 	@Inject
-	public PreferencesStorage(Context context) {
+	public PreferencesStorage(final Context context) {
 		preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		preferences.registerOnSharedPreferenceChangeListener(this);
 	}
@@ -44,88 +44,89 @@ public class PreferencesStorage extends AbstractStorage implements Storage, OnSh
 	// }
 
 	@SuppressWarnings("unchecked")
-	public <T> T get(Value<T> v) {
+	public <T> T get(final Value<T> v) {
 		// Object o = editedValues.get(v);
 		// if (null != o)
 		// return (T) o;
 
 		final String key = ((HasKey) v).getKey();
-		T defaultValue = HasDefaultValue.Registry.getDefaultValue(v);
-		switch (v.type()) {
-		case tBoolean:
-			return (T) (Boolean) getPreferences().getBoolean(key, Boolean.TRUE.equals(defaultValue));
-		case tByte:
-			return (T) (Byte) (byte) getPreferences().getInt(key, ((Number) defaultValue).byteValue());
-		case tShort:
-			return (T) (Short) (short) getPreferences().getInt(key, ((Number) defaultValue).shortValue());
-		case tInteger:
-			return (T) (Integer) getPreferences().getInt(key, ((Number) defaultValue).intValue());
-		case tLong:
-			return (T) (Long) getPreferences().getLong(key, ((Number) defaultValue).longValue());
-		case tCharacter:
-			return (T) String.valueOf(getPreferences().getString(key, String.valueOf(defaultValue)).charAt(0));
-		case tFloat:
-			return (T) (Float) getPreferences().getFloat(key, ((Number) defaultValue).floatValue());
-		case tDouble:
-			return (T) (Double) (double) getPreferences().getFloat(key, ((Number) defaultValue).floatValue());
-		case tObject:
-			throw new RuntimeException("Cannot retrieve an object from Android SharedPreferences");
-		default:
-			return null;
-		}
+		final T defaultValue = HasDefaultValue.Registry.getDefaultValue(v);
+		Class type = typeOf(v);
+		if (type == Boolean.TYPE || type == Boolean.class)
+			return (T) (Boolean) getPreferences().getBoolean(key,
+					Boolean.TRUE.equals(defaultValue));
+		else if (type == Byte.TYPE || type == Byte.class)
+			return (T) (Byte) (byte) getPreferences().getInt(key,
+					((Number) defaultValue).byteValue());
+		else if (type == Short.TYPE || type == Short.class)
+			return (T) (Short) (short) getPreferences().getInt(key,
+					((Number) defaultValue).shortValue());
+		else if (type == Integer.TYPE || type == Integer.class)
+			return (T) (Integer) getPreferences().getInt(key,
+					((Number) defaultValue).intValue());
+		else if (type == Long.TYPE || type == Long.class)
+			return (T) (Long) getPreferences().getLong(key,
+					((Number) defaultValue).longValue());
+		else if (type == String.class)
+			return (T) String.valueOf(getPreferences().getString(key,
+					String.valueOf(defaultValue)).charAt(0));
+		else if (type == Float.TYPE || type == Float.class)
+			return (T) (Float) getPreferences().getFloat(key,
+					((Number) defaultValue).floatValue());
+		else if (type == Double.TYPE || type == Double.class)
+			return (T) (Double) (double) getPreferences().getFloat(key,
+					((Number) defaultValue).floatValue());
+		else
+			throw new RuntimeException(
+					"Cannot retrieve an object from Android SharedPreferences");
 		// throw new
 		// RuntimeException("The previous switch statement should be complete");
 	}
 
 	@Override
-	public <T> void set(Mutable<T> v, T val) {
+	public <T> void set(final ID v, final T val) {
 		// editedValues.put(v, val);
 		final String key = ((HasKey) v).getKey();
-		final Type type = v.type();
-		Editor editor = preferences.edit();
-		write(val, key, type, editor);
+		// final Type type = v.type();
+		final Editor editor = preferences.edit();
+		write(val, key, editor);
 		editor.commit();
 		// throw new
 		// RuntimeException("The previous switch statement should be complete");
 	}
 
-	private <T> void write(T val, final String key, final Type type, Editor editor) {
-		switch (type) {
-		case tBoolean:
+	private Class typeOf(Value<?> v) {
+		return com.directmodelling.reflective.Util.typeArgument(v.getClass(),
+				Value.class, 0);
+	}
+
+	private <T> void write(final T val, final String key, final Editor editor) {
+		Class type = val.getClass();
+		if (type == Boolean.TYPE || type == Boolean.class)
 			editor.putBoolean(key, (Boolean) val);
-			return;
-		case tByte:
+		else if (type == Byte.TYPE || type == Byte.class || type == Short.TYPE
+				|| type == Short.class || type == Integer.TYPE
+				|| type == Integer.class)
 			editor.putInt(key, ((Number) val).intValue());
-			return;
-		case tShort:
-			editor.putInt(key, ((Number) val).intValue());
-			return;
-		case tInteger:
-			editor.putInt(key, ((Number) val).intValue());
-			return;
-		case tLong:
+		else if (type == Long.TYPE || type == Long.class)
 			editor.putLong(key, ((Number) val).longValue());
-			return;
-		case tCharacter:
-			editor.putString(key, String.valueOf(val));
-			return;
-		case tFloat:
+		else if (type == Float.TYPE || type == Float.class//
+				|| type == Double.TYPE || type == Double.class)
 			editor.putFloat(key, (Float) val);
-			return;
-		case tDouble:
-			editor.putFloat(key, ((Number) val).floatValue());
-			return;
-		case tObject:
-			throw new RuntimeException("Cannot store an object in Android SharedPreferences");
-			// default:
-			// throw new
-			// RuntimeException("Value.type() returned the illegal value: " +
-			// type);
-		}
+		else
+			editor.putString(key, String.valueOf(val));
+		// case tObject:
+		// throw new RuntimeException(
+		// "Cannot store an object in Android SharedPreferences");
+		// default:
+		// throw new
+		// RuntimeException("Value.type() returned the illegal value: " +
+		// type);
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+	public void onSharedPreferenceChanged(
+			final SharedPreferences sharedPreferences, final String key) {
 		final Value<?> value = boundVars.get(key);
 		if (null != value) {
 			// editedValues.remove(value);// re-fetch from prefs
@@ -153,10 +154,10 @@ public class PreferencesStorage extends AbstractStorage implements Storage, OnSh
 		// editor.commit();
 	}
 
-	@Override
-	public void bindProperty(Value<?> value) {
-		boundVars.put(HasKey.Registry.get(value), value);
-	}
+	// @Override
+	// public void bindProperty(final Value<?> value) {
+	// boundVars.put(HasKey.Registry.get(value), value);
+	// }
 
 	/** Write data to preferences. */
 	public void store() {
@@ -165,15 +166,20 @@ public class PreferencesStorage extends AbstractStorage implements Storage, OnSh
 	}
 
 	@Override
-	public void addValues(Map<Mutable<?>, Object> values) {
-		Editor editor = preferences.edit();
-		for (Entry<Mutable<?>, Object> entry : values.entrySet()) {
-			Mutable<?> v = entry.getKey();
-			Object val = entry.getValue();
+	public void addValues(final Map<ID, Object> values) {
+		final Editor editor = preferences.edit();
+		for (final Entry<ID, Object> entry : values.entrySet()) {
+			final ID v = entry.getKey();
+			final Object val = entry.getValue();
 			final String key = ((HasKey) v).getKey();
-			final Type type = v.type();
-			write(val, key, type, editor);
+			write(val, key, editor);
 		}
 		editor.commit();
+	}
+
+	@Override
+	public <T> T get(ID id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

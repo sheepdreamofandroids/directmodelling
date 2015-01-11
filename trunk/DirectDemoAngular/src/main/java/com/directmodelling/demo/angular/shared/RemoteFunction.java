@@ -1,7 +1,8 @@
 package com.directmodelling.demo.angular.shared;
 
+import com.directmodelling.api.ID;
+import com.directmodelling.api.Identifiable;
 import com.directmodelling.api.Status;
-import com.directmodelling.demo.angular.client.FunctionCache;
 import com.directmodelling.impl.ObjectFun;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
@@ -23,80 +24,95 @@ import com.google.common.base.Optional;
  * @author guus
  *
  * @param <I>
+ *            inputs
  * @param <O>
+ *            outputs
  */
-public abstract class RemoteFunction<I, O> extends ObjectFun<O> {
+public abstract class RemoteFunction<I, O> extends ObjectFun<O> implements
+		Identifiable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1337587676729866300L;
 
-	/**
-	 * This will be a {@link FunctionCache} on the client and the actual
-	 * implementation on the server.
-	 */
-	// public static Context<Function<I,O>> impl =
-	// Context.perUser.it().create(null);
+	// transient private final Context<Impl<I, O>> impl;
 
-	// private final Map<I, O> results = new MapRecorder<I, O>();
+	transient private O current;
 
-	// private final I input;
+	public abstract class MyImpl implements Impl<I, O> {
+	};
 
-	private final Function<I, Optional<O>> f;
+	public interface Impl<I, O> {
+		void init(RemoteFunction<I, O> f);
 
-	// private final O initial;
-
-	private O current;
-
-	// private Status status = Status.readonly;
-
-	// public RemoteFunction(final I input) {
-	// this.input = input;
-	// }
-	/**
-	 * 
-	 * @param f
-	 *            a particular {@link Function} injected that takes an I and
-	 *            returns an {@link Optional}O. Returning
-	 *            {@link Optional#absent()} means that we're waiting for a
-	 *            result. Throwing any exception means that the calculation
-	 *            cannot be done. Any caching should be done in this function.
-	 * @param initial
-	 */
-	public RemoteFunction(final Function<I, Optional<O>> f, final O initial) {
-		this.f = f;
-		// this.initial = initial;
-		current = initial;
+		Optional<O> apply(RemoteFunction<I, O> requester);
 	}
 
-	protected abstract I argument();
+	public RemoteFunction() {
+	}
+
+	// /**
+	// *
+	// * @param f
+	// * a particular {@link Function} injected that takes an I and
+	// * returns an {@link Optional}O. Returning
+	// * {@link Optional#absent()} means that we're waiting for a
+	// * result. Throwing any exception means that the calculation
+	// * cannot be done. Any caching should be done in this function.
+	// * @param initial
+	// */
+	// public RemoteFunction(final Context<Impl<I, O>> f, final O initial) {
+	// this.impl = f;
+	// // f.it().init(this);
+	// // this.initial = initial;
+	// current = initial;
+	// }
+
+	/**
+	 * @return all current values of argument signals in one convenient package
+	 *         that correctly implements {@link #hashCode()} and
+	 *         {@link #equals(Object)} for use as a key in a cache.
+	 */
+	public abstract I argument();
+
+	/** @return the specific implementation */
+	protected abstract Impl<I, O> implementation();
+
+	/** Initial value before any requests have succeeded */
+	protected abstract O initial();
+
+	private transient boolean doInitialize = true;
 
 	@Override
 	public O get() {
-		final Optional<O> r = f.apply(argument());
+		doInit();
+		final Optional<O> r = implementation().apply(this);
 		// TODO catch exceptions and set status invalid?
-		if (r.isPresent()) {
-			// status = Status.readonly;
-			return current = r.get();
-		} else {
-			// status = Status.pending;
-			return current;// or fail?
+		return r.isPresent() ? current = r.get() : current;
+	}
+
+	private void doInit() {
+		if (doInitialize) {
+			doInitialize = false;
+			current = initial();
 		}
 	}
 
 	@Override
 	public Status status() {
-		return f.apply(argument()).isPresent() ? Status.readonly
+		doInit();
+		return implementation().apply(this).isPresent() ? Status.readonly
 				: Status.pending;
 	}
 
-	// @Override
-	// public void setValue(final O value) {
-	// throw new UnsupportedOperationException(
-	// "RemoteFunction should be evaluated on the server.");
-	// }
-	//
-	// protected void setProtectedValue(final O value) {
-	// super.setValue(value);
-	// }
+	private final ID id = ID.generator.it().createID();
+
+	@Override
+	public ID id() {
+		return id;
+	}
+
+	{// as late as possible, at least after id is initialized
+		implementation().init(this);
+	}
 }
