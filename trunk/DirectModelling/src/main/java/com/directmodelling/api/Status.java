@@ -82,6 +82,11 @@ public interface Status {
 		public boolean isValid() {
 			return true;
 		}
+
+		@Override
+		public boolean isRelevant() {
+			return true;
+		}
 	}
 
 	/** A hint for the GUI whether to show this status as enabled. */
@@ -94,6 +99,12 @@ public interface Status {
 	boolean isValid();
 
 	/**
+	 * Relevant means that the property is meaningful given all the other
+	 * properties. GUI's will usually hide irrelevant properties.
+	 */
+	boolean isRelevant();
+
+	/**
 	 * If possiblyHasStatus implements {@link HasStatus}, possiblyHasStatus's
 	 * {@link #status()} will be returned, otherwise this. Use like
 	 * {@link Status#writeable}.{@link #unlessFrom(o)}.
@@ -104,7 +115,12 @@ public interface Status {
 	 * Currently this data is meaningless. Treat it as if it didn't exist. A
 	 * typical GUI might hide this. Reading and writing could fail.
 	 */
-	Status irrelevant = new Default(false, "Irrelevant");
+	Status irrelevant = new Default(false, "Irrelevant") {
+		@Override
+		public boolean isRelevant() {
+			return false;
+		}
+	};
 	/**
 	 * This data is being calculated right now. The result will be available
 	 * soon and an update will be issued to notify you. The result of get() and
@@ -202,6 +218,11 @@ public interface Status {
 		@Override
 		public boolean isValid() {
 			return false;
+		}
+
+		@Override
+		public boolean isRelevant() {
+			return true;
 		}
 	}
 

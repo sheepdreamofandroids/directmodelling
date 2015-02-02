@@ -25,7 +25,7 @@
 <!-- be added before this line.                -->
 <!--                                           -->
 <script type="text/javascript" src="directdemo/directdemo.nocache.js"></script>
-<script type="text/javascript" src="angular-1.3.0-rc3.js"></script>
+<script type="text/javascript" src="angular-1.3.11.js"></script>
 <script type="text/javascript" src="demo.js"></script>
 
 <!-- Force GWT-RPC calls to the webserver instead of the codeserver -->
@@ -55,17 +55,17 @@
 
 
 
-		<div ng-controller="directDemoController">
+		<div ng-controller="DirectAngularController">
 			<form name="userForm">
-					<p><input type="number" ng-model="dmWrapSignal(zip.digits())" ng-model-options="{getterSetter: true}" size="4" /> {{zip.digits().get()}} {{zip.digits().status().toString()}}
-					 <input type="text" ng-model="dmWrapSignal(zip.letters())" ng-model-options="{getterSetter: true}" size="2" /> {{zip.letters().get()}} {{zip.letters().status().toString()}}</p>
-					 <p>{{zip.postcode().get()}}</p>
-					 <p>Huisnummer: <input type="number" ng-model="dmWrapSignal(zip.houseNumber())" ng-model-options="{getterSetter: true}" size="2" /> {{zip.houseNumber().get().toString()}} {{zip.houseNumber().status().toString()}}</p>
-					<p>Straat: {{zip.result().straat().get()}}</p>
-					<p>Stad: {{zip.result().stad().get()}}</p>
-					<div rabo-text dm-model='zip.letters()' label='Letters' />
+				<dm-number model='model.digits()' label='Cijfers'></dm-number>
+				<dm-text model='model.letters()' label='Letters'></dm-text>
+				<dm-number model='model.houseNumber()' label='Huisnummer'></dm-number>
+				<dm-field model='model.postcode()' label='Postcode'>{{model.postcode().getValue()}}</dm-field>
+				<dm-field model='model.result().stad()' label='Stad'>{{model.result().stad().getValue()}}</dm-field>
+				<dm-field model='model.result().straat()' label='Straat'>{{model.result().straat().getValue()}}</dm-field>
 			</form>
 		</div>
+
 
 
 </body>

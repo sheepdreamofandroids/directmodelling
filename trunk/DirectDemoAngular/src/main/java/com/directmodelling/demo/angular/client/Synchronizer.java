@@ -22,11 +22,13 @@ import java.util.Set;
 import com.directmodelling.api.Context;
 import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
-import com.directmodelling.demo.angular.shared.RemoteFunction;
 import com.directmodelling.impl.Command;
 import com.directmodelling.impl.SingleAssignContext;
 import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
+import com.directmodelling.synchronization.RemoteFunction;
+import com.directmodelling.synchronization.RemoteFunction.Impl.AsyncFunction;
+import com.directmodelling.synchronization.RemoteFunction.Impl.ResultCallback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -44,7 +46,7 @@ public class Synchronizer {
 	public Synchronizer(Version baseValues, TransactionImpl changes) {
 		this.baseValues = baseValues;
 		this.changes = changes;
-		it.init(this);
+		;
 	}
 
 	private final Command commit = new Command() {
@@ -141,4 +143,20 @@ public class Synchronizer {
 	public native void apply() /*-{
 		$wnd.angularScope.$apply();
 	}-*/;
+
+	private final AsyncFunction<Object, Object> asyncFunction = new AsyncFunction<Object, Object>() {
+
+		@Override
+		public void apply(RemoteFunction<Object, Object> requester, Object i,
+				ResultCallback<Object, Object> callback) {
+			requestValue(requester);
+		}
+
+	};
+
+	public <I, O> AsyncFunction<I, O> asFunction() {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		final AsyncFunction<I, O> result = (AsyncFunction) asyncFunction;
+		return result;
+	}
 }

@@ -1,44 +1,23 @@
 package com.directmodelling.demo.shared;
 
-import java.io.Serializable;
+import com.directmodelling.api.DoubleValue;
+import com.directmodelling.impl.Range;
 
-import com.directmodelling.impl.DoubleVar;
-import com.directmodelling.properties.HasMaximum;
-import com.directmodelling.properties.HasMinimum;
-import com.google.gwt.core.client.js.JsType;
+public class MyDoubleVar extends Range<Double> implements DoubleValue.Mutable {
 
-@JsType
-public final class MyDoubleVar extends DoubleVar implements HasMaximum<Double>,
-		HasMinimum<Double>, Serializable {
-
-	private double min;
-	private double max;
-
-	MyDoubleVar() {
-	}
-
-	public MyDoubleVar(final double val, final double min, final double max) {
-		super();
-		this.min = min;
-		this.max = max;
-		set(val);
+	public MyDoubleVar(double i, double j, double k) {
+		super(i, j, k);
 	}
 
 	@Override
-	public Double getMaximum() {
-		return max;
-	}
-
-	public void setMaximum(final Double max) {
-		this.max = max;
+	public double get() {
+		return getValue().doubleValue();
 	}
 
 	@Override
-	public Double getMinimum() {
-		return min;
+	public com.directmodelling.api.DoubleValue.Mutable set(double value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setMinimum(final Double min) {
-		this.min = min;
-	}
 }

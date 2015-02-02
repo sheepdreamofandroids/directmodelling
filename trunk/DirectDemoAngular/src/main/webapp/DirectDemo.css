@@ -1,0 +1,21 @@
+.valid {
+    //background-color: lightgreen;
+}
+
+.invalid {
+    background-color: #FEE;
+}
+
+.field {
+    padding: 2px 8px 2px 8px;
+}
+
+.label {
+    width: 100px;
+    float: left;
+}
+
+.field input {
+    /* float: left; */
+    
+}

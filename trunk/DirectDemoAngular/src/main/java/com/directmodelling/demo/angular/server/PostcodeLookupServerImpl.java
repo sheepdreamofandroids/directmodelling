@@ -1,17 +1,16 @@
 package com.directmodelling.demo.angular.server;
 
-import com.directmodelling.api.ID;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
+import com.directmodelling.synchronization.RemoteFunction;
+import com.directmodelling.synchronization.RemoteFunction.Impl;
+import com.directmodelling.synchronization.RemoteFunction.Impl.ResultCallback;
 
-public class PostcodeLookupServerImpl extends
-		RemoteServerImpl<String, PostcodeLookupResult> {
-
-	public PostcodeLookupServerImpl(ID id) {
-		super(id);
-	}
+public class PostcodeLookupServerImpl implements
+		Impl.AsyncFunction<String, PostcodeLookupResult> {
 
 	@Override
-	protected void calculate(final String zip) {
+	public void apply(RemoteFunction<String, PostcodeLookupResult> requester,
+			String zip, ResultCallback<String, PostcodeLookupResult> callback) {
 		new Thread() {
 			@Override
 			public void run() {
@@ -24,8 +23,9 @@ public class PostcodeLookupServerImpl extends
 				} catch (NumberFormatException nfe) {
 					minHuisNr = 0;
 				} finally {
-					setResult(zip, new PostcodeLookupResult(zip + "straat", zip
-							+ "stad", minHuisNr, minHuisNr + 10));
+					callback.result(zip,
+							new PostcodeLookupResult(zip + "straat", zip
+									+ "stad", minHuisNr, minHuisNr + 10));
 				}
 			};
 		}.start();

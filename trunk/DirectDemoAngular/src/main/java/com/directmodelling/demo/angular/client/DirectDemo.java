@@ -16,10 +16,13 @@
  *******************************************************************************/
 package com.directmodelling.demo.angular.client;
 
+import com.directmodelling.api.BooleanValue;
+import com.directmodelling.api.DoubleValue;
+import com.directmodelling.api.FloatValue;
+import com.directmodelling.api.IntValue;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
 import com.directmodelling.demo.angular.client.GreetingService.MakeSerializable;
-import com.directmodelling.demo.angular.shared.PostcodeDemo;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.js.JsExport;
@@ -52,7 +55,6 @@ public class DirectDemo implements EntryPoint {
 	 */
 	@Override
 	public void onModuleLoad() {
-		// GWT.create(Value.class);
 		makeSerializable();
 
 		final ClientInitializer system = new ClientInitializer();
@@ -71,9 +73,10 @@ public class DirectDemo implements EntryPoint {
 				// Element.as(Document.get().getParentNode()).setPropertyObject(
 				// "directDemoModel", result.model);
 				// setUpGetterSetter(result.model.a());
-				startAngular(// result.getModel(), new Calculator(),
-				// result.postcodeDemo
-				system.demo);
+				AngularAdapter.startAngular(// result.getModel(), new
+											// Calculator(),
+						// result.postcodeDemo
+						system.demo);
 				synchronizer.poll();
 			}
 
@@ -86,11 +89,6 @@ public class DirectDemo implements EntryPoint {
 
 	public static native void show(Object o)/*-{
 		console.log(o);
-	}-*/;
-
-	// DemoModel model, Calculator calc,
-	public static native void startAngular(final PostcodeDemo zip)/*-{
-		$wnd.gwtStarted(zip);
 	}-*/;
 
 	public static native void setUpGetterSetter(Value.Mutable<?> mut)/*-{
@@ -144,4 +142,54 @@ public class DirectDemo implements EntryPoint {
 		popupPanel.add(calc);
 		popupPanel.center();
 	}
+
+	@JsExport()
+	public static native Object asInt(IntValue.Mutable i)/*-{
+		return function(val) {
+			if (val != undefined) {
+				i.set(val);
+			}
+			return i.get();
+		};
+	}-*/;
+
+	@JsExport()
+	public static native Object asFloat(FloatValue.Mutable m)/*-{
+		return function(val) {
+			if (val != undefined) {
+				m.set(val);
+			}
+			return m.get();
+		};
+	}-*/;
+
+	@JsExport()
+	public static native Object asDouble(DoubleValue.Mutable m)/*-{
+		return function(val) {
+			if (val != undefined) {
+				m.set(val);
+			}
+			return m.get();
+		};
+	}-*/;
+
+	@JsExport()
+	public static native Object asBoolean(BooleanValue.Mutable m)/*-{
+		return function(val) {
+			if (val != undefined) {
+				m.set(val);
+			}
+			return m.get();
+		};
+	}-*/;
+
+	@JsExport("directAngular.setup")
+	public static native void setup()/*-{
+		return function($scope) {
+			$scope.asInt = com.directmodelling.demo.angular.client.DirectDemo.asInt;
+			$scope.asFloat = com.directmodelling.demo.angular.client.DirectDemo.asFloat;
+			$scope.asDouble = com.directmodelling.demo.angular.client.DirectDemo.asDouble;
+			$scope.asBoolean = com.directmodelling.demo.angular.client.DirectDemo.asBoolean;
+		};
+	}-*/;
 }

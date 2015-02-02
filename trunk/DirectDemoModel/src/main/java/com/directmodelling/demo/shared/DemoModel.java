@@ -6,8 +6,8 @@ package com.directmodelling.demo.shared;
 import java.io.Serializable;
 
 import com.directmodelling.api.DoubleValue;
+import com.directmodelling.api.DoubleValue.Mutable;
 import com.directmodelling.api.ListValue.Modifiable;
-import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.ObjectVar;
 import com.directmodelling.impl.Variable;
 import com.google.gwt.core.client.js.JsType;
@@ -30,12 +30,12 @@ public class DemoModel implements IDemoModel, Serializable {
 	}
 
 	@Override
-	public DoubleVar doub() {
+	public Mutable doub() {
 		return doub;
 	}
 
 	@Override
-	public DoubleVar getDoubleVar() {
+	public Mutable getDoubleVar() {
 		return doub;
 	}
 
@@ -45,12 +45,12 @@ public class DemoModel implements IDemoModel, Serializable {
 	}
 
 	@Override
-	public DoubleVar a() {
+	public Mutable a() {
 		return a;
 	}
 
 	@Override
-	public DoubleVar b() {
+	public Mutable b() {
 		return b;
 	}
 

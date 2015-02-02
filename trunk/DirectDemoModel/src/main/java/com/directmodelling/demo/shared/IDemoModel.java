@@ -17,8 +17,8 @@
 package com.directmodelling.demo.shared;
 
 import com.directmodelling.api.DoubleValue;
+import com.directmodelling.api.DoubleValue.Mutable;
 import com.directmodelling.api.ListValue;
-import com.directmodelling.impl.DoubleVar;
 import com.directmodelling.impl.Variable;
 import com.google.gwt.core.client.js.JsType;
 
@@ -27,15 +27,15 @@ public interface IDemoModel {
 
 	public Variable<String> var();
 
-	public DoubleVar doub();
+	public Mutable doub();
 
-	public DoubleVar getDoubleVar();
+	public Mutable getDoubleVar();
 
 	public ListValue.Modifiable<IPerson> persons();
 
-	DoubleVar a();
+	Mutable a();
 
-	DoubleVar b();
+	Mutable b();
 
 	DoubleValue sum();
 

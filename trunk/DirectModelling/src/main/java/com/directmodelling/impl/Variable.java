@@ -159,7 +159,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	public String toString() {
 		String val = "UNINITIALIZED";
 		try {
-			final T value = storage.get(this);
+			final T value = storage.get(id);
 			val = value == null ? "NULL" : value.getClass().getName();
 			// val = String.valueOf(value);
 		} catch (final Exception e) {
@@ -167,7 +167,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 		}
 		// final StringWriter stringWriter = new StringWriter();
 		// stackTrace.printStackTrace(new PrintWriter(stringWriter));
-		return "(Var " + hash + " '" + getKey() + "' = " + val +
+		return "(Var " + id + " '" + getKey() + "' = " + val +
 		// " initialized at:" + stringWriter +
 				")";
 	}

@@ -19,9 +19,9 @@ package com.directmodelling.demo.angular.client;
 import java.util.Set;
 
 import com.directmodelling.api.ID;
-import com.directmodelling.demo.angular.shared.IsCalculating;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
 import com.directmodelling.stm.impl.TransactionImpl;
+import com.directmodelling.synchronization.IsCalculating;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

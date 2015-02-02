@@ -12,8 +12,8 @@
     PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
-<web-app>
-
+<web-app metadata-complete="true">
+<!-- BEWARE metadata-complete suppresses a classpath scan for Servlet 3 annotations, this makes startup much faster -->
 	<!-- Servlets -->
 	<servlet>
 		<servlet-name>greetServlet</servlet-name>

@@ -36,7 +36,8 @@
 	<source path="stm" />
 	<source path="collections" />
 	<source path="properties" />
-	<!-- For obvious reasons, do not source 'reflective' -->
+	<source path="synchronization" />
+		<!-- For obvious reasons, do not source 'reflective' -->
 
 	<inherits name="com.google.common.base.Base" />
 	<inherits name="com.google.common.collect.Collect" />

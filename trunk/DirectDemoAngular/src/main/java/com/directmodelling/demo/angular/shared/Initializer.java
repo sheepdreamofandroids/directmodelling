@@ -2,8 +2,8 @@ package com.directmodelling.demo.angular.shared;
 
 import com.directmodelling.api.ID;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
-import com.directmodelling.demo.angular.shared.RemoteFunction.Impl;
 import com.directmodelling.impl.DirectInit;
+import com.directmodelling.synchronization.RemoteFunction.Impl;
 
 public abstract class Initializer extends DirectInit {
 

@@ -169,7 +169,8 @@ public class VersionImpl extends AbstractStorage implements Version,
 
 	@Override
 	public String toString() {
-		return "Version " + token + " : " + values + "   parent: " + parent;
+		return "Version@" + System.identityHashCode(this) + " " + token + " : "
+				+ values + "   parent: " + parent;
 	}
 
 	public void initializeValues(final Version storage) {
