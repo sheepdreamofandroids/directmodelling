@@ -6,13 +6,15 @@ import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates.Tracker;
 import com.directmodelling.demo.angular.shared.Initializer;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
-import com.directmodelling.demo.angular.shared.RemoteFunction.Impl;
+import com.directmodelling.synchronization.RemoteServerImpl;
+import com.directmodelling.synchronization.RemoteFunction.Impl;
 
 public class ServerInitializer extends Initializer {
 
 	@Override
 	protected Impl<String, PostcodeLookupResult> postcodeImpl(ID postcodeCacheID) {
-		return new PostcodeLookupServerImpl(postcodeCacheID);
+		return new RemoteServerImpl(postcodeCacheID,
+				new PostcodeLookupServerImpl());
 	}
 
 	@Override

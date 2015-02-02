@@ -20,16 +20,21 @@ import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates.Tracker;
 import com.directmodelling.demo.angular.shared.Initializer;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
-import com.directmodelling.demo.angular.shared.RemoteFunction.Impl;
 import com.directmodelling.gwt.GWTUpdateTracker;
+import com.directmodelling.synchronization.RemoteClientImpl;
+import com.directmodelling.synchronization.RemoteFunction.Impl;
 
 /** Bits and pieces I don't have a good place for yet. */
 public class ClientInitializer extends Initializer {
+	{
+	}
 
 	@Override
 	protected Impl<String, PostcodeLookupResult> postcodeImpl(ID postcodeCacheID) {
+		Synchronizer.it.init(new Synchronizer(baseValues, changes));
 		return new RemoteClientImpl<String, PostcodeLookupResult>(
-				postcodeCacheID);
+				postcodeCacheID, Synchronizer.it.it()
+						.<String, PostcodeLookupResult> asFunction());
 	}
 
 	@Override

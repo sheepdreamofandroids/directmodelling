@@ -30,6 +30,7 @@ import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.demo.angular.client.GreetingService;
 import com.directmodelling.demo.angular.client.Init;
 import com.directmodelling.stm.impl.TransactionImpl;
+import com.directmodelling.synchronization.RemoteServerImpl;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**

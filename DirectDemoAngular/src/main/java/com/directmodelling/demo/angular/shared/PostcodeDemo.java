@@ -3,9 +3,9 @@ package com.directmodelling.demo.angular.shared;
 import java.io.Serializable;
 
 import com.directmodelling.api.Status;
+import com.directmodelling.api.Value.Mutable;
 import com.directmodelling.impl.IntVar;
 import com.directmodelling.impl.ObjectFun;
-import com.directmodelling.impl.ObjectVar;
 import com.directmodelling.impl.Range;
 import com.directmodelling.impl.StringVar;
 import com.google.gwt.core.client.js.JsType;
@@ -39,15 +39,17 @@ public class PostcodeDemo implements Serializable {
 
 		@Override
 		public Status status() {
-			return digits.status().isValid() ? letters.status() : digits
-					.status();
+			return !digits.status().isValid() ? digits.status() //
+					: !letters.status().isValid() ? letters.status() //
+							: Status.readonly;
 		};
 	};
 
 	public final PostcodeLookup result = new PostcodeLookup(postcode);
 
-	public final ObjectVar<Integer> houseNumber = new Range<Integer>(0,
-			result.minHuisnummer, result.maxHuisnummer);
+	public final Mutable<Integer> houseNumber = new Range<Integer>(0,
+			result.minHuisnummer, result.maxHuisnummer) {
+	};
 
 	// Javascript accessors
 	public final StringVar letters() {
@@ -66,7 +68,7 @@ public class PostcodeDemo implements Serializable {
 		return digits;
 	}
 
-	public final ObjectVar<Integer> houseNumber() {
+	public final Mutable<Integer> houseNumber() {
 		return houseNumber;
 	}
 }

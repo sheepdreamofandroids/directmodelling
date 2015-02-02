@@ -7,13 +7,15 @@ import com.directmodelling.api.Value;
 import com.directmodelling.impl.util.Constant;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
+import com.google.gwt.core.client.js.JsType;
 
 /**
  * A variable with a bounded value. Bounds can be dynamic either by passing in
  * non-constant {@link Value}s or by overriding {@link #getMaximum()} or
  * {@link #getMinimum()}. The same goes for the comparator.
  */
-public class Range<T extends Comparable<? super T>> extends ObjectVar<T>
+@JsType
+public class Range<T extends Comparable<? super T>> extends Variable<T>
 		implements HasMinimum<T>, HasMaximum<T>, Comparator<T> {
 	private Value<T> minimum;
 	private Value<T> maximum;
@@ -43,13 +45,13 @@ public class Range<T extends Comparable<? super T>> extends ObjectVar<T>
 
 	@Override
 	public com.directmodelling.api.Status status() {
-		if (get() == null)
+		if (getValue() == null)
 			return new Status.Invalid.Missing();
 		else if (minimum != null
-				&& comparator.compare(minimum.getValue(), get()) > 0)
+				&& comparator.compare(minimum.getValue(), getValue()) > 0)
 			return new Status.Invalid.TooLow(minimum);
 		else if (maximum != null
-				&& comparator.compare(maximum.getValue(), get()) < 0)
+				&& comparator.compare(maximum.getValue(), getValue()) < 0)
 			return new Status.Invalid.TooHigh(minimum);
 		else
 			return super.status();

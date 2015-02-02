@@ -120,7 +120,8 @@ public class TransactionImpl extends VersionImpl {
 
 	@Override
 	public String toString() {
-		return "Transaction " + token + " : " + values + "   parent: " + parent;
+		return "Transaction@" + System.identityHashCode(this) + " " + token
+				+ " : " + values + "   parent: " + parent;
 	}
 
 	/**

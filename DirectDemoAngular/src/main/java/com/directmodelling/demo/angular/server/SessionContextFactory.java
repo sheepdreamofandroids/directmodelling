@@ -8,6 +8,8 @@ import com.directmodelling.impl.SingleAssignContext;
 import com.google.common.base.Supplier;
 
 public class SessionContextFactory implements Context.Factory {
+	private SessionContextFactory() {
+	};
 
 	private static final String CLASS_NAME = SessionContextFactory.class
 			.getName();

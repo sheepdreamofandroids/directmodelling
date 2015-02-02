@@ -34,6 +34,7 @@
 		<module>DirectDemoSwing</module>
 		<!-- <module>DirectGWTEmulation</module> -->
 		<module>DirectDemoAngular</module>
+		<module>DirectAngular</module>
 	</modules>
 
 	<build>

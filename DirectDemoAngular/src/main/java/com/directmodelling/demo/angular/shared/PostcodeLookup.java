@@ -8,6 +8,7 @@ import com.directmodelling.impl.Function;
 import com.directmodelling.impl.IntFun;
 import com.directmodelling.impl.ObjectFun;
 import com.directmodelling.impl.SingleAssignContext;
+import com.directmodelling.synchronization.RemoteFunction;
 import com.google.gwt.core.client.js.JsType;
 
 /**
