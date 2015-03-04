@@ -11,7 +11,9 @@ import com.directmodelling.impl.ExplicitUpdatesTracker;
 import com.directmodelling.stm.Storage.Util;
 import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.VersionImpl;
+import com.google.common.annotations.GwtIncompatible;
 
+@GwtIncompatible("junit")
 public class CalculatorTest {
 	/** epsilon */
 	private static final double E = .000001;

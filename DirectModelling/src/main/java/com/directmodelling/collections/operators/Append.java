@@ -1,7 +1,6 @@
 package com.directmodelling.collections.operators;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -10,7 +9,10 @@ import java.util.NoSuchElementException;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
 import com.directmodelling.collections.List;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtIncompatible;
 
+@GwtCompatible
 public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 		Receiver {
 	// TODO derive from Union of two Collections?
@@ -27,6 +29,7 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 		// only for serialization
 	}
 
+	@GwtIncompatible("java.io, ClassNotFoundException")
 	private void readObject(final java.io.ObjectInputStream in)
 			throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
@@ -92,32 +95,42 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 		return listIterator();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object[] toArray() {
-		return toArray(null);
+	public S[] toArray() {
+		return copyToArray((S[]) new Object[size()]);
 	}
 
+	// @GwtIncompatible("Array.newInstance")
 	@Override
 	public <T> T[] toArray(T[] a) {
 		final int size = size();
 		if (a == null) {
 			@SuppressWarnings("unchecked")
-			final T[] ts = (T[]) new Object[0];
+			final T[] ts = (T[]) new Object[size];
 			a = ts;
-		} else if (a.length < size) {
-			@SuppressWarnings("unchecked")
-			final T[] na = (T[]) Array.newInstance(a.getClass()
-					.getComponentType(), size);
-			a = na;
+		} else {
+			if (a.length < size) {
+				// @SuppressWarnings("unchecked")
+				// final T[] na = (T[]) Array.newInstance(a.getClass()
+				// .getComponentType(), size);
+				// a = na;
+				// FIXME how to do this in GWT?
+			}
 		}
+		return copyToArray(a);
+	}
+
+	/** copies all elements into target unconditionally */
+	public <T> T[] copyToArray(T[] target) {
 		final List<S>[] b = components;
 		int pos = 0;
 		for (final List<S> list : b) {
 			final Object[] array = list.toArray();
-			System.arraycopy(array, 0, a, pos, array.length);
+			System.arraycopy(array, 0, target, pos, array.length);
 			pos += array.length;
 		}
-		return a;
+		return target;
 	}
 
 	@Override
