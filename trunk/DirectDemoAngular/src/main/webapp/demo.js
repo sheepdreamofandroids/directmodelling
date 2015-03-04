@@ -2,7 +2,7 @@
  * Expose gwt model to angular.
  */
 window.gwtStarted = function(adapter, model) {
-	angular.module('directAngular', [])
+	angular.module('directAngular', ['ngMaterial'])
 
 	.controller('DirectAngularController', [ '$scope', function($scope) {
 		adapter($scope);
@@ -49,5 +49,12 @@ window.gwtStarted = function(adapter, model) {
 		}
 	})
 
+	.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
+		$scope.toggleSidenav = function(menuId) {
+    	$mdSidenav(menuId).toggle();
+  		};
+ 	}]);
+ 	
 	angular.bootstrap(document, [ 'directAngular' ]);
 };
+var lskdflkjsdflkjsdf="lskdjflksjdflkjsdlfkj";

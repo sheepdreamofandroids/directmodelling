@@ -71,4 +71,18 @@ public class PostcodeDemo implements Serializable {
 	public final Mutable<Integer> houseNumber() {
 		return houseNumber;
 	}
+
+	public final StringVar straat = new StringVar("") {
+		@Override
+		public Status status() {
+			return (result.status().isValid()) ? Status.readonly
+					: Status.writeable;
+		}
+
+		@Override
+		public String getValue() {
+			return (status() == status().readonly ? result.get().straat : super
+					.getValue());
+		};
+	};
 }
