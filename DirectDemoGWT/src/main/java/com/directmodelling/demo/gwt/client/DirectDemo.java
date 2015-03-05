@@ -20,6 +20,7 @@ import com.directmodelling.demo.gwt.client.GreetingService.Init;
 import com.directmodelling.demo.gwt.client.GreetingService.MakeSerializable;
 import com.directmodelling.demo.gwt.client.calculator.CalculatorPanel;
 import com.directmodelling.demo.shared.Calculator;
+import com.directmodelling.demo.shared.DemoModel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -61,10 +62,11 @@ public class DirectDemo implements EntryPoint {
 			public void onSuccess(final Init result) {
 				system.initializeValues(result.storage);
 				system.doneInitializing();
-				popup(new DemoPanel(result.model, system), "sliders");
+				final DemoModel model = new DemoModel();
+				popup(new DemoPanel(model, system), "sliders");
 				popup(new CalculatorPanel(new Calculator()), "Calculator");
-				show(result.model);
-				show(result.model.a());
+				show(model);
+				show(model.a());
 			}
 
 			@Override

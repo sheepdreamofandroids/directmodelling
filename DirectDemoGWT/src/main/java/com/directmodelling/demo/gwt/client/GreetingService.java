@@ -16,8 +16,8 @@
  *******************************************************************************/
 package com.directmodelling.demo.gwt.client;
 
-import com.directmodelling.demo.shared.DemoModel;
-import com.directmodelling.demo.shared.MyDoubleVar;
+import java.io.Serializable;
+
 import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -32,10 +32,10 @@ public interface GreetingService extends RemoteService {
 
 	void update(TransactionImpl t);
 
-	public static class Init implements IsSerializable {
+	public static class Init implements Serializable {
 		public Version storage = null;
-		public DemoModel model;
-		public MyDoubleVar wtf;
+		// public DemoModel model;
+		// public MyDoubleVar wtf;
 	}
 
 	Init getInitial();

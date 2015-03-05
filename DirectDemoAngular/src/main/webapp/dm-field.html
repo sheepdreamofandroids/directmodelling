@@ -3,5 +3,5 @@
 		xng-show="model().status().isRelevant()">
 	<span class="label">{{label}}:</span>
 	<ng-transclude></ng-transclude>
-	{{model().status().toString()}}
+	{{status(model())}} |   {{model().status().toString()}}
 </div>

@@ -69,6 +69,16 @@
 					<groupId>com.simpligility.maven.plugins</groupId>
 					<artifactId>android-maven-plugin</artifactId>
 					<version>4.1.1</version>
+					<extensions>true</extensions>
+					<configuration>
+						<sign>
+							<debug>both</debug>
+						</sign>
+						<resourceDirectory>${basedir}/res</resourceDirectory>
+						<androidManifestFile>${basedir}/AndroidManifest.xml</androidManifestFile>
+						<assetsDirectory>${basedir}/assets</assetsDirectory>
+						<nativeLibrariesDirectory>${basedir}/libs</nativeLibrariesDirectory>
+					</configuration>
 				</plugin>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
 					only. It has no influence on the Maven build itself. -->

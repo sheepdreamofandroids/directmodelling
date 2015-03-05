@@ -27,8 +27,8 @@ public class AngularAdapter {
 									return @com.directmodelling.demo.angular.client.AngularAdapter::get(Lcom/directmodelling/api/Value;)(m);
 								};
 							};
-							s.statusX = function(s) {
-								return @com.directmodelling.demo.angular.client.AngularAdapter::status(Lcom/directmodelling/api/Status$HasStatus;)(s);
+							s.status = function(s) {
+								return @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;)(s);
 							};
 						}, zip);
 	}-*/;
@@ -49,8 +49,8 @@ public class AngularAdapter {
 		return v.getValue();
 	}
 
-	public static String status(HasStatus s) {
-		return s.toString();
+	public static String status(Object o) {
+		return o instanceof HasStatus ? ((HasStatus) o).status().toString()
+				: "Readonly";
 	}
-
 }
