@@ -147,7 +147,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
-						<version>2.7.0-beta1</version>
+						<version>2.7.0</version>
 						<configuration>
 							<module>com.directmodelling.demo.angular.DirectDemoAngular</module>
 							<!-- <strict>true</strict> -->
@@ -155,10 +155,11 @@
 							<!-- Really nasty hack to sneak in new arguments -->
 							<!-- <style>OBF' '-XjsInteropMode' 'JS</style> -->
 							<!-- <style>OBF' '-XjsInteropMode' 'JS' '-XcompilePerFile</style> -->
-							<inplace>true</inplace>
+							
+<!-- 							<inplace>true</inplace> -->
 							<jsInteropMode>JS</jsInteropMode>
-							<incrementalCompileWarnings>true</incrementalCompileWarnings>
-							<incremental>true</incremental>
+<!-- 							<incrementalCompileWarnings>true</incrementalCompileWarnings> -->
+<!-- 							<incremental>true</incremental> -->
 						</configuration>
 						<executions>
 							<execution>

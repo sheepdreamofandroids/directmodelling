@@ -21,26 +21,25 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.directmodelling.impl.IntVar;
-import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.VersionImpl;
+import com.directmodelling.test.DirectTestBase;
 
 public class VersionImplTest extends DirectTestBase {
 	@Test
 	public void testStorage() {
-		final VersionImpl parent = new VersionImpl(null);
-		Storage.Util.current.init(parent);
+		final VersionImpl parent = init.baseValues;
 		final IntVar v = new IntVar();
 		parent.set(v, 5);
-		assertEquals(5, (long) parent.get(v));
+		assertEquals(5, (int) parent.get(v));
 		final Version child1 = parent.createChild();
-		assertEquals(5, (long) child1.get(v));
+		assertEquals(5, (int) child1.get(v));
 		child1.set(v, 10);
 		final Version child2 = parent.createChild();
-		assertEquals(5, (long) child2.get(v));
+		assertEquals(5, (int) child2.get(v));
 		child2.set(v, 20);
 		assertEquals(10, (int) child1.get(v));
-		assertEquals(20, (long) child2.get(v));
-		assertEquals(5, (long) parent.get(v));
+		assertEquals(20, (int) child2.get(v));
+		assertEquals(5, (int) parent.get(v));
 	}
 }

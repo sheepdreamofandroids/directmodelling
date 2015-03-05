@@ -71,7 +71,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		// TODO Auto-generated method stub
 		final Init init = new Init();
 		init.storage = serverWorld;
-		init.model = model;
+		// init.model = model;
 		return init;
 	}
 

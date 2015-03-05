@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package test.com.modelling.stm.impl;
+package com.directmodelling.test;
 
 import com.directmodelling.impl.DirectTestInit;
 
 public class DirectTestBase {
-	protected final DirectTestInit init = new DirectTestInit();
+	protected final static DirectTestInit init = new DirectTestInit();
 }

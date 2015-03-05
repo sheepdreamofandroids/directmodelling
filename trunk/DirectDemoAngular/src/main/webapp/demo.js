@@ -17,6 +17,9 @@ window.gwtStarted = function(adapter, model) {
 				label : '@',
 				model : '&'
 			},
+			controller : function($scope) {
+				adapter($scope);
+			},
 			templateUrl : 'dm-field.html',
 		}
 	})

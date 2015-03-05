@@ -124,13 +124,17 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
-						<version>2.6.1</version>
+						<version>2.7.0</version>
 						<configuration>
 							<module>com.directmodelling.demo.gwt.DirectDemoGWT</module>
 							<!-- <strict>true</strict> -->
 							<!-- <logLevel>DEBUG</logLevel> -->
 							<!-- Really nasty hack to sneak in -XjsInteropMode -->
-							<style>PRETTY' '-XjsInteropMode' 'JS</style>
+<!-- 							<style>PRETTY' '-XjsInteropMode' 'JS</style> -->
+<!-- 							<inplace>true</inplace> -->
+							<jsInteropMode>JS</jsInteropMode>
+<!-- 							<incrementalCompileWarnings>true</incrementalCompileWarnings> -->
+<!-- 							<incremental>true</incremental> -->
 						</configuration>
 						<executions>
 							<execution>

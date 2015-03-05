@@ -24,6 +24,7 @@ import com.directmodelling.api.IntValue.Mutable;
 import com.directmodelling.api.Updates;
 import com.directmodelling.impl.ExplicitUpdatesTracker;
 import com.directmodelling.impl.IntVar;
+import com.directmodelling.test.DirectTestBase;
 
 public class EntityTest extends DirectTestBase {
 	interface Simple {

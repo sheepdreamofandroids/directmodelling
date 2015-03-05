@@ -1,29 +1,24 @@
 package com.directmodelling.demo.shared;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.directmodelling.api.DoubleValue;
-import com.directmodelling.api.Updates;
 import com.directmodelling.impl.DoubleVar;
-import com.directmodelling.impl.ExplicitUpdatesTracker;
-import com.directmodelling.stm.Storage.Util;
-import com.directmodelling.stm.Version;
-import com.directmodelling.stm.impl.VersionImpl;
+import com.directmodelling.test.DirectTestBase;
 import com.google.common.annotations.GwtIncompatible;
 
 @GwtIncompatible("junit")
-public class CalculatorTest {
+public class CalculatorTest extends DirectTestBase {
 	/** epsilon */
 	private static final double E = .000001;
 
-	@Before
-	public void setup() {
-		final Version baseData = new VersionImpl();
-		Util.current.init(new VersionImpl(baseData));
-		Updates.tracker = new ExplicitUpdatesTracker();
-	}
+	// @Before
+	// public void setup() {
+	// final Version baseData = new VersionImpl();
+	// Util.current.init(new VersionImpl(baseData));
+	// Updates.tracker = new ExplicitUpdatesTracker();
+	// }
 
 	@Test
 	public void testCalculator() {
