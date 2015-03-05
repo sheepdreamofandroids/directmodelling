@@ -1,6 +1,6 @@
 package com.directmodelling.demo.angular.client;
 
-import com.directmodelling.api.Status.HasStatus;
+import com.directmodelling.api.Status;
 import com.directmodelling.api.Value;
 import com.directmodelling.demo.angular.shared.PostcodeDemo;
 
@@ -49,8 +49,7 @@ public class AngularAdapter {
 		return v.getValue();
 	}
 
-	public static String status(Object o) {
-		return o instanceof HasStatus ? ((HasStatus) o).status().toString()
-				: "Readonly";
+	public static Status status(Object o) {
+		return Status.readonly.unlessFrom(o);
 	}
 }
