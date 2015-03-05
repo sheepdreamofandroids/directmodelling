@@ -87,6 +87,11 @@ public interface Status {
 		public boolean isRelevant() {
 			return true;
 		}
+
+		@Override
+		public boolean hasValue() {
+			return true;
+		}
 	}
 
 	/** A hint for the GUI whether to show this status as enabled. */
@@ -103,6 +108,11 @@ public interface Status {
 	 * properties. GUI's will usually hide irrelevant properties.
 	 */
 	boolean isRelevant();
+
+	/**
+	 * @return is a value available? An invalid value IS available.
+	 */
+	boolean hasValue();
 
 	/**
 	 * If possiblyHasStatus implements {@link HasStatus}, possiblyHasStatus's
@@ -124,9 +134,15 @@ public interface Status {
 	/**
 	 * This data is being calculated right now. The result will be available
 	 * soon and an update will be issued to notify you. The result of get() and
-	 * getValue() will be outdated. A GUI could show a progress bar or throbber.
+	 * getValue() will be outdated. A GUI could show a progress bar or
+	 * throbber.No value is available.
 	 */
-	Status pending = new Default(false, "Pending");
+	Status pending = new Default(false, "Pending") {
+		@Override
+		public boolean hasValue() {
+			return false;
+		}
+	};
 	/**
 	 * This data is calculated. The get() or getValue() methods will return
 	 * current data. Set() or setValue() might fail.
@@ -134,9 +150,14 @@ public interface Status {
 	Status readonly = new Default(false, "ReadOnly");
 	/**
 	 * Like readonly but at least one input is invalid or wrong. This means a
-	 * machine mistake, NOT a user mistake.
+	 * machine mistake, NOT a user mistake. No value is available.
 	 */
-	Status suspect = new Default(false, "Suspect");
+	Status suspect = new Default(false, "Suspect") {
+		@Override
+		public boolean hasValue() {
+			return false;
+		}
+	};
 	/** Readable and writable. The current value is valid. */
 	Status writeable = new Default(true, "Writeable");
 
@@ -222,6 +243,11 @@ public interface Status {
 
 		@Override
 		public boolean isRelevant() {
+			return true;
+		}
+
+		@Override
+		public boolean hasValue() {
 			return true;
 		}
 	}

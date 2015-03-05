@@ -1,7 +1,7 @@
 
-<div	class="field {{model().status().isValid() ? 'valid' : 'invalid'}}"
+<div	class="field {{status(model()).isValid() ? 'valid' : 'invalid'}}"
 		xng-show="model().status().isRelevant()">
 	<span class="label">{{label}}:</span>
 	<ng-transclude></ng-transclude>
-	{{status(model())}} |   {{model().status().toString()}}
+	{{status(model())}}
 </div>
