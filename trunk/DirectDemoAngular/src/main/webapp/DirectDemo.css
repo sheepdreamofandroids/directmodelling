@@ -15,6 +15,12 @@
     float: left;
 }
 
+.status {
+    float: right;
+    d
+;
+    color: lightgray;
+}
 .field input {
     /* float: left; */
     

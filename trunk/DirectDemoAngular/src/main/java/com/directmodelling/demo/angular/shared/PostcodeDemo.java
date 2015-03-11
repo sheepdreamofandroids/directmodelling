@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Value.Mutable;
+import com.directmodelling.impl.Function;
 import com.directmodelling.impl.IntVar;
 import com.directmodelling.impl.ObjectFun;
 import com.directmodelling.impl.Range;
@@ -85,4 +86,17 @@ public class PostcodeDemo implements Serializable {
 					.getValue());
 		};
 	};
+
+	public final Function<String> strad = new Function<String>() {
+		@Override
+		public String getValue() {
+			return result.status().isValid() ? result.get().stad : "";
+		}
+
+		@Override
+		public Status status() {
+			return result.status();
+		}
+	};
+
 }
