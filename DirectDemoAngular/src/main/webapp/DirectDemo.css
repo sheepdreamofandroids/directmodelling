@@ -17,9 +17,8 @@
 
 .status {
     float: right;
-    d
-;
-    color: lightgray;
+    color: darkgray;
+    overflow: hidden; 
 }
 .field input {
     /* float: left; */

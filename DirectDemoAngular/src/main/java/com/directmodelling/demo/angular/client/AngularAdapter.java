@@ -3,6 +3,7 @@ package com.directmodelling.demo.angular.client;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Value;
 import com.directmodelling.demo.angular.shared.PostcodeDemo;
+import com.directmodelling.properties.HasMinimum;
 
 public class AngularAdapter {
 
@@ -30,6 +31,7 @@ public class AngularAdapter {
 							s.status = function(s) {
 								return @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;)(s);
 							};
+							s.intMin = @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;);
 						}, zip);
 	}-*/;
 
@@ -39,6 +41,15 @@ public class AngularAdapter {
 
 	public static int getInt(Value<Integer> m) {
 		return m.getValue();
+	}
+
+	public static double getIntMin(Object o) {
+		if (!(o instanceof HasMinimum))
+			return 0;
+		Comparable min = ((HasMinimum) o).getMinimum();
+		if (!(min instanceof Number))
+			return 0;
+		return ((Number) min).doubleValue();
 	}
 
 	public static void set(Value.Mutable<Object> m, Object o) {

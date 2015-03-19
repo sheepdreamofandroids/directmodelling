@@ -16,6 +16,7 @@ public class Address {
 					: new Status.Invalid.Format();
 		};
 	};
+	public final Adres adres = new Adres(postcode);
 
 	public final PostcodeLookup lookup = new PostcodeLookup(postcode);
 

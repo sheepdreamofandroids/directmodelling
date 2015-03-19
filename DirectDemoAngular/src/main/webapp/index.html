@@ -121,6 +121,13 @@ https://github.com/google/material-design-icons
 				<dm-field model='model.postcode()' label='Postcode'>{{model.postcode().getValue()}}</dm-field>
 				<dm-field model='model.result().stad()' label='Stad'>{{model.result().stad().getValue()}}</dm-field>
 				<dm-field model='model.result().straat()' label='Straat'>{{model.result().straat().getValue()}}</dm-field>
+				<dm-field model='model.houseNumber()' label='Huisnummer'>
+					<md-slider ng-model="asInt(model.houseNumber())" min="{{model.houseNumber().getMinimum().intValue()}}" max="500" ng-model-options="{getterSetter: true}"></md-slider>
+				</dm-field>
+				min: model}}
+				min: model.houseNumber()}}
+				min: {{model.houseNumber().getMinimum()}}
+				min: model.houseNumber().getMinimum().intValue()}}
 			</form>
 
             </md-content>

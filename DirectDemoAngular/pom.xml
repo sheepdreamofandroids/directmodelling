@@ -42,6 +42,12 @@
 						<fileset>
 							<directory>src/main/webapp/directdemo</directory>
 						</fileset>
+						<fileset>
+							<directory>src/main/webapp/WEB-INF/classes</directory>
+						</fileset>
+						<fileset>
+							<directory>src/main/webapp/WEB-INF/lib</directory>
+						</fileset>
 					</filesets>
 				</configuration>
 			</plugin>

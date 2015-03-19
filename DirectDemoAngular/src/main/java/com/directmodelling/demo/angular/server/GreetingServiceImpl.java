@@ -106,7 +106,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		// init.postcodeDemo = new PostcodeDemo();
 		// init.calculator = new Calculator();
 
-		perThreadResponse.get().addHeader("Access-Control-Allow-Origin", "*");
+		// perThreadResponse.get().addHeader("Access-Control-Allow-Origin",
+		// "*");
 		return init;
 	}
 
