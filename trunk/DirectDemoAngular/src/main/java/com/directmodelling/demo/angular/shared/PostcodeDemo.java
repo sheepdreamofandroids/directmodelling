@@ -54,4 +54,8 @@ public class PostcodeDemo implements Serializable {
 		return digits;
 	}
 
+	public final Adres adres() {
+		return adres;
+	}
+
 }

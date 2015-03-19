@@ -17,6 +17,7 @@
 package com.directmodelling.stm.impl;
 
 import java.io.Serializable;
+import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -169,8 +170,14 @@ public class VersionImpl extends AbstractStorage implements Version,
 
 	@Override
 	public String toString() {
+		String vals;
+		try {
+			vals = values.toString();
+		} catch (ConcurrentModificationException e) {
+			vals = "~~~concurrently modified~~~";
+		}
 		return "Version@" + System.identityHashCode(this) + " " + token + " : "
-				+ values + "   parent: " + parent;
+				+ vals + "   parent: " + parent;
 	}
 
 	public void initializeValues(final Version storage) {

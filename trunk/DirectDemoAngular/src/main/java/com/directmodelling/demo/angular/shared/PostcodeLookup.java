@@ -102,6 +102,12 @@ public class PostcodeLookup extends
 			this.minHuisnummer = minHuisnummer;
 			this.maxHuisnummer = maxHuisnummer;
 		}
+
+		@Override
+		public String toString() {
+			return straat + ' ' + minHuisnummer + '-' + maxHuisnummer + " / "
+					+ stad;
+		}
 	}
 
 	public static final SingleAssignContext<Impl<String, PostcodeLookupResult>> impl = Context.SESSION
