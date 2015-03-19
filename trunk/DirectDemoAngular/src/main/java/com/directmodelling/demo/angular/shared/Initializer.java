@@ -7,14 +7,11 @@ import com.directmodelling.synchronization.RemoteFunction.Impl;
 
 public abstract class Initializer extends DirectInit {
 
-	public final PostcodeDemo demo;
-	public final ID postcodeCacheID;
-
 	{
-		postcodeCacheID = ID.generator.it().createID();
-		PostcodeLookup.impl.init(postcodeImpl(postcodeCacheID));
-		demo = new PostcodeDemo();// must be after PostcodeLookup.impl.init
+		PostcodeLookup.impl.init(postcodeImpl(ID.generator.it().createID()));
 	}
+	public final PostcodeDemo demo = new PostcodeDemo();// must be after
+														// PostcodeLookup.impl.init
 
 	protected abstract Impl<String, PostcodeLookupResult> postcodeImpl(
 			ID postcodeCacheID);
