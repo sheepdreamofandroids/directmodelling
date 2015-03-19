@@ -117,17 +117,14 @@ https://github.com/google/material-design-icons
     		<form name="userForm" layout="column" ng-controller="DirectAngularController">
 				<dm-number model='model.digits()' label='Cijfers'></dm-number>
 				<dm-text model='model.letters()' label='Letters'></dm-text>
-				<dm-number model='model.houseNumber()' label='Huisnummer'></dm-number>
-				<dm-field model='model.postcode()' label='Postcode'>{{model.postcode().getValue()}}</dm-field>
-				<dm-field model='model.result().stad()' label='Stad'>{{model.result().stad().getValue()}}</dm-field>
-				<dm-field model='model.result().straat()' label='Straat'>{{model.result().straat().getValue()}}</dm-field>
-				<dm-field model='model.houseNumber()' label='Huisnummer'>
-					<md-slider ng-model="asInt(model.houseNumber())" min="{{model.houseNumber().getMinimum().intValue()}}" max="500" ng-model-options="{getterSetter: true}"></md-slider>
+				<dm-number model='model.adres().houseNumber()' label='Huisnummer'></dm-number>
+				<dm-field model='model.adres().postcode()' label='Postcode'>{{model.adres().postcode().getValue()}}</dm-field>
+				<dm-field model='model.result().stad()' label='Stad'>{{model.adres().result().stad().getValue()}}</dm-field>
+				<dm-field model='model.result().straat()' label='Straat'>{{model.adres().result().straat().getValue()}}</dm-field>
+				<dm-field model='model.adres().houseNumber()' label='Huisnummer'>
+					<md-slider ng-model="asInt(model.adres().houseNumber())" min="{{model.adres().houseNumber().getMinimum().intValue()}}" max="500" ng-model-options="{getterSetter: true}" aria-label="Huisnummer"></md-slider>
 				</dm-field>
-				min: model}}
-				min: model.houseNumber()}}
-				min: {{model.houseNumber().getMinimum()}}
-				min: model.houseNumber().getMinimum().intValue()}}
+				min: {{model.adres().houseNumber().getMinimum()}}
 			</form>
 
             </md-content>
