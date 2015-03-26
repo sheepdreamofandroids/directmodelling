@@ -54,8 +54,12 @@ window.gwtStarted = function(adapter, model) {
 
 	.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
 		$scope.toggleSidenav = function(menuId) {
-    	$mdSidenav(menuId).toggle();
+    		$mdSidenav(menuId).toggle();
   		};
+  		$scope.tab=0;
+  		$scope.choose = function(section) {
+  			$scope.tab = section;
+  		}
  	}]);
  	
 	angular.bootstrap(document, [ 'directAngular' ]);

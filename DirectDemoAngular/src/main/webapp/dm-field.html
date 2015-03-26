@@ -1,7 +1,18 @@
-
+<!--
 <div	class="field {{status(model()).isValid() ? 'valid' : 'invalid'}}"
 		xng-show="model().status().isRelevant()">
 	<span class="label">{{label}}:</span>
 	<span class="status">{{status(model()).toString()}}</span>
 	<ng-transclude></ng-transclude>
 </div>
+-->
+<md-input-container>
+	<label>{{label}}</label>
+	<ng-transclude></ng-transclude>
+	<div ng-messages="status(model()).toString()">
+		<div ng-message="Format">This is written wrongly.</div>
+		<div ng-message="TooHigh">This is too high.</div>
+		<div ng-message="TooLow">This is too low.</div>
+	</div>
+</md-input-container>
+        

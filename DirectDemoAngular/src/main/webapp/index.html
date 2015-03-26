@@ -109,24 +109,43 @@ https://github.com/google/material-design-icons
 
     <div layout="row" flex>
         <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-sm')">
-          
+        	<md-button class="xmd-raised" ng-click="choose('address_single');">Een veld</md-button>
+        	<md-button class="xmd-raised" ng-click="choose('address_double');">Twee velden</md-button>
+        	<md-button class="xmd-raised" ng-click="choose('nada');">Niets</md-button>
+        	<ul>
+        		<li><a href="#" ng-click="choose('address_single');">Een veld</a></li>
+        		<li><a href="#" ng-click="choose('address_double');">Twee velden</a></li>
+        		
+        	</ul>
         </md-sidenav>
-        <div layout="column" flex id="content">
+        <div layout="column" flex id="content" class="{{section}}">
             <md-content layout="column" flex class="md-padding">
-              
-    		<form name="userForm" layout="column" ng-controller="DirectAngularController">
-				<dm-number model='model.digits()' label='Cijfers'></dm-number>
-				<dm-text model='model.letters()' label='Letters'></dm-text>
-				<dm-number model='model.adres().houseNumber()' label='Huisnummer'></dm-number>
-				<dm-field model='model.adres().postcode()' label='Postcode'>{{model.adres().postcode().getValue()}}</dm-field>
-				<dm-field model='model.result().stad()' label='Stad'>{{model.adres().result().stad().getValue()}}</dm-field>
-				<dm-field model='model.result().straat()' label='Straat'>{{model.adres().result().straat().getValue()}}</dm-field>
-				<dm-field model='model.adres().houseNumber()' label='Huisnummer'>
-					<md-slider ng-model="asInt(model.adres().houseNumber())" min="{{model.adres().houseNumber().getMinimum().intValue()}}" max="500" ng-model-options="{getterSetter: true}" aria-label="Huisnummer"></md-slider>
-				</dm-field>
-				min: {{model.adres().houseNumber().getMinimum()}}
-			</form>
-
+				<ng-switch on="tab">
+					<form name="userForm" layout="column" ng-controller="DirectAngularController" ng-switch-when="address_single">
+						<dm-number model='model.digits()' label='Cijfers'></dm-number>
+						<dm-text model='model.letters()' label='Letters'></dm-text>
+						<dm-number model='model.adres().houseNumber()' label='Huisnummer'></dm-number>
+						<dm-field model='model.adres().postcode()' label='Postcode'>{{model.adres().postcode().getValue()}}</dm-field>
+						<dm-field model='model.result().stad()' label='Stad'>{{model.adres().result().stad().getValue()}}</dm-field>
+						<dm-field model='model.result().straat()' label='Straat'>{{model.adres().result().straat().getValue()}}</dm-field>
+						<dm-field model='model.adres().houseNumber()' label='Huisnummer'>
+							<md-slider ng-model="asInt(model.adres().houseNumber())" min="{{minInt(model.adres().houseNumber())}}" max="999" ng-model-options="{getterSetter: true}" aria-label="Huisnummer"></md-slider>
+						</dm-field>
+						min: {{minInt(model.adres().houseNumber())}}
+					</form>
+					<form name="userForm" layout="column" ng-controller="DirectAngularController" ng-switch-when="address_double">
+						<dm-number model='model.digits()' label='Cijfers'></dm-number>
+						<dm-text model='model.letters()' label='Letters'></dm-text>
+						<dm-number model='model.adres().houseNumber()' label='Huisnummer'></dm-number>
+						<dm-field model='model.adres().postcode()' label='Postcode'>{{model.adres().postcode().getValue()}}</dm-field>
+						<dm-field model='model.result().stad()' label='Stad'>{{model.adres().result().stad().getValue()}}</dm-field>
+						<dm-field model='model.result().straat()' label='Straat'>{{model.adres().result().straat().getValue()}}</dm-field>
+						<dm-field model='model.adres().houseNumber()' label='Huisnummer'>
+							<md-slider ng-model="asInt(model.adres().houseNumber())" min="{{minInt(model.adres().houseNumber())}}" max="999" ng-model-options="{getterSetter: true}" aria-label="Huisnummer"></md-slider>
+						</dm-field>
+						min: {{minInt(model.adres().houseNumber())}}
+					</form>
+				</ng-switch>
             </md-content>
         </div>
     </div>
