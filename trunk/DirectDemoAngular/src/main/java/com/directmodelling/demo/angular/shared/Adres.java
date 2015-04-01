@@ -13,7 +13,7 @@ public class Adres {
 	public Adres(Value<String> postcode) {
 		this.postcode = postcode;
 		result = new PostcodeLookup(postcode);
-		houseNumber = new Range<Integer>(0, result.minHuisnummer,
+		houseNumber = new Range<Integer>(100, result.minHuisnummer,
 				result.maxHuisnummer) {
 		};
 	}

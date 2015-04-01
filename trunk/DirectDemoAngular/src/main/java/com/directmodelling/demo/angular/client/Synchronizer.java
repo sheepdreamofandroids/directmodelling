@@ -117,8 +117,8 @@ public class Synchronizer {
 				poll();
 				GWT.log("Polled " + result);
 				// TODO check compatibility of result with changes
-				result.commitTo(baseValues);
-				changes.reset();
+				result.commitTo(changes);
+				// changes.reset();
 				apply();
 			}
 		});
