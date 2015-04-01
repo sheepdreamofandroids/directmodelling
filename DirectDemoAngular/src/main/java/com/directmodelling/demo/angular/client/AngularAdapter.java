@@ -3,6 +3,7 @@ package com.directmodelling.demo.angular.client;
 import com.directmodelling.api.Status;
 import com.directmodelling.api.Value;
 import com.directmodelling.demo.angular.shared.PostcodeDemo;
+import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
 
 public class AngularAdapter {
@@ -28,10 +29,16 @@ public class AngularAdapter {
 									return @com.directmodelling.demo.angular.client.AngularAdapter::get(Lcom/directmodelling/api/Value;)(m);
 								};
 							};
-							s.status = function(s) {
+						 	s.status = @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;);
+							s.Xstatus = function(s) {
 								return @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;)(s);
 							};
-							s.intMin = @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;);
+							s.minimum = @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;);
+							s.Xminimum = function(o) {
+								return @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;)(o);
+							};
+							s.maximum = @com.directmodelling.demo.angular.client.AngularAdapter::maximum(Ljava/lang/Object;);
+							s.log = function(o) {console.log(o);};
 						}, zip);
 	}-*/;
 
@@ -50,6 +57,15 @@ public class AngularAdapter {
 		if (!(min instanceof Number))
 			return 0;
 		return ((Number) min).doubleValue();
+	}
+
+	public static double maximum(Object o) {
+		if (!(o instanceof HasMaximum))
+			return 0;
+		Comparable max = ((HasMaximum) o).getMaximum();
+		if (!(max instanceof Number))
+			return 0;
+		return ((Number) max).doubleValue();
 	}
 
 	public static void set(Value.Mutable<Object> m, Object o) {

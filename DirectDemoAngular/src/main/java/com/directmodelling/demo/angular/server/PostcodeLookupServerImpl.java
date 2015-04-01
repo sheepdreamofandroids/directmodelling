@@ -22,6 +22,8 @@ public class PostcodeLookupServerImpl implements
 					e.printStackTrace();
 				} catch (NumberFormatException nfe) {
 					minHuisNr = 0;
+				} catch (StringIndexOutOfBoundsException e) {
+					minHuisNr = 0;
 				} finally {
 					callback.result(zip,
 							new PostcodeLookupResult(zip + "straat", zip

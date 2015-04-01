@@ -112,38 +112,31 @@ https://github.com/google/material-design-icons
         	<md-button class="xmd-raised" ng-click="choose('address_single');">Een veld</md-button>
         	<md-button class="xmd-raised" ng-click="choose('address_double');">Twee velden</md-button>
         	<md-button class="xmd-raised" ng-click="choose('nada');">Niets</md-button>
-        	<ul>
-        		<li><a href="#" ng-click="choose('address_single');">Een veld</a></li>
-        		<li><a href="#" ng-click="choose('address_double');">Twee velden</a></li>
-        		
-        	</ul>
         </md-sidenav>
         <div layout="column" flex id="content" class="{{section}}">
             <md-content layout="column" flex class="md-padding">
 				<ng-switch on="tab">
 					<form name="userForm" layout="column" ng-controller="DirectAngularController" ng-switch-when="address_single">
-						<dm-number model='model.digits()' label='Cijfers'></dm-number>
-						<dm-text model='model.letters()' label='Letters'></dm-text>
-						<dm-number model='model.adres().houseNumber()' label='Huisnummer'></dm-number>
-						<dm-field model='model.adres().postcode()' label='Postcode'>{{model.adres().postcode().getValue()}}</dm-field>
-						<dm-field model='model.result().stad()' label='Stad'>{{model.adres().result().stad().getValue()}}</dm-field>
-						<dm-field model='model.result().straat()' label='Straat'>{{model.adres().result().straat().getValue()}}</dm-field>
-						<dm-field model='model.adres().houseNumber()' label='Huisnummer'>
-							<md-slider ng-model="asInt(model.adres().houseNumber())" min="{{minInt(model.adres().houseNumber())}}" max="999" ng-model-options="{getterSetter: true}" aria-label="Huisnummer"></md-slider>
-						</dm-field>
-						min: {{minInt(model.adres().houseNumber())}}
+						{{log(model)}}
+						{{log(model.adres1())}}
+						{{log(model.adres1().adres())}}
+						{{log(model.adres1().adres().postcode())}}
+						<dm-text model='model.adres1().adres().postcode()' label='Postcode'></dm-text>
+						<dm-number model='model.adres1().adres().houseNumber()' label='Huisnummer'></dm-number>
+						<dm-field model='model.adres1().adres().result().stad()' label='Stad'>{{model.adres1().adres().result().stad().getValue()}}</dm-field>
+						<dm-field model='model.adres1().adres().result().straat()' label='Straat'>{{model.adres1().adres().result().straat().getValue()}}</dm-field>
+						huisnummer min: {{minimum(model.adres1().adres().houseNumber())}} | max: {{maximum(model.adres1().adres().houseNumber())}}
 					</form>
 					<form name="userForm" layout="column" ng-controller="DirectAngularController" ng-switch-when="address_double">
-						<dm-number model='model.digits()' label='Cijfers'></dm-number>
-						<dm-text model='model.letters()' label='Letters'></dm-text>
-						<dm-number model='model.adres().houseNumber()' label='Huisnummer'></dm-number>
-						<dm-field model='model.adres().postcode()' label='Postcode'>{{model.adres().postcode().getValue()}}</dm-field>
-						<dm-field model='model.result().stad()' label='Stad'>{{model.adres().result().stad().getValue()}}</dm-field>
-						<dm-field model='model.result().straat()' label='Straat'>{{model.adres().result().straat().getValue()}}</dm-field>
-						<dm-field model='model.adres().houseNumber()' label='Huisnummer'>
-							<md-slider ng-model="asInt(model.adres().houseNumber())" min="{{minInt(model.adres().houseNumber())}}" max="999" ng-model-options="{getterSetter: true}" aria-label="Huisnummer"></md-slider>
-						</dm-field>
-						min: {{minInt(model.adres().houseNumber())}}
+						<dm-number model='model.adres2().digits()' label='Cijfers'></dm-number>
+						<dm-text model='model.adres2().letters()' label='Letters'></dm-text>
+						<dm-number model='model.adres2().adres().houseNumber()' label='Huisnummer'></dm-number>
+						<dm-field model='model.adres2().adres().postcode()' label='Postcode'>{{model.adres2().adres().postcode().getValue()}}</dm-field>
+						<dm-field model='model.adres2().adres().result().stad()' label='Stad'>{{model.adres2().adres().result().stad().getValue()}}</dm-field>
+						<dm-field model='model.adres2().adres().result().straat()' label='Straat'>{{model.adres2().adres().result().straat().getValue()}}</dm-field>
+						<dm-slider model='model.adres2().adres().houseNumber()' label='Huisnummer'></dm-slider>
+						min: {{minimum(model.adres2().adres().houseNumber())}}
+						max: {{maximum(model.adres2().adres().houseNumber())}}
 					</form>
 				</ng-switch>
             </md-content>

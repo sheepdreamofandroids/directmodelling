@@ -19,6 +19,7 @@ window.gwtStarted = function(adapter, model) {
 			},
 			controller : function($scope) {
 				adapter($scope);
+				//console.log($scope.model());
 			},
 			templateUrl : 'dm-field.html',
 		}
@@ -35,6 +36,19 @@ window.gwtStarted = function(adapter, model) {
 				model : '&'
 			},
 			templateUrl : 'dm-number.html',
+		}
+	})
+
+	.directive('dmSlider', function() {
+		return {
+			controller : function($scope) {
+				adapter($scope);
+			},
+			scope : {
+				label : '@',
+				model : '&'
+			},
+			templateUrl : 'dm-slider.html',
 		}
 	})
 
