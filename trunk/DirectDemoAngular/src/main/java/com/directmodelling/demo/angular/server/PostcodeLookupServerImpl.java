@@ -20,9 +20,8 @@ public class PostcodeLookupServerImpl implements
 					minHuisNr = Integer.parseInt(zip.substring(0, 3));
 				} catch (final InterruptedException e) {
 					e.printStackTrace();
-				} catch (NumberFormatException nfe) {
-					minHuisNr = 0;
-				} catch (StringIndexOutOfBoundsException e) {
+				} catch (NumberFormatException
+						| StringIndexOutOfBoundsException e) {
 					minHuisNr = 0;
 				} finally {
 					callback.result(zip,

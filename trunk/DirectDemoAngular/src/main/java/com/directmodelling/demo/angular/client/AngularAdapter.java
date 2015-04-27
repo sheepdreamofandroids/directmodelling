@@ -29,14 +29,10 @@ public class AngularAdapter {
 									return @com.directmodelling.demo.angular.client.AngularAdapter::get(Lcom/directmodelling/api/Value;)(m);
 								};
 							};
+							s.get = function(o) {return o.@com.directmodelling.api.Value::getValue()();};
+							s.set = function(o,v) {return o.@com.directmodelling.api.Value.Mutable::setValue(TT;)(v);};
 						 	s.status = @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;);
-							s.Xstatus = function(s) {
-								return @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;)(s);
-							};
 							s.minimum = @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;);
-							s.Xminimum = function(o) {
-								return @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;)(o);
-							};
 							s.maximum = @com.directmodelling.demo.angular.client.AngularAdapter::maximum(Ljava/lang/Object;);
 							s.log = function(o) {console.log(o);};
 						}, zip);
