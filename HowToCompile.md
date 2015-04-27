@@ -1,0 +1,12 @@
+# Introduction #
+
+These instructions assume Eclipse with these plugins: Subversive, M2Eclipse, Google plugin (only needed for GWT projects), Android Development Tools plugin (for Android Demo Project)
+
+
+# Details #
+
+  * Select all projects under Trunk and choose Check Out
+  * When done, select all projects except DirectDemoAndroid
+  * from the context menu choose Maven/Enable Dependency Management
+  * select DirectDemoAndroid and choose Android Tools / Fix Project Properties
+  * select DirectDemoGWT and choose Google / Web Toolkit Settings..., enable GWT and choose GWT 2.1.1
