@@ -181,6 +181,13 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
+				<artifactId>DirectModelling</artifactId>
+				<classifier>sources</classifier>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>DirectDemoModel</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -189,6 +196,19 @@
 				<artifactId>DirectDemoModel</artifactId>
 				<classifier>sources</classifier>
 				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>DirectAngular</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>DirectAngular</artifactId>
+				<classifier>sources</classifier>
+				<version>${project.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -200,6 +220,7 @@
 				<artifactId>DirectGWT</artifactId>
 				<classifier>sources</classifier>
 				<version>${project.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
@@ -291,7 +312,7 @@
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava-gwt</artifactId>
-				<version>16.0.1</version>
+				<version>18.0</version>
 			</dependency>
 
 			<dependency>

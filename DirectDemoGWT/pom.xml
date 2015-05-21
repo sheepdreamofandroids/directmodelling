@@ -115,6 +115,10 @@
 			<artifactId>DirectDemoModel</artifactId>
 			<classifier>sources</classifier>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.gwt.inject</groupId>
+			<artifactId>gin</artifactId>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>

@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>
  -->
 <module>
-	<inherits name='com.google.gwt.inject.Inject' />
+	<!-- <inherits name='com.google.gwt.inject.Inject' /> -->
 	<!-- <inherits name='com.directmodelling.Value' /> -->
 	<inherits name='com.google.gwt.user.User' />
 

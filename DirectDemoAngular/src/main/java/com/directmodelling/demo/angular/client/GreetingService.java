@@ -38,19 +38,18 @@ public interface GreetingService extends RemoteService {
 
 	Init getInitial();
 
+	/**
+	 * GWT serialization only generates serialization code for those types that
+	 * are statically known to be serialized. This is only fully known for data
+	 * sent from client to server since the compiler sees all code and there is
+	 * no reflection. Sending other types (server to client) will result in
+	 * runtime errors. To avoid such runtime errors, add such types as fields
+	 * here to let the GWT compiler know.
+	 * 
+	 * @author BloemsmaGC
+	 *
+	 */
 	public static class MakeSerializable implements IsSerializable {
-		// Value<?> value;
-		// Number dummy1;
-
-		// Storage dummy2;
-		// ListVar<String> gwtDummy = new ListVar<String>() {
-		// };
-
-		// TransactionImpl dummy3;
-		//
-		// VersionImpl dummy4;
-		//
-		// DemoModel.MyDoubleVar dummy5;
 		public ID id;
 		public PostcodeLookupResult result;
 		IsCalculating isCalculating;

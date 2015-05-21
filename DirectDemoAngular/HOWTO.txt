@@ -1,0 +1,11 @@
+Debugging in eclipse:
+
+right-click on project -> Google -> Web Toolkit Settings...
+enable "Use Google Web Toolkit"
+navigate to Google / Web Application (left navigation column)
+enable "This project has a WAR directory"
+set the folder to "src/main/webapp"
+enable "Launch and deploy from this directory..."
+
+Now Debug the "DirectDemoAngular SDM" launch configuration (in parent project)
+Surf to "http://localhost:8765/"  (not 127.0.0.1)

@@ -6,6 +6,7 @@ import com.directmodelling.demo.angular.shared.PostcodeDemo;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
 
+
 public class AngularAdapter {
 
 	// DemoModel model, Calculator calc,
@@ -30,7 +31,7 @@ public class AngularAdapter {
 								};
 							};
 							s.get = function(o) {return o.@com.directmodelling.api.Value::getValue()();};
-							s.set = function(o,v) {return o.@com.directmodelling.api.Value.Mutable::setValue(TT;)(v);};
+							s.set = function(o,v) {return o.@com.directmodelling.api.Value.Mutable::setValue(Ljava/lang/Object;)(v);};
 						 	s.status = @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;);
 							s.minimum = @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;);
 							s.maximum = @com.directmodelling.demo.angular.client.AngularAdapter::maximum(Ljava/lang/Object;);
