@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.demo.angular.server;
+package com.directmodelling.server;
 
 import java.io.IOException;
 import java.util.Set;
@@ -27,8 +27,9 @@ import javax.servlet.http.HttpSession;
 import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Receiver;
-import com.directmodelling.demo.angular.client.GreetingService;
-import com.directmodelling.demo.angular.client.Init;
+import com.directmodelling.gwt.sync.SyncService;
+import com.directmodelling.impl.DirectInit;
+import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.synchronization.RemoteServerImpl;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -37,13 +38,19 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
+public class SyncServiceImpl extends RemoteServiceServlet implements
+		SyncService {
+
+	public SyncServiceImpl(DirectInit initializer) {
+		this.initializer = initializer;
+		initializer.init();
+	}
+
 	/** attribute name of longpoll thread in session */
-	private static final String SESSION_THREAD = GreetingServiceImpl.class
+	private static final String SESSION_THREAD = SyncServiceImpl.class
 			.getName() + ".thread";
 	// Map<Object, Object> postcodes = new MapRecorder<Object, Object>();
-	final ServerInitializer initializer = new ServerInitializer();
+	final DirectInit initializer;
 
 	// DemoModel model = new DemoModel();
 	// public Version serverValues = initializer.baseValues;
@@ -90,24 +97,24 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public MakeSerializable dummy(final MakeSerializable dummy) {
 		// TODO Auto-generated method stub
-		dummy.id = ID.generator.it().createID();
+		// dummy.id = ID.generator.it().createID();
 		return dummy;
 	}
 
 	@Override
-	public Init getInitial() {
+	public Version initial() {
 		// TODO use update() instead?
-		final Init init = new Init();
+		// final Init init = new Init();
 		// new PostcodeDemo();
 		initializer.changes.commitTo(initializer.baseValues);
-		init.storage = initializer.baseValues;
+		// init.storage = initializer.baseValues;
 		// init.model = model;
 		// init.postcodeCacheID = postcodeLookupImpl.id();
 		// init.postcodeDemo = new PostcodeDemo();
 		// init.calculator = new Calculator();
 
 		perThreadResponse.get().addHeader("Access-Control-Allow-Origin", "*");
-		return init;
+		return initializer.baseValues;
 	}
 
 	@Override
@@ -140,10 +147,12 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 			@Override
 			public void valuesChanged() {
 				HttpSession session = SESSION.get();
-				Thread longPollThread = (Thread) session
-						.getAttribute(SESSION_THREAD);
-				if (longPollThread != null)
-					longPollThread.interrupt();
+				if (session != null) {
+					Thread longPollThread = (Thread) session
+							.getAttribute(SESSION_THREAD);
+					if (longPollThread != null)
+						longPollThread.interrupt();
+				}
 			}
 		});
 	}
@@ -166,4 +175,5 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	public static final ThreadLocal<HttpSession> SESSION = new InheritableThreadLocal<>();
 	public static final ThreadLocal<HttpServletRequest> REQUEST = new InheritableThreadLocal<>();
 	public static final ThreadLocal<HttpServletResponse> RESPONSE = new InheritableThreadLocal<>();
+
 }

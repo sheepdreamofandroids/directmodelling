@@ -22,12 +22,6 @@ import com.directmodelling.impl.DirectInit;
 public class DirectSwingInit extends DirectInit {
 	public static DirectSwingInit INSTANCE = new DirectSwingInit();
 
-	/**
-	 * 
-	 */
-	public static void init() {
-	}
-
 	@Override
 	protected Tracker updatesTracker() {
 		return new SwingUpdateTracker();

@@ -21,20 +21,40 @@ import com.directmodelling.api.Updates.Tracker;
 import com.directmodelling.demo.angular.shared.Initializer;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
 import com.directmodelling.gwt.GWTUpdateTracker;
+import com.directmodelling.gwt.sync.Synchronizer;
 import com.directmodelling.synchronization.RemoteClientImpl;
+import com.directmodelling.synchronization.RemoteFunction;
 import com.directmodelling.synchronization.RemoteFunction.Impl;
+import com.directmodelling.synchronization.RemoteFunction.Impl.AsyncFunction;
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 
 /** Bits and pieces I don't have a good place for yet. */
 public class ClientInitializer extends Initializer {
-	{
+
+	private MySyncServiceAsync greetingService;
+
+	public ClientInitializer(MySyncServiceAsync greetingService) {
+		this.greetingService = greetingService;
+		// init();
 	}
 
 	@Override
 	protected Impl<String, PostcodeLookupResult> postcodeImpl(ID postcodeCacheID) {
-		Synchronizer.it.init(new Synchronizer(baseValues, changes));
+		Synchronizer.it.init(new Synchronizer(baseValues, changes,
+				greetingService));
 		return new RemoteClientImpl<String, PostcodeLookupResult>(
-				postcodeCacheID, Synchronizer.it.it()
-						.<String, PostcodeLookupResult> asFunction());
+				postcodeCacheID,
+				Suppliers.memoize(//
+						new Supplier<RemoteFunction.Impl.AsyncFunction<String, PostcodeLookupResult>>() {
+
+							@Override
+							public AsyncFunction<String, PostcodeLookupResult> get() {
+								return Synchronizer.it
+										.it()
+										.<String, PostcodeLookupResult> asFunction();
+							}
+						}));
 	}
 
 	@Override

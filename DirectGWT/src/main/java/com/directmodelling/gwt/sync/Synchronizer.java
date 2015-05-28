@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.demo.angular.client;
+package com.directmodelling.gwt.sync;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,14 +38,15 @@ public class Synchronizer {
 	public static final SingleAssignContext<Synchronizer> it = Context.SESSION
 			.it().create();
 
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final SyncServiceAsync syncService;
+	//= GWT			.create(SyncService.class);
 	private Version baseValues;
 	private TransactionImpl changes;
 
-	public Synchronizer(Version baseValues, TransactionImpl changes) {
+	public Synchronizer(Version baseValues, TransactionImpl changes,SyncServiceAsync syncService) {
 		this.baseValues = baseValues;
 		this.changes = changes;
+		this.syncService = syncService;
 		;
 	}
 
@@ -74,7 +75,7 @@ public class Synchronizer {
 					final TransactionImpl t = new TransactionImpl();
 					changes.moveTo(t);
 					changes.reset();
-					greetingService.update(t, requestedValues,
+					syncService.update(t, requestedValues,
 							new AsyncCallback<TransactionImpl>() {
 
 								@Override
@@ -104,7 +105,7 @@ public class Synchronizer {
 	}
 
 	public void poll() {
-		greetingService.longPoll(new AsyncCallback<TransactionImpl>() {
+		syncService.longPoll(new AsyncCallback<TransactionImpl>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

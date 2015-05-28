@@ -6,6 +6,7 @@ import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates.Tracker;
 import com.directmodelling.demo.angular.shared.Initializer;
 import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
+import com.directmodelling.server.SessionBasedUpdatesTracker;
 import com.directmodelling.synchronization.RemoteServerImpl;
 import com.directmodelling.synchronization.RemoteFunction.Impl;
 

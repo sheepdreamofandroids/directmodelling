@@ -10,7 +10,7 @@ public class PostcodeLookupServerImpl implements
 
 	@Override
 	public void apply(RemoteFunction<String, PostcodeLookupResult> requester,
-			String zip, ResultCallback<String, PostcodeLookupResult> callback) {
+			final String zip, final ResultCallback<String, PostcodeLookupResult> callback) {
 		new Thread() {
 			@Override
 			public void run() {

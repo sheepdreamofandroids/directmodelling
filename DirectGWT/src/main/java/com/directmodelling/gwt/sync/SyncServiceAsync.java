@@ -14,26 +14,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.demo.angular.client;
+package com.directmodelling.gwt.sync;
 
 import java.util.Set;
 
 import com.directmodelling.api.ID;
-import com.directmodelling.demo.angular.client.GreetingService.MakeSerializable;
+import com.directmodelling.gwt.sync.SyncService.MakeSerializable;
+import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * The client side stub for the RPC service.
+ * @param <MakeSerializable>
  */
-public interface GreetingServiceAsync {
+public interface SyncServiceAsync {
+	
+	void initial(AsyncCallback<Version> callback);
 
 	void update(TransactionImpl t, Set<ID> requestedValues,
 			AsyncCallback<TransactionImpl> callback);
 
 	void longPoll(AsyncCallback<TransactionImpl> callback);
 
-	void getInitial(AsyncCallback<Init> callback);
 
 	void dummy(MakeSerializable dummy, AsyncCallback<MakeSerializable> callback);
 

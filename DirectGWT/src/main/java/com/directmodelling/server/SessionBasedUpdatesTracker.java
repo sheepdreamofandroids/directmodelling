@@ -1,4 +1,4 @@
-package com.directmodelling.demo.angular.server;
+package com.directmodelling.server;
 
 import com.directmodelling.api.Value;
 import com.directmodelling.impl.ExplicitUpdatesTracker;

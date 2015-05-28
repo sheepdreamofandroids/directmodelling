@@ -6,12 +6,14 @@ import com.directmodelling.impl.DirectInit;
 import com.directmodelling.synchronization.RemoteFunction.Impl;
 
 public abstract class Initializer extends DirectInit {
-
-	{
+	@Override
+	public void init() {
 		PostcodeLookup.impl.init(postcodeImpl(ID.generator.it().createID()));
+		demo = new PostcodeDemo();// must be after
+		// PostcodeLookup.impl.init
 	}
-	public final PostcodeDemo demo = new PostcodeDemo();// must be after
-														// PostcodeLookup.impl.init
+
+	public PostcodeDemo demo;
 
 	protected abstract Impl<String, PostcodeLookupResult> postcodeImpl(
 			ID postcodeCacheID);
