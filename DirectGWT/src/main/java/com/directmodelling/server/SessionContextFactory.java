@@ -1,4 +1,4 @@
-package com.directmodelling.demo.angular.server;
+package com.directmodelling.server;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,14 +17,14 @@ public class SessionContextFactory implements Context.Factory {
 	private static long counter = 0;
 
 	@Override
-	public <T> Context<T> create(Supplier<T> supplier) {
+	public <T> Context<T> create(final Supplier<T> supplier) {
 		// TODO Auto-generated method stub
 		return new Context<T>() {
 			protected final String key = CLASS_NAME + ++counter;
 
 			@Override
 			public T it() {
-				HttpSession session = GreetingServiceImpl.REQUEST.get()
+				HttpSession session = SyncServiceImpl.REQUEST.get()
 						.getSession(true);
 				@SuppressWarnings("unchecked")
 				T attribute = (T) session.getAttribute(key);

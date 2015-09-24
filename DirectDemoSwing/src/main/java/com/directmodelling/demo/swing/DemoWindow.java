@@ -26,7 +26,7 @@ public class DemoWindow {
 	}
 
 	public static void main(final String[] args) {
-		DirectSwingInit.init();
+		new DirectSwingInit().init();
 
 		final DemoWindowVE ve = new DemoWindowVE();
 		ve.bind(new DemoModel());

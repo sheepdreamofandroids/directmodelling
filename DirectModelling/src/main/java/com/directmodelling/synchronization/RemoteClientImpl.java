@@ -6,14 +6,15 @@ import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
 import com.directmodelling.stm.Storage;
 import com.google.common.base.Optional;
+import com.google.common.base.Supplier;
 
 public class RemoteClientImpl<I, O> implements RemoteFunction.Impl<I, O> {
 
 	private final ID cacheId;
-	private RemoteFunction.Impl.AsyncFunction<I, O> f;
+	private Supplier<com.directmodelling.synchronization.RemoteFunction.Impl.AsyncFunction<I, O>> f;
 
 	public RemoteClientImpl(final ID cacheId,
-			RemoteFunction.Impl.AsyncFunction<I, O> f) {
+			Supplier<RemoteFunction.Impl.AsyncFunction<I, O>> f) {
 		this.cacheId = cacheId;
 		this.f = f;
 	}
@@ -32,7 +33,7 @@ public class RemoteClientImpl<I, O> implements RemoteFunction.Impl<I, O> {
 		final Object p = theCache.get(argument);
 		if (p == null) {
 			theCache.put(argument, IsCalculating.onClient);
-			f.apply(requester, argument,
+			f.get().apply(requester, argument,
 					new RemoteFunction.Impl.ResultCallback<I, O>() {
 						@Override
 						public void result(I i, O o) {

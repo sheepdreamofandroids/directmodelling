@@ -16,8 +16,8 @@
 <!-- BEWARE metadata-complete suppresses a classpath scan for Servlet 3 annotations, this makes startup much faster -->
 	<!-- Servlets -->
 	<servlet>
-		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>com.directmodelling.demo.angular.server.GreetingServiceImpl</servlet-class>
+		<servlet-name>syncServlet</servlet-name>
+		<servlet-class>com.directmodelling.demo.angular.server.MySyncServiceImpl</servlet-class>
 	</servlet>
 
 <!-- 	<servlet> -->
@@ -43,8 +43,8 @@
 <!-- 	</servlet-mapping> -->
 
 	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/directdemo/greet</url-pattern>
+		<servlet-name>syncServlet</servlet-name>
+		<url-pattern>/directdemo/sync</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->

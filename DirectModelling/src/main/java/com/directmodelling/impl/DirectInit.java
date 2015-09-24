@@ -27,4 +27,9 @@ public abstract class DirectInit {
 
 	protected abstract Tracker updatesTracker();
 
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

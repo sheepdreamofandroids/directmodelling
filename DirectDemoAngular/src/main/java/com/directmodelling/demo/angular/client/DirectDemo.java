@@ -22,7 +22,11 @@ import com.directmodelling.api.FloatValue;
 import com.directmodelling.api.IntValue;
 import com.directmodelling.api.Updates;
 import com.directmodelling.api.Value;
-import com.directmodelling.demo.angular.client.GreetingService.MakeSerializable;
+import com.directmodelling.gwt.sync.SyncService;
+import com.directmodelling.gwt.sync.SyncService.MakeSerializable;
+import com.directmodelling.gwt.sync.SyncServiceAsync;
+import com.directmodelling.gwt.sync.Synchronizer;
+import com.directmodelling.stm.Version;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.js.JsExport;
@@ -47,8 +51,8 @@ public class DirectDemo implements EntryPoint {
 	 * Create a remote service proxy to talk to the server-side Greeting
 	 * service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final MySyncServiceAsync greetingService = GWT
+			.create(MySyncService.class);
 
 	/**
 	 * This is the entry point method.
@@ -57,14 +61,13 @@ public class DirectDemo implements EntryPoint {
 	public void onModuleLoad() {
 		makeSerializable();
 
-		final ClientInitializer system = new ClientInitializer();
-		final Synchronizer synchronizer = new Synchronizer(system.baseValues,
-				system.changes);
-		greetingService.getInitial(new AsyncCallback<Init>() {
+		final ClientInitializer system = new ClientInitializer(greetingService);
+		system.init();
+		greetingService.initial(new AsyncCallback<Version>() {
 
 			@Override
-			public void onSuccess(final Init result) {
-				system.baseValues.initializeValues(result.getStorage());
+			public void onSuccess(final Version result) {
+				system.baseValues.initializeValues(result);
 				// Util.current.init(changes);
 				Updates.tracker.runUpdates();
 				// show(result.getModel().a());
@@ -77,7 +80,7 @@ public class DirectDemo implements EntryPoint {
 											// Calculator(),
 						// result.postcodeDemo
 						system.demo);
-				synchronizer.poll();
+				Synchronizer.it.it().poll();
 			}
 
 			@Override
@@ -129,6 +132,20 @@ public class DirectDemo implements EntryPoint {
 
 						}
 					});
+			greetingService.dummy(new FixSerialization(), new AsyncCallback<FixSerialization>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onSuccess(FixSerialization result) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 		}
 	}
 

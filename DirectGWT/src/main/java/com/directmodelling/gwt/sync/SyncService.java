@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *******************************************************************************/
-package com.directmodelling.demo.angular.client;
+package com.directmodelling.gwt.sync;
 
 import java.util.Set;
 
 import com.directmodelling.api.ID;
-import com.directmodelling.demo.angular.shared.PostcodeLookup.PostcodeLookupResult;
+import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
+import com.directmodelling.stm.impl.VersionImpl;
 import com.directmodelling.synchronization.IsCalculating;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -29,14 +30,13 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 /**
  * The client side stub for the RPC service.
  */
-@RemoteServiceRelativePath("greet")
-public interface GreetingService extends RemoteService {
+@RemoteServiceRelativePath("sync")
+public interface SyncService /*extends RemoteService*/ {
+	Version initial();
 
 	TransactionImpl update(TransactionImpl t, Set<ID> toCalc);
 
 	TransactionImpl longPoll();
-
-	Init getInitial();
 
 	/**
 	 * GWT serialization only generates serialization code for those types that
@@ -49,10 +49,10 @@ public interface GreetingService extends RemoteService {
 	 * @author BloemsmaGC
 	 *
 	 */
-	public static class MakeSerializable implements IsSerializable {
-		public ID id;
-		public PostcodeLookupResult result;
-		IsCalculating isCalculating;
+	public class MakeSerializable implements IsSerializable {
+		IsCalculating aCalculating;
+		ID id;
+		VersionImpl versionImpl;
 	}
 
 	MakeSerializable dummy(MakeSerializable dummy);
