@@ -7,3 +7,5 @@ bin
 **/target/*
 **/bin/*
 **/.*/*
+**/src/main/webapp/WEB_INF/deploy
+**/WEB-INF/lib/

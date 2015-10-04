@@ -36,7 +36,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="com.google.gdt.eclipse.maven.mavenClasspathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.DevMode"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -superDevMode -war C:gitdirectmodellingDirectDemoAngularsrcmainwebapp -XjsInteropMode JS -codeServerPort 9876"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-superDevMode -logLevel INFO -port 8765 -remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -war /Volumes/Data/Users/guus/git/directmodelling/DirectDemoAngular/src/main/webapp -XjsInteropMode JS -codeServerPort 9876 com.directmodelling.demo.angular.DirectDemoAngular"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="DirectDemoAngular"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XstartOnFirstThread -Xmx512m"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:DirectDemoAngular}"/>

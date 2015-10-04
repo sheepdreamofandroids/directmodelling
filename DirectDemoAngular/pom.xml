@@ -27,7 +27,7 @@
 	<packaging>war</packaging>
 
 	<build>
-		<outputDirectory>war/WEB-INF/classes</outputDirectory>
+		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<!-- Clean up leftovers from devmode. Try this when devmode gets mysterious 
@@ -47,6 +47,9 @@
 						</fileset>
 						<fileset>
 							<directory>src/main/webapp/WEB-INF/lib</directory>
+						</fileset>
+						<fileset>
+							<directory>src/main/webapp/WEB-INF/deploy</directory>
 						</fileset>
 					</filesets>
 				</configuration>
