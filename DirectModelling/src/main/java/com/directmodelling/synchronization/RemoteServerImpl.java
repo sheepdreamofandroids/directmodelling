@@ -3,6 +3,9 @@ package com.directmodelling.synchronization;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import com.directmodelling.api.Context;
 import com.directmodelling.api.ID;
 import com.directmodelling.api.Identifiable;
@@ -16,6 +19,7 @@ import com.google.common.collect.Iterables;
 /** One instance per type of service. The synchronized cache is per session. */
 public class RemoteServerImpl<I, O> implements Impl<I, O>,
 		Impl.ResultCallback<I, O>, Identifiable {
+	@Inject Provider<Storage> storage;
 
 	@Override
 	public void init(final RemoteFunction<I, O> f) {
@@ -28,7 +32,7 @@ public class RemoteServerImpl<I, O> implements Impl<I, O>,
 	public RemoteServerImpl(ID id, Impl.AsyncFunction<I, O> f) {
 		this.id = id;
 		this.f = f;
-		Storage.Util.current.it().set(id, new HashMap<I, Object>());
+		storage.get().set(id, new HashMap<I, Object>());
 	}
 
 	@Override
@@ -40,11 +44,12 @@ public class RemoteServerImpl<I, O> implements Impl<I, O>,
 	// {
 	// Storage.Util.current.it().set(id, new HashMap<I, Object>());
 	// }
+	@Inject Provider<Storage> currentStorage;
 
 	@Override
 	public Optional<O> apply(final RemoteFunction<I, O> requester) {
 		final I argument = requester.argument();
-		final Map<I, Object> cache = Storage.Util.current.it().get(id);
+		final Map<I, Object> cache = currentStorage.get().get(id);
 		Object cached = cache.get(argument);
 		// avoid double calculations
 		if (cached == null || cached == IsCalculating.onClient) {
@@ -66,9 +71,9 @@ public class RemoteServerImpl<I, O> implements Impl<I, O>,
 
 	@Override
 	public void result(final I argument, final O result) {
-		final Map<I, Object> cache = Storage.Util.current.it().get(id);
+		final Map<I, Object> cache = currentStorage.get().get(id);
 		cache.put(argument, result);
-		Storage.Util.current.it().set(id, cache);
+		storage.get().set(id, cache);
 		Updates.aValueChanged(/* TODO id */null);
 	}
 

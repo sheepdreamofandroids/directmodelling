@@ -9,6 +9,10 @@ import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.stm.impl.VersionImpl;
 
+import dagger.Module;
+import dagger.Provides;
+
+@Module
 public abstract class DirectInit {
 
 	public final VersionImpl baseValues = new VersionImpl();
@@ -25,11 +29,16 @@ public abstract class DirectInit {
 		return Factory.Default.INSTANCE;
 	}
 
+	@Provides
+	protected Tracker tracker() {
+		return updatesTracker();
+	}
+
 	protected abstract Tracker updatesTracker();
 
 	public void init() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -17,17 +17,15 @@
 package com.directmodelling.api;
 
 /**
- * Handles dependencies. Keeping track of all dependencies between values takes
- * a lot of overhead which is not done. Register to receive notifications
- * whenever ANY data changes. This means you might get more notifications than
- * you're actually interested in. Handle it.
+ * Handles dependencies. Keeping track of all dependencies between values takes a lot of overhead which is not done.
+ * Register to receive notifications whenever ANY data changes. This means you might get more notifications than you're
+ * actually interested in. Handle it.
  */
 public abstract class Updates {
 	/** IMplemented by receivers of notifications. */
 	public interface Receiver {
 		/**
-		 * One or more values, changed. These are not necessarily ones that you
-		 * are interested in.
+		 * One or more values, changed. These are not necessarily ones that you are interested in.
 		 */
 		void valuesChanged();
 	}

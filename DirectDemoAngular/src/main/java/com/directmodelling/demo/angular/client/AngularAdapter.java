@@ -6,7 +6,7 @@ import com.directmodelling.demo.angular.shared.PostcodeDemo;
 import com.directmodelling.properties.HasMaximum;
 import com.directmodelling.properties.HasMinimum;
 
-
+/** Provides a javascript-friendly facade to java code.*/
 public class AngularAdapter {
 
 	// DemoModel model, Calculator calc,

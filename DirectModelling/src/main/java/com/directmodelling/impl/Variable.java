@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.ID;
 import com.directmodelling.api.Identifiable;
@@ -59,7 +62,9 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 
 	@Override
 	public T getValue() {
-		return storage.get(id);
+		@SuppressWarnings("unchecked") // We know we only put T's into the storage
+		final T t = (T) storage.get(id);
+		return t;
 	}
 
 	@Override
@@ -69,7 +74,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 		return getValue();
 	}
 
-	private final ID id = ID.generator.it().createID();
+	@Inject ID id ;
 
 	@Override
 	public ID id() {
@@ -96,7 +101,8 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	// Make sure (de-)serialized vars refer to the same values
 	private int hash = 0;
 	private static int uniqueHash = 0;
-	private transient Storage storage = Util.current.it();
+	@Inject transient Storage storage;
+	@Inject Provider<Storage> currentStorage;
 
 	// private final String id = UUID.uuid();
 
@@ -105,9 +111,10 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	private void readObject(final java.io.ObjectInputStream in)
 			throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
+		@SuppressWarnings("unchecked") // we write a T
 		final T val = (T) in.readObject();
 		hash = 0;
-		storage = Util.current.it();
+		storage = currentStorage.get();
 		if (val != UNINITIALIZED)
 			setValue(val);
 	}
@@ -120,10 +127,10 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	}
 
 	@GwtIncompatible("Only to be used by native serialization.")
-	@SuppressWarnings("unused")
+	@SuppressWarnings("unused") // is implicitly used by serialization
 	private void readObjectNoData() throws ObjectStreamException {
 		hash = 0;
-		storage = Util.current.it();
+		storage = currentStorage.get();
 	}
 
 	@Override

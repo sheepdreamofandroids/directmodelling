@@ -16,8 +16,12 @@
  *******************************************************************************/
 package com.directmodelling.demo.gwt.client;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
+import com.directmodelling.api.Updates.Tracker;
 import com.directmodelling.gwt.GWTUpdateTracker;
 import com.directmodelling.impl.Command;
 import com.directmodelling.impl.SimpleIDGenerator;
@@ -28,15 +32,26 @@ import com.directmodelling.stm.impl.VersionImpl;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import dagger.Module;
+import dagger.Provides;
+
 /** Bits and pieces I don't have a good place for yet. */
+@Module
 public class System {
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+
+	@Provides
+	@Singleton
+	Tracker updateTracker() {
+		return new GWTUpdateTracker();
+	}
+	
+	@Inject Tracker tracker;
 
 	final VersionImpl baseValues = new VersionImpl();// .storage;
 	{
 		Util.current.init(baseValues);
-		Updates.tracker = new GWTUpdateTracker();
+		// Updates.tracker = new GWTUpdateTracker();
 		ID.generator.init(new SimpleIDGenerator());
 	}
 	final TransactionImpl changes = new TransactionImpl(baseValues);
@@ -71,7 +86,7 @@ public class System {
 		@Override
 		public void run() {
 			changes.reset();
-			Updates.tracker.runUpdates();
+			tracker.runUpdates();
 		}
 	};
 
@@ -81,7 +96,7 @@ public class System {
 
 	public void doneInitializing() {
 		Util.current.init(changes);
-		Updates.tracker.runUpdates();
+		tracker.runUpdates();
 	}
 
 	public void initializeValues(final Version storage) {

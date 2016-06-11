@@ -40,5 +40,6 @@
 		<!-- For obvious reasons, do not source 'reflective' -->
 
 	<inherits name="com.google.common.base.Base" />
-	<inherits name="com.google.common.collect.Collect" />
+	<inherits name="com.google.common.base.Base" />
+	<inherits name="dagger.Dagger" />
 </module>

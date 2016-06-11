@@ -20,11 +20,14 @@ package com.directmodelling.demo.swing;
 
 import java.awt.event.ActionEvent;
 
+import javax.inject.Provider;
 import javax.swing.AbstractAction;
 
 import com.directmodelling.api.Updates;
 import com.directmodelling.demo.shared.DemoModel;
 import com.directmodelling.demo.swing.calculator.Calculator;
+import com.directmodelling.impl.DirectModule;
+import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.Util;
 import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
@@ -33,7 +36,16 @@ import com.directmodelling.swing.SwingUpdateTracker;
 import com.directmodelling.swing.binding.Binding;
 import com.directmodelling.swing.binding.SpinnerBinder;
 
+import dagger.Component;
+
 public class Main {
+
+	@Component(modules = DirectModule.class)
+	static interface SwingComponent {
+		DirectModule.StorageProvider currentStorage();
+
+		VersionImpl baseValues();
+	}
 
 	public static void main(final String[] args) {
 		startup();

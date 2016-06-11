@@ -56,19 +56,24 @@
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.google.code.gwtx</groupId> -->
-<!-- 			<artifactId>gwtx</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.code.gwtx</groupId> -->
+		<!-- <artifactId>gwtx</artifactId> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava-gwt</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>${project.groupId}</groupId> -->
-<!-- 			<artifactId>DirectGWTEmulation</artifactId> -->
-<!-- 			<version>${project.version}</version> -->
-<!-- 			<classifier>sources</classifier> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>${project.groupId}</groupId> -->
+		<!-- <artifactId>DirectGWTEmulation</artifactId> -->
+		<!-- <version>${project.version}</version> -->
+		<!-- <classifier>sources</classifier> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>com.google.dagger</groupId>
+			<artifactId>dagger-gwt</artifactId>
+			<version>2.4</version>
+		</dependency>
 	</dependencies>
 </project>

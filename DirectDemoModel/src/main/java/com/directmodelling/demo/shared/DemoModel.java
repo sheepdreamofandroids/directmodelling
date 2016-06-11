@@ -5,15 +5,20 @@ package com.directmodelling.demo.shared;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.DoubleValue.Mutable;
 import com.directmodelling.api.ListValue.Modifiable;
+import com.directmodelling.impl.DirectModule.StorageProvider;
 import com.directmodelling.impl.ObjectVar;
 import com.directmodelling.impl.Variable;
 import com.google.gwt.core.client.js.JsType;
 
 @JsType
 public class DemoModel implements IDemoModel, Serializable {
+	
+	@Inject StorageProvider currentStorage;
 
 	ObjectVar<String> var = new ObjectVar<String>("initial");
 	MyDoubleVar doub = new MyDoubleVar(5, -10, 10);

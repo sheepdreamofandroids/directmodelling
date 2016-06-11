@@ -51,6 +51,13 @@
 						<value>**/emul/**/*.java</value>
 					</excludes>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.dagger</groupId>
+						<artifactId>dagger-compiler</artifactId>
+						<version>${dagger.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -140,9 +147,9 @@
 	</repositories>
 
 	<scm>
-		<connection>scm:svn:https://directmodelling.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://directmodelling.googlecode.com/svn/trunk</developerConnection>
-		<url>https://directmodelling.googlecode.com/svn/trunk</url>
+		<connection>scm:svn:https://github.com/sheepdreamofandroids/directmodelling.git</connection>
+		<developerConnection>scm:svn:https://github.com/sheepdreamofandroids/directmodelling.git</developerConnection>
+		<url>https://github.com/sheepdreamofandroids/directmodelling</url>
 	</scm>
 	<issueManagement>
 		<system>Google Code</system>
@@ -154,6 +161,11 @@
 			<artifactId>junit</artifactId>
 			<type>jar</type>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.dagger</groupId>
+			<artifactId>dagger-compiler</artifactId>
+			<version>${dagger.version}</version>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
@@ -171,6 +183,7 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<gwt.version>2.7.0</gwt.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dagger.version>2.1</dagger.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -256,7 +269,7 @@
 			<dependency>
 				<groupId>com.google.android</groupId>
 				<artifactId>android</artifactId>
-				<version>1.6_r2</version>
+				<version>6.0</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
@@ -276,27 +289,27 @@
 				<artifactId>gin</artifactId>
 				<version>1.0</version>
 			</dependency>
-<!-- 			<dependency> -->
-<!-- 				<groupId>com.google.gwt</groupId> -->
-<!-- 				<artifactId>gwt-user</artifactId> -->
-<!-- 				<version>${gwt.version}</version> -->
-<!-- 			</dependency> -->
-<!-- 			<dependency> -->
-<!-- 				<groupId>com.google.gwt</groupId> -->
-<!-- 				<artifactId>gwt-dev</artifactId> -->
-<!-- 				<version>${gwt.version}</version> -->
-<!-- 				<scope>test</scope> -->
-<!-- 			</dependency> -->
-<!-- 			<dependency> -->
-<!-- 				<groupId>com.google.gwt</groupId> -->
-<!-- 				<artifactId>gwt-servlet</artifactId> -->
-<!-- 				<version>${gwt.version}</version> -->
-<!-- 			</dependency> -->
-<!-- 			<dependency> -->
-<!-- 				<groupId>com.google.gwt</groupId> -->
-<!-- 				<artifactId>gwt-codeserver</artifactId> -->
-<!-- 				<version>${gwt.version}</version> -->
-<!-- 			</dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.google.gwt</groupId> -->
+			<!-- <artifactId>gwt-user</artifactId> -->
+			<!-- <version>${gwt.version}</version> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.google.gwt</groupId> -->
+			<!-- <artifactId>gwt-dev</artifactId> -->
+			<!-- <version>${gwt.version}</version> -->
+			<!-- <scope>test</scope> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.google.gwt</groupId> -->
+			<!-- <artifactId>gwt-servlet</artifactId> -->
+			<!-- <version>${gwt.version}</version> -->
+			<!-- </dependency> -->
+			<!-- <dependency> -->
+			<!-- <groupId>com.google.gwt</groupId> -->
+			<!-- <artifactId>gwt-codeserver</artifactId> -->
+			<!-- <version>${gwt.version}</version> -->
+			<!-- </dependency> -->
 			<dependency>
 				<groupId>com.google.gwt</groupId>
 				<artifactId>gwt</artifactId>

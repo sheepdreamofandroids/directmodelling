@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.demo.shared.FunctionApplication;
 import com.directmodelling.demo.swing.Main;
+import com.directmodelling.impl.DirectInit;
 import com.directmodelling.swing.binding.Button2CommandBinding;
 import com.directmodelling.swing.binding.Iterator2PanelBinding;
 import com.google.common.base.Function;
@@ -15,10 +16,16 @@ public class Calculator {
 
 	public static final com.directmodelling.demo.shared.Calculator MODEL = new com.directmodelling.demo.shared.Calculator();
 
+	@dagger.Component(modules = DirectInit.class)
+	public static interface Context {
+		DirectInit init();
+	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(final String[] args) {
+		// DaggerCalculator_Context.builder
 		Main.startup();
 		start();
 	}
@@ -32,8 +39,7 @@ public class Calculator {
 		frame.setVisible(true);
 	}
 
-	public static void bind(final CalculatorPanel panel,
-			final com.directmodelling.demo.shared.Calculator model) {
+	public static void bind(final CalculatorPanel panel, final com.directmodelling.demo.shared.Calculator model) {
 		new Button2CommandBinding(panel.plus, model.plus());
 		new Button2CommandBinding(panel.minus, model.minus());
 		new Button2CommandBinding(panel.multiply, model.multiply());

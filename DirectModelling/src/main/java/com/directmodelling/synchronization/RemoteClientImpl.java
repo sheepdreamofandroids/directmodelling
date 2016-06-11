@@ -2,6 +2,9 @@ package com.directmodelling.synchronization;
 
 import java.util.Map;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import com.directmodelling.api.ID;
 import com.directmodelling.api.Updates;
 import com.directmodelling.stm.Storage;
@@ -23,11 +26,13 @@ public class RemoteClientImpl<I, O> implements RemoteFunction.Impl<I, O> {
 	public void init(final RemoteFunction<I, O> f) {
 
 	}
+	
+	@Inject Provider<Storage> storage;
 
 	@Override
 	public Optional<O> apply(final RemoteFunction<I, O> requester) {
 		final I argument = requester.argument();
-		final Storage storage = Storage.Util.current.it();
+		final Storage storage = this.storage.get();
 		@SuppressWarnings("unchecked")
 		final Map<I, Object> theCache = (Map<I, Object>) storage.get(cacheId);
 		final Object p = theCache.get(argument);

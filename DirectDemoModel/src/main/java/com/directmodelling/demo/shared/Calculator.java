@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 import com.directmodelling.api.DirectModelling;
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.Value;
@@ -14,11 +16,20 @@ import com.directmodelling.impl.ObjectFun;
 import com.directmodelling.impl.ObjectVar;
 import com.google.gwt.core.client.js.JsType;
 
+import dagger.Component;
+
 @JsType
 public class Calculator implements Serializable {
-	public Calculator() {
+
+	@Component(modules = DirectModelling.class)
+	static interface Calc {
+		Calculator calculator();
 	}
 
+	@Inject
+	public Calculator() {
+		// TODO Auto-generated constructor stub
+	}
 	/** Link to outermost (rightmost) operator. Initially link to first value. */
 	public final Mutable<DoubleValue> calculation = new ObjectVar<DoubleValue>();
 
@@ -58,6 +69,7 @@ public class Calculator implements Serializable {
 
 	{
 		DirectModelling.init();
+		Calculator calculator = DaggerCalculator_Calc.create().calculator();
 		clear.run();
 	}
 
@@ -72,8 +84,7 @@ public class Calculator implements Serializable {
 		public void run() {
 			final DoubleVar right = new DoubleVar();
 			right.set(0);
-			calculation.setValue(new FunctionApplication(
-					calculation.getValue(), right, op));
+			calculation.setValue(new FunctionApplication(calculation.getValue(), right, op));
 		}
 	}
 
