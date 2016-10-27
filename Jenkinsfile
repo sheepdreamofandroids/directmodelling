@@ -9,4 +9,6 @@ node {
 	echo "Branch: ${env.BRANCH_NAME}"
 	
 	echo "Build nr: ${env.BUILD_NUMBER}"
+	
+	sh 'mvn clean package'
 }
