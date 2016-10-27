@@ -20,12 +20,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.directmodelling.api.ID;
-import com.directmodelling.api.Updates;
 import com.directmodelling.api.Updates.Tracker;
 import com.directmodelling.gwt.GWTUpdateTracker;
 import com.directmodelling.impl.Command;
 import com.directmodelling.impl.SimpleIDGenerator;
-import com.directmodelling.stm.Storage.Util;
+import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.stm.impl.VersionImpl;
@@ -50,7 +49,7 @@ public class System {
 
 	final VersionImpl baseValues = new VersionImpl();// .storage;
 	{
-		Util.current.init(baseValues);
+		Storage.current.init(baseValues);
 		// Updates.tracker = new GWTUpdateTracker();
 		ID.generator.init(new SimpleIDGenerator());
 	}
@@ -95,7 +94,7 @@ public class System {
 	}
 
 	public void doneInitializing() {
-		Util.current.init(changes);
+		Storage.current.init(changes);
 		tracker.runUpdates();
 	}
 

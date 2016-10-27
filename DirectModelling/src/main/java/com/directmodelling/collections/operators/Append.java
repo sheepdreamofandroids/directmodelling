@@ -13,18 +13,20 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.annotations.GwtIncompatible;
 
 @GwtCompatible
-public class Append<S> extends AbstractImmutableList<S> implements List<S>,
+public class Append<Element> extends AbstractReadonlyList<Element> implements List<Element>,
 		Receiver {
+	private static final long serialVersionUID = 4150994680743821709L;
 	// TODO derive from Union of two Collections?
-	private List<S>[] components;
+	private List<Element>[] components;
 	private transient int[] offsets;
 	private transient boolean dirty = false;
-	private transient ListReplace<S>[] deltas;
+	private transient ListReplace<Element>[] deltas;
 	// TODO reset above after deserialization
 	{
 		Updates.registerForChanges(this);
 	}
 
+	@SuppressWarnings("unused")
 	private Append() {
 		// only for serialization
 	}
@@ -36,7 +38,8 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 		init();
 	}
 
-	public Append(final List<S>... components) {
+	@SafeVarargs
+	public Append(final List<Element>... components) {
 		this.components = components;
 		init();
 	}
@@ -49,7 +52,7 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 		offsets = new int[count + 1];
 		offsets[0] = 0;
 		@SuppressWarnings("unchecked")
-		final ListReplace<S>[] unchecked = new ListReplace[count];
+		final ListReplace<Element>[] unchecked = new ListReplace[count];
 		deltas = unchecked;
 		for (int i = 0; i < unchecked.length; i++) {
 			deltas[i] = components[i].getLastDelta();
@@ -83,7 +86,7 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 
 	@Override
 	public boolean contains(final Object o) {
-		for (final List<S> list : components) {
+		for (final List<Element> list : components) {
 			if (list.contains(o))
 				return true;
 		}
@@ -91,14 +94,14 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 	}
 
 	@Override
-	public Iterator<S> iterator() {
+	public Iterator<Element> iterator() {
 		return listIterator();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public S[] toArray() {
-		return copyToArray((S[]) new Object[size()]);
+	public Element[] toArray() {
+		return copyToArray((Element[]) new Object[size()]);
 	}
 
 	// @GwtIncompatible("Array.newInstance")
@@ -123,9 +126,9 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 
 	/** copies all elements into target unconditionally */
 	public <T> T[] copyToArray(T[] target) {
-		final List<S>[] b = components;
+		final List<Element>[] b = components;
 		int pos = 0;
-		for (final List<S> list : b) {
+		for (final List<Element> list : b) {
 			final Object[] array = list.toArray();
 			System.arraycopy(array, 0, target, pos, array.length);
 			pos += array.length;
@@ -143,7 +146,7 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 	}
 
 	@Override
-	public S get(final int index) {
+	public Element get(final int index) {
 		final int size = size();
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException("Index " + index
@@ -184,19 +187,19 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 	}
 
 	@Override
-	public ListIterator<S> listIterator() {
+	public ListIterator<Element> listIterator() {
 		return listIterator(0);
 	}
 
 	@Override
-	public ListIterator<S> listIterator(final int index) {
-		return new ListIterator<S>() {
-			ListIterator<S> sub = null;
+	public ListIterator<Element> listIterator(final int index) {
+		return new ListIterator<Element>() {
+			ListIterator<Element> sub = null;
 			int subFor = 0;
 
 			@Override
 			public boolean hasNext() {
-				return sub.hasNext() || nextSub();
+				return (sub != null && sub.hasNext()) || nextSub();
 			}
 
 			/**
@@ -206,7 +209,7 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 			 */
 			private boolean nextSub() {
 				while (subFor < components.length) {
-					sub = components[subFor].listIterator();
+					sub = components[subFor++].listIterator();
 					if (sub.hasNext())
 						return true;
 				}
@@ -214,7 +217,7 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 			}
 
 			@Override
-			public S next() {
+			public Element next() {
 				if (hasNext())
 					return sub.next();
 				else
@@ -246,7 +249,7 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 			}
 
 			@Override
-			public S previous() {
+			public Element previous() {
 				if (hasPrevious())
 					return sub.previous();
 				else
@@ -270,36 +273,36 @@ public class Append<S> extends AbstractImmutableList<S> implements List<S>,
 			}
 
 			@Override
-			public void set(final S e) {
+			public void set(final Element e) {
 				sub.set(e);
 			}
 
 			@Override
-			public void add(final S e) {
+			public void add(final Element e) {
 				throw immutable();
 			}
 		};
 	}
 
 	@Override
-	public java.util.List<S> subList(final int fromIndex, final int toIndex) {
+	public java.util.List<Element> subList(final int fromIndex, final int toIndex) {
 		// How would this behave while components are changing?
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ListReplace<S> getLastDelta() {
+	public ListReplace<Element> getLastDelta() {
 		if (dirty) {
 			for (int i = 0; i < deltas.length; i++) {
-				ListReplace<S> delta = deltas[i];
+				ListReplace<Element> delta = deltas[i];
 				while (delta.getNext() != null) {
 					delta = delta.getNext();
 					if (delta instanceof ListReplace) {
-						final ListReplace<S> r = delta;
+						final ListReplace<Element> r = delta;
 						deltas[i] = delta;
 						// constructor links after current lastDelta and updates
 						// lastDelta field to this new one
-						new ListReplace<S>(this, r.from + offsets[i], r.to
+						new ListReplace<>(this, r.from + offsets[i], r.to
 								+ offsets[i], r.elements);
 					}
 				}

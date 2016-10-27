@@ -2,35 +2,50 @@ package com.directmodelling.collections;
 
 import java.io.Serializable;
 import java.util.AbstractList;
+import java.util.Arrays;
 
 import com.directmodelling.collections.Delta.HasDeltas;
 import com.directmodelling.collections.List.ListReplace;
 
-public interface List<S> extends HasDeltas<ListReplace<S>>, java.util.List<S>
+public interface List<Element> extends HasDeltas<ListReplace<Element>>, java.util.List<Element>
 /* , RCollection<S> */{
 
-	public static final class ListReplace<T> extends Delta<List<T>> {
+	public static final class ListReplace<Element>
+			extends Delta<java.util.List<Element>> {
 		/** new elements */
-		public final Object elements[];
+		public final Element elements[];
 		/** replaced range */
 		public final int from, to;
 
-		public ListReplace(final List container, final int from, final int to,
-				final Object... elements) {
+		public ListReplace(final DeltaTracker<ListReplace<Element>> container, final int from, final int to,
+				@SuppressWarnings("unchecked") final Element... elements) {
 			super(container);
 			this.from = from;
 			this.to = to;
 			this.elements = elements;
 		}
 
+		// protected ListReplace() {
+		// from = 0;
+		// to = 0;
+		// elements = null;
+		// }
+
 		@Override
-		public ListReplace<T> getNext() {
-			@SuppressWarnings("unchecked")
-			final ListReplace<T> next = (ListReplace<T>) super.getNext();
+		public ListReplace<Element> getNext() {
+			final ListReplace<Element> next = super.getNext();
 			return next;
+		}
+
+		@Override
+		void apply(java.util.List<Element> l) {
+			if (from != to)
+				l.subList(from, to).clear();
+			l.addAll(from, Arrays.asList(elements));
 		}
 	}
 
+	@SuppressWarnings("serial")
 	public static final class Singleton<T> extends AbstractList<T> implements
 			List<T>, Serializable {
 		private final T t;

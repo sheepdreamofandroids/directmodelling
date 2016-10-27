@@ -2,36 +2,45 @@ package com.directmodelling.demo.swing.calculator;
 
 import java.awt.Component;
 
+import javax.inject.Inject;
 import javax.swing.JFrame;
 
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.demo.shared.FunctionApplication;
-import com.directmodelling.demo.swing.Main;
-import com.directmodelling.impl.DirectInit;
+import com.directmodelling.swing.DirectSwingInit;
 import com.directmodelling.swing.binding.Button2CommandBinding;
 import com.directmodelling.swing.binding.Iterator2PanelBinding;
 import com.google.common.base.Function;
 
-public class Calculator {
+public class SwingCalculator {
+	public final DirectSwingInit init;
 
-	public static final com.directmodelling.demo.shared.Calculator MODEL = new com.directmodelling.demo.shared.Calculator();
+	@Inject
+	public SwingCalculator(com.directmodelling.demo.shared.Calculator model, DirectSwingInit init) {
+		MODEL = model;
+		this.init = init;
+		init.init();
+	}
 
-	@dagger.Component(modules = DirectInit.class)
+	public final com.directmodelling.demo.shared.Calculator MODEL;
+	// = new com.directmodelling.demo.shared.Calculator();
+
+	@dagger.Component(modules = { DirectSwingInit.class })
 	public static interface Context {
-		DirectInit init();
+		SwingCalculator calc();
 	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(final String[] args) {
-		// DaggerCalculator_Context.builder
-		Main.startup();
-		start();
+		SwingCalculator calc = DaggerSwingCalculator_Context.builder().build().calc();
+		// Main.startup();
+		calc.start();
 	}
 
-	public static void start() {
-		final JFrame frame = new JFrame("Calculator");
+	public void start() {
+		final JFrame frame = new JFrame("SwingCalculator");
 		final CalculatorPanel calc = new CalculatorPanel();
 		bind(calc, MODEL);
 		frame.setContentPane(calc);
@@ -39,7 +48,7 @@ public class Calculator {
 		frame.setVisible(true);
 	}
 
-	public static void bind(final CalculatorPanel panel, final com.directmodelling.demo.shared.Calculator model) {
+	public void bind(final CalculatorPanel panel, final com.directmodelling.demo.shared.Calculator model) {
 		new Button2CommandBinding(panel.plus, model.plus());
 		new Button2CommandBinding(panel.minus, model.minus());
 		new Button2CommandBinding(panel.multiply, model.multiply());

@@ -7,12 +7,24 @@ import java.util.Iterator;
 import com.directmodelling.collections.Delta.DeltaTracker;
 
 @SuppressWarnings("serial")
+/**
+ * Base for wrappers of a collection that track all changes that occur through this wrapper.
+ * 
+ * @author guus
+ *
+ * @param <T>
+ * @param <C>
+ * @param <D>
+ */
 public abstract class CollectionRecorder<T, C extends java.util.Collection<T>, D extends Delta>
 		extends DeltaTracker<D> implements /* RCollection<T>, */Serializable,
 		Collection<T> {
 	protected final C delegate;
 
-	/** Create a CollectionRecorder with the given delegate for actual storage. */
+	/**
+	 * Create a CollectionRecorder with the given delegate for actual storage. The delegate can never be modified
+	 * directly.
+	 */
 	public CollectionRecorder(final C delegate) {
 		assert delegate != null; // fail fast
 		this.delegate = delegate;

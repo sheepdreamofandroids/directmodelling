@@ -18,23 +18,13 @@
  */
 package com.directmodelling.demo.swing;
 
-import java.awt.event.ActionEvent;
-
-import javax.inject.Provider;
-import javax.swing.AbstractAction;
-
 import com.directmodelling.api.Updates;
-import com.directmodelling.demo.shared.DemoModel;
-import com.directmodelling.demo.swing.calculator.Calculator;
 import com.directmodelling.impl.DirectModule;
 import com.directmodelling.stm.Storage;
-import com.directmodelling.stm.Storage.Util;
 import com.directmodelling.stm.Version;
 import com.directmodelling.stm.impl.TransactionImpl;
 import com.directmodelling.stm.impl.VersionImpl;
 import com.directmodelling.swing.SwingUpdateTracker;
-import com.directmodelling.swing.binding.Binding;
-import com.directmodelling.swing.binding.SpinnerBinder;
 
 import dagger.Component;
 
@@ -47,28 +37,28 @@ public class Main {
 		VersionImpl baseValues();
 	}
 
-	public static void main(final String[] args) {
-		startup();
-		final DemoModel model = new DemoModel();
-		final DemoFrame f = new DemoFrame();
-		Binding.bindDouble(f.slider, model.doub());
-		Binding.bindDouble(f.textfield, model.doub());
-		SpinnerBinder.bindDouble(model.doub(), f.spinner, 1);
-		Calculator.bind(f.calculatorPanel, Calculator.MODEL);
-		// This is all presentation, no model necessary
-		f.startCalculator.setAction(new AbstractAction() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				Calculator.start();
-			}
-		});
-		f.pack();
-		f.setVisible(true);
-	}
+	// public static void main(final String[] args) {
+	// startup();
+	// final DemoModel model = new DemoModel();
+	// final DemoFrame f = new DemoFrame();
+	// Binding.bindDouble(f.slider, model.doub());
+	// Binding.bindDouble(f.textfield, model.doub());
+	// SpinnerBinder.bindDouble(model.doub(), f.spinner, 1);
+	// SwingCalculator.bind(f.calculatorPanel, SwingCalculator.MODEL);
+	// // This is all presentation, no model necessary
+	// f.startCalculator.setAction(new AbstractAction() {
+	// @Override
+	// public void actionPerformed(final ActionEvent e) {
+	// SwingCalculator.start();
+	// }
+	// });
+	// f.pack();
+	// f.setVisible(true);
+	// }
 
 	public static void startup() {
 		final Version baseData = new VersionImpl();
-		Util.current.init(new TransactionImpl(baseData));
+		Storage.current.init(new TransactionImpl(baseData));
 		Updates.tracker = new SwingUpdateTracker();
 	}
 }

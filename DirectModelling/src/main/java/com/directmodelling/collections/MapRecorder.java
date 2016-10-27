@@ -6,8 +6,7 @@ import java.util.Set;
 
 import com.directmodelling.collections.Delta.DeltaTracker;
 
-public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>>
-		implements Map<K, V> {
+public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>> implements Map<K, V> {
 	private final java.util.Map<K, V> delegate;
 
 	public MapRecorder() {
@@ -45,13 +44,13 @@ public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>>
 
 	@Override
 	public V put(final K key, final V value) {
-		new MapReplace<K, V>(this, key, value);
+		new MapReplace<>(this, key, value);
 		return delegate.put(key, value);
 	}
 
 	@Override
 	public V remove(final Object key) {
-		new MapReplace<K, V>(this, key);
+		new MapReplace<>(this, key);
 		return delegate.remove(key);
 	}
 
@@ -65,32 +64,28 @@ public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>>
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		new MapReplace<>(this);
+		delegate.clear();
 	}
 
 	@Override
 	public Set<K> keySet() {
-		// TODO Auto-generated method stub
-		return null;
+		return delegate.keySet();
 	}
 
 	@Override
 	public Collection<V> values() {
-		// TODO Auto-generated method stub
-		return null;
+		return delegate.values();
 	}
 
 	@Override
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		// TODO Auto-generated method stub
-		return null;
+		return delegate.entrySet();
 	}
 
 	@Override
-	public MapReplace<K, V> getLastDelta() {
-		// TODO Auto-generated method stub
-		return null;
+	protected com.directmodelling.collections.Map.MapReplace<K, V> createSentinel() {
+		return new MapReplace<>(null, null);
 	}
 
 }

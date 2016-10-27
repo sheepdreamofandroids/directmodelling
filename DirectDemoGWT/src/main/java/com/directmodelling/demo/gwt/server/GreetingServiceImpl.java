@@ -34,7 +34,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		GreetingService {
 	public Version serverWorld = new VersionImpl(null);
 	{
-		Storage.Util.current.init(serverWorld);
+		Storage.current.init(serverWorld);
 		Updates.tracker = new ExplicitUpdatesTracker();
 	}
 	DemoModel model = new DemoModel();

@@ -17,13 +17,13 @@ public abstract class DirectInit {
 
 	public final VersionImpl baseValues = new VersionImpl();
 	public final TransactionImpl changes = new TransactionImpl(baseValues);
-	{
-		Context.SESSION.init(sessionContext());// TODO use session
-		Context.GLOBAL.init(Context.Factory.Default.INSTANCE);
-		ID.generator.init(SimpleIDGenerator.INSTANCE);
-		Storage.Util.current.init(changes);
-		Updates.tracker = updatesTracker();
-	}
+	// {
+	// Context.SESSION.init(sessionContext());// TODO use session
+	// Context.GLOBAL.init(Context.Factory.Default.INSTANCE);
+	// ID.generator.init(SimpleIDGenerator.INSTANCE);
+	// Storage.Util.current.init(changes);
+	// Updates.tracker = updatesTracker();
+	// }
 
 	protected Context.Factory sessionContext() {
 		return Factory.Default.INSTANCE;
@@ -37,8 +37,11 @@ public abstract class DirectInit {
 	protected abstract Tracker updatesTracker();
 
 	public void init() {
-		// TODO Auto-generated method stub
-
+		Context.SESSION.init(sessionContext());// TODO use session
+		Context.GLOBAL.init(Context.Factory.Default.INSTANCE);
+		ID.generator.init(SimpleIDGenerator.INSTANCE);
+		Storage.current.init(changes);
+		Updates.tracker = updatesTracker();
 	}
 
 }

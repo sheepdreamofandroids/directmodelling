@@ -16,10 +16,18 @@
  *******************************************************************************/
 package com.directmodelling.swing;
 
+import javax.inject.Inject;
+
 import com.directmodelling.api.Updates.Tracker;
 import com.directmodelling.impl.DirectInit;
 
+import dagger.Module;
+
+@Module
 public class DirectSwingInit extends DirectInit {
+	@Inject
+	public DirectSwingInit() {
+	}
 	public static DirectSwingInit INSTANCE = new DirectSwingInit();
 
 	@Override

@@ -21,7 +21,6 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import com.directmodelling.api.HasKey;
 import com.directmodelling.api.ID;
@@ -33,7 +32,6 @@ import com.directmodelling.api.Value;
 import com.directmodelling.gwt.GwtIncompatible;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Storage.HasStorage;
-import com.directmodelling.stm.Storage.Util;
 import com.directmodelling.stm.impl.UninitializedException;
 import com.google.gwt.core.client.js.JsType;
 
@@ -41,6 +39,8 @@ import com.google.gwt.core.client.js.JsType;
 public abstract class Variable<T> extends AbstractMutable<T> implements
 		Identifiable, HasStatus, ID, Value.Mutable<T>, HasKey, HasStorage,
 		Serializable {
+
+	// public static final ThreadLocal<Storage> currentStorage = new InheritableThreadLocal<>();
 	public Variable() {
 		super();
 	}
@@ -101,8 +101,8 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	// Make sure (de-)serialized vars refer to the same values
 	private int hash = 0;
 	private static int uniqueHash = 0;
-	@Inject transient Storage storage;
-	@Inject Provider<Storage> currentStorage;
+	transient Storage storage = Storage.current.it();
+	// @Inject Provider<Storage> currentStorage;
 
 	// private final String id = UUID.uuid();
 
@@ -114,7 +114,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 		@SuppressWarnings("unchecked") // we write a T
 		final T val = (T) in.readObject();
 		hash = 0;
-		storage = currentStorage.get();
+		storage = Storage.current.it();
 		if (val != UNINITIALIZED)
 			setValue(val);
 	}
@@ -130,7 +130,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	@SuppressWarnings("unused") // is implicitly used by serialization
 	private void readObjectNoData() throws ObjectStreamException {
 		hash = 0;
-		storage = currentStorage.get();
+		storage = Storage.current.it();
 	}
 
 	@Override

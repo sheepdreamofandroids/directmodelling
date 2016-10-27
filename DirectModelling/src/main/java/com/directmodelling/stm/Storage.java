@@ -25,13 +25,7 @@ import com.directmodelling.impl.EntityUtil;
 import com.directmodelling.impl.SingleAssignContext;
 
 public interface Storage extends Serializable {
-	public static abstract class Util {
-		// TODO move out of Util
-		// TODO ask Context to create Context
-		public static SingleAssignContext<Storage> current = Context.SESSION
-				.it().create();
-	}
-
+	SingleAssignContext<Storage> current = Context.SESSION.it().create();
 	// <T> T get(Value<T> v);
 
 	<T> T get(ID id);

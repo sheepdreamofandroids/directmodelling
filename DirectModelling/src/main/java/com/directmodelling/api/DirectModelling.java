@@ -9,7 +9,7 @@ import dagger.Module;
 public final class DirectModelling {
 	public static void init(final Storage storage,
 			final Updates.Tracker updatesTracker) {
-		Storage.Util.current.init(storage);
+		Storage.current.init(storage);
 		Updates.tracker = updatesTracker;
 	}
 
@@ -18,7 +18,7 @@ public final class DirectModelling {
 	}
 
 	public static void init() {
-		if (Storage.Util.current == null)
+		if (Storage.current == null)
 			initForTests();
 	}
 }

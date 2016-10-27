@@ -1,11 +1,5 @@
 package com.directmodelling.swing.binding;
 
-import com.directmodelling.api.Updates;
-import com.directmodelling.api.Updates.Receiver;
-import com.directmodelling.api.Updates.Tracker;
-import com.directmodelling.api.Value;
-import com.directmodelling.api.Value.Mutable;
-
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -13,17 +7,24 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.directmodelling.api.Updates.Receiver;
+import com.directmodelling.api.Updates.Tracker;
+import com.directmodelling.api.Value;
+import com.directmodelling.api.Value.Mutable;
+
 public abstract class AbstractBinder<TVal> implements Receiver {
-public interface Inject{
-	void inject(AbstractBinder<?> i);
-}
+	// public interface Injector {
+	// void inject(AbstractBinder<?> i);
+	// }
 	protected final Value<TVal> val;
 	protected final Mutable<TVal> var;
 	public Exception lastConversionError;
 	private static final Logger log = LoggerFactory.getLogger(AbstractBinder.class);
 	private Object currentWidgetValue = this;// special value meaning
+	private Tracker tracker;
 												// uninitialized
 	@Inject void inject(Tracker tracker){
+		this.tracker = tracker;
 		tracker.registerForChanges(this);
 	}
 

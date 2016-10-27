@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import javax.inject.Inject;
 
-import com.directmodelling.api.DirectModelling;
 import com.directmodelling.api.DoubleValue;
 import com.directmodelling.api.Value;
 import com.directmodelling.api.Value.Mutable;
@@ -16,22 +15,20 @@ import com.directmodelling.impl.ObjectFun;
 import com.directmodelling.impl.ObjectVar;
 import com.google.gwt.core.client.js.JsType;
 
-import dagger.Component;
-
 @JsType
 public class Calculator implements Serializable {
 
-	@Component(modules = DirectModelling.class)
-	static interface Calc {
-		Calculator calculator();
-	}
+	// @Component(modules = DirectModelling.class)
+	// static interface Calc {
+	// Calculator calculator();
+	// }
 
 	@Inject
 	public Calculator() {
 		// TODO Auto-generated constructor stub
 	}
 	/** Link to outermost (rightmost) operator. Initially link to first value. */
-	public final Mutable<DoubleValue> calculation = new ObjectVar<DoubleValue>();
+	public final Mutable<DoubleValue> calculation = new ObjectVar<>();
 
 	private final Command plus = new DoAppendOperator(Operator.plus);
 	private final Command minus = new DoAppendOperator(Operator.minus);
@@ -50,7 +47,7 @@ public class Calculator implements Serializable {
 
 		@Override
 		public Iterable<DoubleValue> get() {
-			final ArrayList<DoubleValue> result = new ArrayList<DoubleValue>();
+			final ArrayList<DoubleValue> result = new ArrayList<>();
 			DoubleValue o = calculation.getValue();
 			while (o instanceof FunctionApplication) {
 				result.add(o);
@@ -63,15 +60,15 @@ public class Calculator implements Serializable {
 
 	};
 
-	static {
-		DirectModelling.init();
-	}
-
-	{
-		DirectModelling.init();
-		Calculator calculator = DaggerCalculator_Calc.create().calculator();
-		clear.run();
-	}
+	// static {
+	// DirectModelling.init();
+	// }
+	//
+	// {
+	// DirectModelling.init();
+	// Calculator calculator = DaggerCalculator_Calc.create().calculator();
+	// clear.run();
+	// }
 
 	private final class DoAppendOperator extends Command {
 		private final Operator op;

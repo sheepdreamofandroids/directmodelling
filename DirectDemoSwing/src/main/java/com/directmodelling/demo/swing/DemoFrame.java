@@ -65,9 +65,9 @@ public class DemoFrame extends javax.swing.JFrame {
 
         tabs.addTab("Multiple bindings", jScrollPane1);
 
-        startCalculator.setText("Start Calculator");
+        startCalculator.setText("Start SwingCalculator");
         tabs.addTab("Action", startCalculator);
-        tabs.addTab("Calculator", calculatorPanel);
+        tabs.addTab("SwingCalculator", calculatorPanel);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
