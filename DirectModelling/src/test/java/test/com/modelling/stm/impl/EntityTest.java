@@ -44,6 +44,7 @@ public class EntityTest extends DirectTestBase {
 
 	@Test
 	public void testSimpleEntity() {
+		init.init();
 		Updates.tracker = new ExplicitUpdatesTracker();
 		final SimpleEntity se = new SimpleEntity();
 		se.inty().set(15);

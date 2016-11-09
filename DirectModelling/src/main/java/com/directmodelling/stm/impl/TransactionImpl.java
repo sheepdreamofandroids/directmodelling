@@ -22,12 +22,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.directmodelling.api.ID;
-import com.directmodelling.collections.Delta.HasDeltas;
+import com.directmodelling.collections.HasDeltas;
 import com.directmodelling.stm.Storage;
 import com.directmodelling.stm.Version;
 
 public class TransactionImpl extends VersionImpl {
-	protected HashMap<ID, Object> reads = new HashMap<ID, Object>();
+	protected HashMap<ID, Object> reads = new HashMap<>();
 
 	public TransactionImpl() {
 		this(null);
@@ -173,6 +173,6 @@ public class TransactionImpl extends VersionImpl {
 	public void moveTo(TransactionImpl t) {
 		super.moveTo(t);
 		t.reads = reads;
-		reads = new HashMap<ID, Object>();
+		reads = new HashMap<>();
 	}
 }

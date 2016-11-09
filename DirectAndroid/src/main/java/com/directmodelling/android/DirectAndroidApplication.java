@@ -16,12 +16,12 @@
  *******************************************************************************/
 package com.directmodelling.android;
 
-import roboguice.RoboGuice;
-import android.app.Application;
-
-import com.directmodelling.stm.Storage;
-import com.directmodelling.stm.impl.VersionImpl;
+import com.directmodelling.api.Updates.Tracker;
+import com.directmodelling.impl.DirectInit;
 import com.google.inject.util.Modules;
+
+import android.app.Application;
+import roboguice.RoboGuice;
 
 /**
  * Subclass this for your own application, or use this directly. If neither is
@@ -30,7 +30,13 @@ import com.google.inject.util.Modules;
 public class DirectAndroidApplication extends Application {
 	public DirectAndroidApplication() {
 		super();
-		Storage.Util.current.init(new VersionImpl());// FIXME
+		new DirectInit() {
+
+			@Override
+			protected Tracker updatesTracker() {
+				return new AndroidUpdateTracker();
+			}
+		}.init();
 	}
 
 	@Override
