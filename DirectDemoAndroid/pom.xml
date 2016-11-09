@@ -129,7 +129,7 @@
 				<configuration>
 					<sdk>
 						<!-- platform or api level (api level 4 = platform 2.2) -->
-						<platform>24</platform>
+						<platform>23</platform>
 					</sdk>
 					<sign>
 						<debug>both</debug>
