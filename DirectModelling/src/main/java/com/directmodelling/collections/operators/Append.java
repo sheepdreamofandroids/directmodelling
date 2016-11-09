@@ -310,4 +310,9 @@ public class Append<Element> extends AbstractReadonlyList<Element> implements Li
 		}
 		return super.getLastDelta();
 	}
+
+	@Override
+	protected com.directmodelling.collections.List.ListReplace<Element> createSentinel() {
+		return new ListReplace<>(this, 0, 0);
+	}
 }

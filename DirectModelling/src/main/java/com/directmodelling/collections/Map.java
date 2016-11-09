@@ -1,7 +1,7 @@
 package com.directmodelling.collections;
 
 public interface Map<K, V> extends java.util.Map<K, V>,
-		HasDeltas<Map.MapReplace<K, V>, Map<K, V>> {
+		HasDeltas<Map.MapReplace<K, V>, java.util.Map<K, V>> {
 
 	/**
 	 * Records a change in a map. <br>
@@ -13,38 +13,43 @@ public interface Map<K, V> extends java.util.Map<K, V>,
 	 * @param <K>
 	 * @param <V>
 	 */
-	public static class MapReplace<K, V> extends com.directmodelling.collections.HasDeltas.Delta<Map<K, V>> {
+	public static class MapReplace<K, V> extends HasDeltas.Delta<java.util.Map<K, V>, MapReplace<K, V>> {
 		/**
 		 * key==REMOVE means clear map. Could be anything when value==REMOVE,
 		 * otherwise a K.
 		 */
-		public final Object key;
+		public final K key;
 		/** When ==REMOVE, then removal otherwise addition/overwrite. */
 		public final V value;
 		/** Marker for value to designate removals. */
 		public static final Object REMOVE = new Object();
 
 		/** Create a remove delta */
-		public MapReplace(final DeltaTracker<MapReplace<K, V>, Map<K, V>> container) {
+		public MapReplace(final DeltaTracker<MapReplace<K, V>, ?, ?> container) {
 			this(container, (K) REMOVE, null);
 		}
 
 		/** Create a remove delta */
-		public MapReplace(final DeltaTracker<MapReplace<K, V>, Map<K, V>> container, final Object key) {
-			this(container, (K) key, (V) REMOVE);
+		public MapReplace(final DeltaTracker<MapReplace<K, V>, ?, ?> container, final K key) {
+			this(container, key, (V) REMOVE);
 		}
 
 		/** create a put delta */
-		public MapReplace(final DeltaTracker<MapReplace<K, V>, Map<K, V>> container, final K key, final V value) {
+		public MapReplace(final DeltaTracker<MapReplace<K, V>, ?, ?> container, final K key, final V value) {
 			super(container);
 			this.key = key;
 			this.value = value;
 		}
 
 		@Override
-		void apply(Map<K, V> c) {
-			// TODO Auto-generated method stub
-
+		protected
+				void apply(java.util.Map<K, V> c) {
+			if (key == REMOVE)
+				c.clear();
+			else if (value == REMOVE)
+				c.remove(key);
+			else
+				c.put(key, value);
 		}
 	}
 

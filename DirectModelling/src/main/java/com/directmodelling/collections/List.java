@@ -4,20 +4,19 @@ import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.Arrays;
 
-import com.directmodelling.collections.Delta.HasDeltas;
 import com.directmodelling.collections.List.ListReplace;
 
-public interface List<Element> extends HasDeltas<ListReplace<Element>>, java.util.List<Element>
-/* , RCollection<S> */{
+public interface List<Element> extends HasDeltas<ListReplace<Element>, java.util.List<Element>>, java.util.List<Element>
+/* , RCollection<S> */ {
 
 	public static final class ListReplace<Element>
-			extends Delta<java.util.List<Element>> {
+			extends HasDeltas.Delta<java.util.List<Element>, ListReplace<Element>> {
 		/** new elements */
 		public final Element elements[];
 		/** replaced range */
 		public final int from, to;
 
-		public ListReplace(final DeltaTracker<ListReplace<Element>> container, final int from, final int to,
+		public ListReplace(final DeltaTracker<ListReplace<Element>, ?, ?> container, final int from, final int to,
 				@SuppressWarnings("unchecked") final Element... elements) {
 			super(container);
 			this.from = from;
@@ -32,13 +31,7 @@ public interface List<Element> extends HasDeltas<ListReplace<Element>>, java.uti
 		// }
 
 		@Override
-		public ListReplace<Element> getNext() {
-			final ListReplace<Element> next = super.getNext();
-			return next;
-		}
-
-		@Override
-		void apply(java.util.List<Element> l) {
+		protected void apply(java.util.List<Element> l) {
 			if (from != to)
 				l.subList(from, to).clear();
 			l.addAll(from, Arrays.asList(elements));
@@ -46,8 +39,7 @@ public interface List<Element> extends HasDeltas<ListReplace<Element>>, java.uti
 	}
 
 	@SuppressWarnings("serial")
-	public static final class Singleton<T> extends AbstractList<T> implements
-			List<T>, Serializable {
+	public static final class Singleton<T> extends AbstractList<T> implements List<T>, Serializable {
 		private final T t;
 
 		public Singleton(final T t) {

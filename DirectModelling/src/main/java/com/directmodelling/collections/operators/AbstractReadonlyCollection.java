@@ -3,7 +3,6 @@ package com.directmodelling.collections.operators;
 import java.io.Serializable;
 import java.util.Collection;
 
-import com.directmodelling.collections.HasDeltas;
 import com.directmodelling.collections.HasDeltas.Delta;
 import com.directmodelling.collections.HasDeltas.DeltaTracker;
 
@@ -13,8 +12,8 @@ import com.directmodelling.collections.HasDeltas.DeltaTracker;
  * not by calling mutators on this instance.
  */
 @SuppressWarnings("serial")
-public abstract class AbstractReadonlyCollection<Element, Coll extends HasDeltas<Deltah, Collection<Element>>, Deltah extends Delta<Collection<Element>>>
-		extends DeltaTracker<Deltah, Collection<Element>> implements Collection<Element>, Serializable {
+public abstract class AbstractReadonlyCollection<Element, Tracker extends AbstractReadonlyCollection<Element, Tracker, Coll, Deltah>, Coll, Deltah extends Delta<Coll, Deltah>>
+		extends DeltaTracker<Deltah, Coll, Tracker> implements Collection<Element>, Serializable {
 
 	@Override
 	public boolean add(final Element e) {
@@ -35,8 +34,7 @@ public abstract class AbstractReadonlyCollection<Element, Coll extends HasDeltas
 	 * @return
 	 */
 	protected UnsupportedOperationException immutable() {
-		return new UnsupportedOperationException(
-				"Result of appending lists is immutable.");
+		return new UnsupportedOperationException("Result of appending lists is immutable.");
 	}
 
 	@Override

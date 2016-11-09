@@ -8,8 +8,9 @@ import com.directmodelling.api.ListValue;
 import com.directmodelling.api.Updates;
 
 /** Wraps a standard list and records all modifications. */
+@SuppressWarnings("serial")
 public class ListRecorder<Element>
-		extends CollectionRecorder<Element, java.util.List<Element>, List.ListReplace<Element>>
+		extends CollectionRecorder<Element, java.util.List<Element>, List.ListReplace<Element>, ListRecorder<Element>>
 		implements List<Element>, ListValue<Element>, java.util.List<Element> {
 
 	/** Supplies a default list implementation. */

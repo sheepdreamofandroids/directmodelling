@@ -4,9 +4,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-import com.directmodelling.collections.Delta.DeltaTracker;
+import com.directmodelling.collections.HasDeltas.DeltaTracker;
 
-public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>> implements Map<K, V> {
+
+public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>, java.util.Map<K, V>, MapRecorder<K, V>>
+		implements Map<K, V> {
 	private final java.util.Map<K, V> delegate;
 
 	public MapRecorder() {
@@ -50,7 +52,7 @@ public class MapRecorder<K, V> extends DeltaTracker<Map.MapReplace<K, V>> implem
 
 	@Override
 	public V remove(final Object key) {
-		new MapReplace<>(this, key);
+		new MapReplace(this, key);
 		return delegate.remove(key);
 	}
 

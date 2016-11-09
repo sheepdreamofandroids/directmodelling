@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import com.directmodelling.collections.List;
+import com.directmodelling.collections.List.ListReplace;
 
 /**
  * Simple baseclass for implementing readonly {@link com.directmodelling.collections.List}s. It throws an
@@ -11,9 +12,10 @@ import com.directmodelling.collections.List;
  * not by calling mutators on this instance.
  */
 @SuppressWarnings("serial")
-public abstract class AbstractReadonlyList<Element>
-		extends AbstractReadonlyCollection<Element, List<Element>, List.ListReplace<Element>>
-		implements List<Element>, Serializable {
+public abstract class AbstractReadonlyList<Element> extends // ListRecorder<Element>
+		AbstractReadonlyCollection<Element, AbstractReadonlyList<Element>, java.util.List<Element>, ListReplace<Element>>
+		implements List<Element>, Serializable
+{
 
 	@Override
 	public void add(final int index, final Element element) {
@@ -36,8 +38,8 @@ public abstract class AbstractReadonlyList<Element>
 	}
 
 	@Override
-	protected com.directmodelling.collections.List.ListReplace<Element> createSentinel() {
-		return new ListReplace<>(this, 0, 0, (Element[]) null);
+	protected ListReplace<Element> createSentinel() {
+		return new ListReplace<>(this, 0, 0);
 	}
 
 }

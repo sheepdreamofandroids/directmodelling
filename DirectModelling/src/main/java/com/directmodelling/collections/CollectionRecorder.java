@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.directmodelling.collections.Delta.DeltaTracker;
+import com.directmodelling.collections.HasDeltas.Delta;
+import com.directmodelling.collections.HasDeltas.DeltaTracker;
+
 
 @SuppressWarnings("serial")
 /**
@@ -16,16 +18,17 @@ import com.directmodelling.collections.Delta.DeltaTracker;
  * @param <C>
  * @param <D>
  */
-public abstract class CollectionRecorder<T, C extends java.util.Collection<T>, D extends Delta>
-		extends DeltaTracker<D> implements /* RCollection<T>, */Serializable,
-		Collection<T> {
-	protected final C delegate;
+public abstract class CollectionRecorder<Element, Coll extends java.util.Collection<Element>, Del extends Delta<Coll, Del>, Tracker extends CollectionRecorder<Element, Coll, Del, Tracker>>
+		extends DeltaTracker<Del, Coll, Tracker>
+		implements /* RCollection<T>, */Serializable,
+		Collection<Element> {
+	protected final Coll delegate;
 
 	/**
 	 * Create a CollectionRecorder with the given delegate for actual storage. The delegate can never be modified
 	 * directly.
 	 */
-	public CollectionRecorder(final C delegate) {
+	public CollectionRecorder(final Coll delegate) {
 		assert delegate != null; // fail fast
 		this.delegate = delegate;
 	}
@@ -46,7 +49,7 @@ public abstract class CollectionRecorder<T, C extends java.util.Collection<T>, D
 	}
 
 	@Override
-	public Iterator<T> iterator() {
+	public Iterator<Element> iterator() {
 		return delegate.iterator();// TODO intercept remove?
 	}
 
@@ -64,7 +67,7 @@ public abstract class CollectionRecorder<T, C extends java.util.Collection<T>, D
 	public boolean retainAll(final java.util.Collection<?> arg0) {
 		// TODO optimize
 		boolean result = false;
-		for (final T t : delegate) {
+		for (final Element t : delegate) {
 			if (!arg0.contains(t))
 				result |= remove(t);
 		}
