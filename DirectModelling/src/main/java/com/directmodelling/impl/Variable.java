@@ -74,7 +74,8 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 		return getValue();
 	}
 
-	@Inject ID id ;
+	@Inject
+	ID id = ID.generator.it().createID();
 
 	@Override
 	public ID id() {

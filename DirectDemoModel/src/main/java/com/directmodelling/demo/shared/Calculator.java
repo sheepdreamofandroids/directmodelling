@@ -42,6 +42,9 @@ public class Calculator implements Serializable {
 			calculation.setValue(var);
 		}
 	};
+	{
+		clear.run();
+	}
 
 	public final Value<Iterable<DoubleValue>> flattenedOperatorList = new ObjectFun<Iterable<DoubleValue>>() {
 
