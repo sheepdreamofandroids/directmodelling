@@ -10,17 +10,17 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:name="com.directmodelling.android.demo.DemoApp" >
+        android:name="com.directmodelling.android.demo.DemoApp_" >
         <activity
             android:label="@string/app_name"
-            android:name="com.directmodelling.android.demo.DirectDemoAndroid" >
+            android:name="com.directmodelling.android.demo.DirectDemoAndroid_" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.directmodelling.android.demo.CalculatorActivity" >
+        <activity android:name="com.directmodelling.android.demo.CalculatorActivity_" >
         </activity>
     </application>
 

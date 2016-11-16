@@ -19,25 +19,28 @@ package com.directmodelling.android.demo;
 import static com.directmodelling.android.binding.Binding.bindCommand;
 import static com.directmodelling.android.binding.Binding.bindDouble;
 
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
 import com.directmodelling.demo.shared.DemoModel;
 import com.directmodelling.impl.Command;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import roboguice.activity.RoboActivity;
-import roboguice.inject.InjectView;
 
-public class DirectDemoAndroid extends RoboActivity {
+@EActivity(R.layout.main)
+public class DirectDemoAndroid extends Activity {
 	// Enjoy this typesafety thank to the excellent RoboGuice
 	// http://code.google.com/p/roboguice/
-	@InjectView(R.id.NumberSlider)
+	@ViewById(R.id.NumberSlider)
 	SeekBar bar;
-	@InjectView(R.id.EditText01)
+	@ViewById(R.id.EditText01)
 	EditText text;
-	@InjectView(R.id.startCalculator)
+	@ViewById
 	Button startCalculator;
 
 	/** Called when the activity is first created. */

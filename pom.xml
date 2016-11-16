@@ -29,7 +29,8 @@
 		<module>DirectGWT</module>
 		<module>DirectSwing</module>
 		<module>DirectDemoModel</module>
-<!-- 		<module>DirectDemoAndroid</module> uncommented until I can figure out how to get the dependencies-->
+		<module>DirectDemoAndroid</module>
+<!-- 		 uncommented until I can figure out how to get the dependencies -->
 		<module>DirectDemoGWT</module>
 		<module>DirectDemoSwing</module>
 		<!-- <module>DirectGWTEmulation</module> -->
