@@ -30,7 +30,7 @@
 		<module>DirectSwing</module>
 		<module>DirectDemoModel</module>
 		<module>DirectDemoAndroid</module>
-<!-- 		 uncommented until I can figure out how to get the dependencies -->
+		<!-- uncommented until I can figure out how to get the dependencies -->
 		<module>DirectDemoGWT</module>
 		<module>DirectDemoSwing</module>
 		<!-- <module>DirectGWTEmulation</module> -->
@@ -73,6 +73,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<forceCreation>true</forceCreation>
+				</configuration>
 			</plugin>
 		</plugins>
 		<pluginManagement>
