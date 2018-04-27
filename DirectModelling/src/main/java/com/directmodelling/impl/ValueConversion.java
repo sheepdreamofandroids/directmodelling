@@ -24,8 +24,8 @@ public abstract class ValueConversion<Outer, Inner> extends
 	}
 
 	@Override
-	public Outer getValue() {
-		return inner2outer(wrapped.getValue());
+	public Outer get() {
+		return inner2outer(wrapped.get());
 	}
 
 	@Override

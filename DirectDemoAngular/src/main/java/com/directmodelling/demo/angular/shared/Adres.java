@@ -24,7 +24,7 @@ public class Adres {
 
 	public final Function<String> stad = new Function<String>() {
 		@Override
-		public String getValue() {
+		public String get() {
 			return result.status().isValid() ? result.get().stad : "";
 		}
 
@@ -41,9 +41,8 @@ public class Adres {
 		}
 
 		@Override
-		public String getValue() {
-			return (status() == status().readonly ? result.get().straat : super
-					.getValue());
+		public String get() {
+			return (status() == status().readonly ? result.get().straat : this.get());
 		};
 	};
 

@@ -92,7 +92,7 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 	@Override
 	public void valuesChanged() {
 		if (null != value) {
-			final TMutableValue newValue = value.getValue();
+			final TMutableValue newValue = value.get();
 			if (!equals(newValue, lastValue)) {
 				lastValue = newValue;
 				boolean viewIsCorrect = false;
@@ -129,7 +129,7 @@ public abstract class Binder<TView, TMutableValue, TViewValue> implements Receiv
 			lastViewContents = v;
 			try {
 				final TMutableValue newMutableValue = fromView.convert(v);
-				if (!equals(newMutableValue, value.getValue())) {
+				if (!equals(newMutableValue, value.get())) {
 					mutable.setValue(newMutableValue);
 				}
 			} catch (final Exception e) {

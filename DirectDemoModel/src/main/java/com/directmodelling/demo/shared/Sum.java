@@ -19,8 +19,8 @@ public class Sum extends DoubleFunction implements Serializable {
 	}
 
 	@Override
-	public double get() {
-		return a.get() + b.get();
+	public double getAsDouble() {
+		return a.getAsDouble() + b.getAsDouble();
 	}
 
 	@Override

@@ -32,8 +32,8 @@ public class DoubleVar extends Variable<Double> implements DoubleValue.Mutable {
 	}
 
 	@Override
-	public double get() {
-		return getValue();
+	public double getAsDouble() {
+		return get();
 	}
 
 	// @Override

@@ -10,7 +10,7 @@ public class ValueBuilder {
 	public DoubleValue val(final double d) {
 		return new DoubleFunction() {
 			@Override
-			public double get() {
+			public double getAsDouble() {
 				return d;
 			}
 		};
@@ -18,8 +18,7 @@ public class ValueBuilder {
 
 	public IntFun val(final int d) {
 		return new IntFun() {
-			@Override
-			public int get() {
+			public int getAsDouble() {
 				return d;
 			}
 		};

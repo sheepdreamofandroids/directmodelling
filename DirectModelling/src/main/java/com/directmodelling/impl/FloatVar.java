@@ -29,8 +29,8 @@ public class FloatVar extends Variable<Float> implements FloatValue.Mutable {
 	}
 
 	@Override
-	public float get() {
-		return getValue();
+	public float getAsFloat() {
+		return get();
 	}
 
 	public FloatVar _(Applicable<? super FloatVar> a) {

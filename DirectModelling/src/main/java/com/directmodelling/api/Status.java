@@ -31,9 +31,9 @@ import com.google.gwt.core.client.js.JsType;
  * <dt>pending</dt>
  * <dd>This data is being calculated right now. The result will be available
  * soon and an update will be issued to notify you. The result of get() and
- * getValue() will be outdated. A GUI could show a progress bar or throbber.</dd>
+ * get() will be outdated. A GUI could show a progress bar or throbber.</dd>
  * <dt>readonly</dt>
- * <dd>This data is calculated. The get() or getValue() methods will return
+ * <dd>This data is calculated. The get() or get() methods will return
  * current data. Set() or setValue() might fail.</dd>
  * <dt>suspect</dt>
  * <dd>Like readonly but at least one input is invalid or wrong.</dd>
@@ -134,7 +134,7 @@ public interface Status {
 	/**
 	 * This data is being calculated right now. The result will be available
 	 * soon and an update will be issued to notify you. The result of get() and
-	 * getValue() will be outdated. A GUI could show a progress bar or
+	 * get() will be outdated. A GUI could show a progress bar or
 	 * throbber.No value is available.
 	 */
 	Status pending = new Default(false, "Pending") {
@@ -144,7 +144,7 @@ public interface Status {
 		}
 	};
 	/**
-	 * This data is calculated. The get() or getValue() methods will return
+	 * This data is calculated. The get() or get() methods will return
 	 * current data. Set() or setValue() might fail.
 	 */
 	Status readonly = new Default(false, "ReadOnly");

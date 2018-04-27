@@ -1,76 +1,74 @@
-/*******************************************************************************
- * Copyright (c) 2010 Guus C. Bloemsma.
+/**
+ * ***************************************************************************** Copyright (c) 2010
+ * Guus C. Bloemsma.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * <p>This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
- *******************************************************************************/
+ * <p>You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>
+ * *****************************************************************************
+ */
 package com.directmodelling.api;
 
 import java.io.Serializable;
 
 import com.google.gwt.core.client.js.JsType;
+import java.util.function.Supplier;
 
 //TODO rename to Signal
 @JsType
-public interface Value<T> extends Serializable {
-	/** @return Boxed value */
-	T getValue();
+public interface Value<T> extends Serializable, Supplier<T> {
+  /** @return Boxed value */
+//  T get();
 
-	// @Deprecated()
-	// // Not used often enough to be in such a central spot.
-	// Type type();
-	//
-	// /** Indicate JVM type */
-	// enum Type {
-	// tBoolean, tByte, tShort, tInteger, tLong, tCharacter, tFloat, tDouble,
-	// tObject;
-	//
-	// public static Type fromClass(final Class<?> c) {
-	// if (c == Boolean.class || c == Boolean.TYPE)
-	// return tBoolean;
-	// if (c == Byte.class || c == Byte.TYPE)
-	// return tByte;
-	// if (c == Short.class || c == Short.TYPE)
-	// return tShort;
-	// if (c == Integer.class || c == Integer.TYPE)
-	// return tInteger;
-	// if (c == Long.class || c == Long.TYPE)
-	// return tLong;
-	// if (c == Character.class || c == Character.TYPE)
-	// return tCharacter;
-	// if (c == Float.class || c == Float.TYPE)
-	// return tFloat;
-	// if (c == Double.class || c == Double.TYPE)
-	// return tDouble;
-	// return tObject;
-	// }
-	// }
+  // @Deprecated()
+  // // Not used often enough to be in such a central spot.
+  // Type type();
+  //
+  // /** Indicate JVM type */
+  // enum Type {
+  // tBoolean, tByte, tShort, tInteger, tLong, tCharacter, tFloat, tDouble,
+  // tObject;
+  //
+  // public static Type fromClass(final Class<?> c) {
+  // if (c == Boolean.class || c == Boolean.TYPE)
+  // return tBoolean;
+  // if (c == Byte.class || c == Byte.TYPE)
+  // return tByte;
+  // if (c == Short.class || c == Short.TYPE)
+  // return tShort;
+  // if (c == Integer.class || c == Integer.TYPE)
+  // return tInteger;
+  // if (c == Long.class || c == Long.TYPE)
+  // return tLong;
+  // if (c == Character.class || c == Character.TYPE)
+  // return tCharacter;
+  // if (c == Float.class || c == Float.TYPE)
+  // return tFloat;
+  // if (c == Double.class || c == Double.TYPE)
+  // return tDouble;
+  // return tObject;
+  // }
+  // }
 
-	@JsType
-	public interface Mutable<T> extends Value<T> {
-		/**
-		 * @param value
-		 *            Boxed value to be stored.
-		 */
-		void setValue(T value);
+  @JsType
+  public interface Mutable<T> extends Value<T> {
+    /** @param value Boxed value to be stored. */
+    void setValue(T value);
 
-		// a setter
-		/** angularjs style getterSetter */
-		T value(T newValue);
-	}
+    // a setter
+    /** angularjs style getterSetter */
+    T value(T newValue);
+  }
 
-	// public interface UserValue<T> extends Mutable<T>, HasStatus {
-	// // maybe another status getter
-	// }
+  // public interface UserValue<T> extends Mutable<T>, HasStatus {
+  // // maybe another status getter
+  // }
 
 }

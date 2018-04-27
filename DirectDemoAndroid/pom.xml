@@ -23,7 +23,7 @@
 	<packaging>apk</packaging>
 
 	<properties>
-		<maven.compiler.source>1.6</maven.compiler.source>
+		<!--<maven.compiler.source>1.6</maven.compiler.source>-->
 	</properties>
 
 	<dependencies>
@@ -135,12 +135,14 @@
 			<plugin>
 				<groupId>com.simpligility.maven.plugins</groupId>
 				<artifactId>android-maven-plugin</artifactId>
-				<version>4.3.0</version>
+				<version>4.5.0</version>
 				<extensions>true</extensions>
 				<configuration>
 					<sdk>
 						<!-- platform or api level (api level 4 = platform 2.2) -->
 						<platform>23</platform>
+						<!--<path>Z:\android-sdk-windows</path>-->
+						<path>/media/guus/Data/android-sdk-linux</path>
 					</sdk>
 					<sign>
 						<debug>both</debug>

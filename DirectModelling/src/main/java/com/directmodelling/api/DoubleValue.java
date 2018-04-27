@@ -16,11 +16,14 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
+import java.util.function.DoubleSupplier;
+
+import com.google.common.base.Supplier;
 import com.google.gwt.core.client.js.JsType;
 
 @JsType
-public interface DoubleValue extends Value<Double> {
-	double get();
+public interface DoubleValue extends Value<Double>/*, DoubleSupplier*/ {
+	double getAsDouble();
 
 	@JsType
 	public interface Mutable extends DoubleValue, Value.Mutable<Double> {

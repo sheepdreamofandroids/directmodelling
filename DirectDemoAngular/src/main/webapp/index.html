@@ -123,17 +123,17 @@ https://github.com/google/material-design-icons
 						{{log(model.adres1().adres().postcode())}}
 						<dm-text model='model.adres1().adres().postcode()' label='Postcode'></dm-text>
 						<dm-number model='model.adres1().adres().houseNumber()' label='Huisnummer'></dm-number>
-						<dm-field model='model.adres1().adres().result().stad()' label='Stad'>{{model.adres1().adres().result().stad().getValue()}}</dm-field>
-						<dm-field model='model.adres1().adres().result().straat()' label='Straat'>{{model.adres1().adres().result().straat().getValue()}}</dm-field>
+						<dm-field model='model.adres1().adres().result().stad()' label='Stad'>{{model.adres1().adres().result().stad().get()}}</dm-field>
+						<dm-field model='model.adres1().adres().result().straat()' label='Straat'>{{model.adres1().adres().result().straat().get()}}</dm-field>
 						huisnummer min: {{minimum(model.adres1().adres().houseNumber())}} | max: {{maximum(model.adres1().adres().houseNumber())}}
 					</form>
 					<form name="userForm" layout="column" ng-controller="DirectAngularController" ng-switch-when="address_double">
 						<dm-number model='model.adres2().digits()' label='Cijfers'></dm-number>
 						<dm-text model='model.adres2().letters()' label='Letters'></dm-text>
 						<dm-number model='model.adres2().adres().houseNumber()' label='Huisnummer'></dm-number>
-						<dm-field model='model.adres2().adres().postcode()' label='Postcode'>{{model.adres2().adres().postcode().getValue()}}</dm-field>
-						<dm-field model='model.adres2().adres().result().stad()' label='Stad'>{{model.adres2().adres().result().stad().getValue()}}</dm-field>
-						<dm-field model='model.adres2().adres().result().straat()' label='Straat'>{{model.adres2().adres().result().straat().getValue()}}</dm-field>
+						<dm-field model='model.adres2().adres().postcode()' label='Postcode'>{{model.adres2().adres().postcode().get()}}</dm-field>
+						<dm-field model='model.adres2().adres().result().stad()' label='Stad'>{{model.adres2().adres().result().stad().get()}}</dm-field>
+						<dm-field model='model.adres2().adres().result().straat()' label='Straat'>{{model.adres2().adres().result().straat().get()}}</dm-field>
 						<dm-slider model='model.adres2().adres().houseNumber()' label='Huisnummer'></dm-slider>
 						min: {{minimum(model.adres2().adres().houseNumber())}}
 						max: {{maximum(model.adres2().adres().houseNumber())}}

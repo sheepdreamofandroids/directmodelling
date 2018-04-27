@@ -51,14 +51,14 @@ public class PostcodeLookup extends
 
 	public final IntFun minHuisnummer = new IntFun() {
 		@Override
-		public int get() {
+		public int getAsInt() {
 			return PostcodeLookup.this.get().minHuisnummer;
 		}
 	};
 
 	public final IntFun maxHuisnummer = new IntFun() {
 		@Override
-		public int get() {
+		public int getAsInt() {
 			return PostcodeLookup.this.get().maxHuisnummer;
 		}
 	};
@@ -115,7 +115,7 @@ public class PostcodeLookup extends
 
 	@Override
 	public String argument() {
-		return postcode.getValue();
+		return postcode.get();
 	}
 
 	@Override

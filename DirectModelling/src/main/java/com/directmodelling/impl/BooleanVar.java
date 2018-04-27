@@ -30,8 +30,8 @@ public class BooleanVar extends Variable<Boolean> implements
 	}
 
 	@Override
-	public boolean get() {
-		return getValue();
+	public boolean getAsBoolean() {
+		return get();
 	}
 
 	// @Override

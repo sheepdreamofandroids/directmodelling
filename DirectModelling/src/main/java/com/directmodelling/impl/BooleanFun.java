@@ -16,18 +16,13 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
+import java.util.function.BooleanSupplier;
+
 /** A calculated boolean. */
-public abstract class BooleanFun extends Function<Boolean> {
-
-	public abstract boolean get();
-
-	// @Override
-	// public Type type() {
-	// return Type.tBoolean;
-	// }
+public abstract class BooleanFun extends Function<Boolean> implements BooleanSupplier {
 
 	@Override
-	public Boolean getValue() {
-		return get();
+	public Boolean get() {
+		return getAsBoolean();
 	}
 }

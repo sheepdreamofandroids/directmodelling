@@ -22,7 +22,7 @@ import com.directmodelling.api.LongValue;
 public abstract class LongFun extends Function<Long> implements LongValue {
 
 	@Override
-	public Long getValue() {
-		return get();
+	public Long get() {
+		return getAsLong();
 	}
 }

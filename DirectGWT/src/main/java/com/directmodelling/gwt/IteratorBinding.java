@@ -56,7 +56,7 @@ public abstract class IteratorBinding<In, Out> implements Receiver,
 	@Override
 	public void valuesChanged() {
 		final Iterator<Out> cont = container.iterator();
-		final Iterator<In> vals = values.getValue().iterator();
+		final Iterator<In> vals = values.get().iterator();
 
 		while (vals.hasNext() && cont.hasNext()) {
 			In val = vals.next();

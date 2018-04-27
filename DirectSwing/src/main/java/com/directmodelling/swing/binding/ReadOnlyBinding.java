@@ -46,6 +46,6 @@ public abstract class ReadOnlyBinding<TValue, TWidget> implements Receiver {
 
 	@Override
 	public void valuesChanged() {
-		set(value2widget.convert(value.getValue()));
+		set(value2widget.convert(value.get()));
 	}
 }

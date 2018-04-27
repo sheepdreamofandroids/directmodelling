@@ -17,7 +17,7 @@
 package com.directmodelling.api;
 
 public interface BooleanValue extends Value<Boolean> {
-	boolean get();
+	boolean getAsBoolean();
 
 	interface Mutable extends BooleanValue, Value.Mutable<Boolean> {
 		void set(boolean value);

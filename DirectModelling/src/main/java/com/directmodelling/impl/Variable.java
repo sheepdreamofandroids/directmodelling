@@ -61,7 +61,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	}
 
 	@Override
-	public T getValue() {
+	public T get() {
 		@SuppressWarnings("unchecked") // We know we only put T's into the storage
 		final T t = (T) storage.get(id);
 		return t;
@@ -71,7 +71,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 	public T value(final T newValue) {
 		if (newValue != null)
 			setValue(newValue);
-		return getValue();
+		return get();
 	}
 
 	@Inject
@@ -87,7 +87,7 @@ public abstract class Variable<T> extends AbstractMutable<T> implements
 
 	protected Object serializedValue() {
 		try {
-			return getValue();
+			return get();
 		} catch (final UninitializedException e) {
 			return UNINITIALIZED;
 		}

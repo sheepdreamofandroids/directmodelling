@@ -16,8 +16,10 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
-public interface IntValue extends Value<Integer> {
-	int get();
+import java.util.function.IntSupplier;
+
+public interface IntValue extends Value<Integer>, IntSupplier {
+	int getAsInt();
 
 	public interface Mutable extends IntValue, Value.Mutable<Integer> {
 		void set(int value);

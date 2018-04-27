@@ -51,7 +51,7 @@ public class Calculator implements Serializable {
 		@Override
 		public Iterable<DoubleValue> get() {
 			final ArrayList<DoubleValue> result = new ArrayList<>();
-			DoubleValue o = calculation.getValue();
+			DoubleValue o = calculation.get();
 			while (o instanceof FunctionApplication) {
 				result.add(o);
 				o = ((FunctionApplication) o).left();
@@ -84,7 +84,7 @@ public class Calculator implements Serializable {
 		public void run() {
 			final DoubleVar right = new DoubleVar();
 			right.set(0);
-			calculation.setValue(new FunctionApplication(calculation.getValue(), right, op));
+			calculation.setValue(new FunctionApplication(calculation.get(), right, op));
 		}
 	}
 

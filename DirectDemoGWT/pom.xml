@@ -1,11 +1,11 @@
-<!-- Copyright (c) 2010 Guus C. Bloemsma. This program is free software: 
-	you can redistribute it and/or modify it under the terms of the GNU General 
-	Public License as published by the Free Software Foundation, either version 
-	3 of the License, or (at your option) any later version. This program is 
-	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
-	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-	PURPOSE. See the GNU General Public License for more details. You should 
-	have received a copy of the GNU General Public License along with this program. 
+<!-- Copyright (c) 2010 Guus C. Bloemsma. This program is free software:
+	you can redistribute it and/or modify it under the terms of the GNU General
+	Public License as published by the Free Software Foundation, either version
+	3 of the License, or (at your option) any later version. This program is
+	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+	PURPOSE. See the GNU General Public License for more details. You should
+	have received a copy of the GNU General Public License along with this program.
 	If not, see <http://www.gnu.org/licenses /> -->
 
 <!-- The simplest way to run this app is by running the following commandline -->
@@ -30,7 +30,7 @@
 		<outputDirectory>war/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
-				<!-- Clean up leftovers from devmode. Try this when devmode gets mysterious 
+				<!-- Clean up leftovers from devmode. Try this when devmode gets mysterious
 					errors. -->
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.5</version>
@@ -128,7 +128,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>gwt-maven-plugin</artifactId>
-						<version>2.7.0</version>
+						<version>2.8.2</version>
 						<configuration>
 							<module>com.directmodelling.demo.gwt.DirectDemoGWT</module>
 							<!-- <strict>true</strict> -->

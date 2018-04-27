@@ -59,13 +59,14 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<configuration><failOnMissingWebXml>false</failOnMissingWebXml></configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
@@ -93,11 +94,12 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>DirectAngular</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>DirectAngular</artifactId>
-			<classifier>sources</classifier>
-		</dependency>
+<!-- 		There are no java sources in directangular yet -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>${project.groupId}</groupId> -->
+<!-- 			<artifactId>DirectAngular</artifactId> -->
+<!-- 			<classifier>sources</classifier> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>

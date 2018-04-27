@@ -24,8 +24,8 @@ public class FunctionApplication extends DoubleFunction {
 	 * Delegates the actual calculation to the operator.
 	 */
 	@Override
-	public double get() {
-		return operator.getValue().eval(left.get(), right.get());
+	public double getAsDouble() {
+		return operator.get().eval(left.getAsDouble(), right.getAsDouble());
 	}
 
 	public DoubleValue left() {

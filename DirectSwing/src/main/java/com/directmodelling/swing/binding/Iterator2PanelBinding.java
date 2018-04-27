@@ -50,7 +50,7 @@ public class Iterator2PanelBinding<T> implements Receiver {
 	public void valuesChanged() {
 		// TODO should attempt to change as little as possible
 		int index = 0;
-		for (final T t : values.getValue()) {
+		for (final T t : values.get()) {
 			final Component component = factory.apply(t);
 			// inserts new, moves or leaves alone
 			if (container.getComponentCount() <= index

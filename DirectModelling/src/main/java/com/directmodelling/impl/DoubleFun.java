@@ -16,18 +16,14 @@
  *******************************************************************************/
 package com.directmodelling.impl;
 
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
 /** A calculated double. */
-public abstract class DoubleFun extends Function<Double> {
+public abstract class DoubleFun extends Function<Double> implements DoubleSupplier {
 
-	public abstract double get();
-
-	// @Override
-	// public Type type() {
-	// return Type.tDouble;
-	// }
-
-	@Override
-	public Double getValue() {
-		return get();
-	}
+    @Override
+    public Double get() {
+        return getAsDouble();
+    }
 }

@@ -2,22 +2,23 @@ package com.directmodelling.collections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.directmodelling.collections.operators.AbstractReadonlyList;
+import com.google.common.collect.ImmutableList;
 
 @SuppressWarnings("serial")
 public class ListPlayer<Element> extends AbstractReadonlyListWrapper<Element> {
 	private ListReplace<Element> sentinel;
 
-	public ListPlayer(AbstractReadonlyList<Element> sentinel) {
+	public ListPlayer(HasListDeltas<Element> sentinel) {
 		this(new ArrayList<Element>(), sentinel);
 	}
 
-	public ListPlayer(List<Element> delegate, AbstractReadonlyList<Element> sentinel) {
+	public ListPlayer(List<Element> delegate, HasListDeltas<Element> sentinel) {
 		super(delegate);
 		this.sentinel = sentinel.getLastDelta();
-		delegate.addAll(sentinel);
 	}
 
 	@Override

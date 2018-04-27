@@ -22,10 +22,10 @@ import com.directmodelling.api.FloatValue;
 public abstract class FloatFun extends Function<Float> implements FloatValue {
 
 	@Override
-	public abstract float get();
+	public abstract float getAsFloat();
 
 	@Override
-	public Float getValue() {
-		return get();
+	public Float get() {
+		return getAsFloat();
 	}
 }

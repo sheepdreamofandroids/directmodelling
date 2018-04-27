@@ -24,12 +24,12 @@ public class IntFun extends Function<Integer> implements IntValue {
 	};
 
 	@Override
-	public Integer getValue() {
-		return get();
+	public Integer get() {
+		return getAsInt();
 	}
 
 	@Override
-	public int get() {
+	public int getAsInt() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

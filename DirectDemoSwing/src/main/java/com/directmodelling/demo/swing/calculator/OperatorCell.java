@@ -40,7 +40,7 @@ public class OperatorCell extends JPanel {
 	public OperatorCell(final FunctionApplication in) {
 		this();
 		new DocumentBinder(textField, new TextFromDouble(in.right()));
-		// label.setText(in.operator().getValue().name);
+		// label.setText(in.operator().get().name);
 		ReadOnlyBinding.bind(lblNewLabel, in);
 		ListModelBinding.bind(operatorChooser, in.operator());
 	}
@@ -48,7 +48,7 @@ public class OperatorCell extends JPanel {
 	public OperatorCell(final Value<Double> in) {
 		this();
 		new DocumentBinder(textField, new TextFromDouble(in));
-		// label.setText(in.operator().getValue().name);
+		// label.setText(in.operator().get().name);
 		ReadOnlyBinding.bind(lblNewLabel, in);
 		operatorChooser.setVisible(false);
 	}

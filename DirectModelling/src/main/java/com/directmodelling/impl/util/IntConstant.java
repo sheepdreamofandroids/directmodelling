@@ -12,12 +12,12 @@ public class IntConstant extends IntFun {
 	}
 
 	@Override
-	public Integer getValue() {
+	public Integer get() {
 		return value;
 	}
 
 	@Override
-	public int get() {
+	public int getAsInt() {
 		return value;
 	}
 

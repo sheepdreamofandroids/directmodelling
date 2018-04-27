@@ -152,7 +152,7 @@ public class TransactionImpl extends VersionImpl {
 						+ " was changed: expected (" + entry.getValue()
 						+ ") but got (" + other.get(entry.getKey()) + ").");
 				// throw new CommitAbortedException("Value of " + entry.getKey()
-				// + " was changed: expected (" + entry.getValue()
+				// + " was changed: expected (" + entry.get()
 				// + ") but got (" + other.get(entry.getKey()) + ").");
 			}
 		}

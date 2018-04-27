@@ -10,8 +10,8 @@ public class MyDoubleVar extends Range<Double> implements DoubleValue.Mutable {
 	}
 
 	@Override
-	public double get() {
-		return getValue().doubleValue();
+	public double getAsDouble() {
+		return get().doubleValue();
 	}
 
 	@Override

@@ -1,9 +1,7 @@
-target
-bin
-.*
+**/.*
 **/target
 **/bin
-**/.*
+**/*.iml
 **/target/*
 **/bin/*
 **/.*/*

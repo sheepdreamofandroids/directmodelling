@@ -20,14 +20,5 @@ import com.google.gwt.core.client.js.JsType;
 
 /** A calculated object. */
 @JsType
-public class ObjectFun<T> extends Function<T> {
-
-	public T get() {
-		return null;
-	}
-
-	@Override
-	public T getValue() {
-		return get();
-	}
+public abstract class ObjectFun<T> extends Function<T> {
 }

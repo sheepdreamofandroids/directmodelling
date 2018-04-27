@@ -17,7 +17,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal> {
 
 		@Override
 		public Object getValue() {
-			return val.getValue();
+			return val.get();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -37,7 +37,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public Object getPreviousValue() {
-			final TVal v = val.getValue();
+			final TVal v = val.get();
 			return v instanceof Comparable && val instanceof HasMinimum<?>
 					&& ((Comparable) v).compareTo(((HasMinimum<?>) val).getMinimum()) <= 0 ? null : decrement(v);
 		}
@@ -45,7 +45,7 @@ public abstract class SpinnerBinder<TVal> extends AbstractBinder<TVal> {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public Object getNextValue() {
-			final TVal v = val.getValue();
+			final TVal v = val.get();
 			return val instanceof HasMaximum<?> && ((Comparable) v).compareTo(((HasMaximum<?>) val).getMaximum()) >= 0 ? null
 					: increment(v);
 		}

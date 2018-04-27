@@ -17,7 +17,7 @@
 package com.directmodelling.api;
 
 public interface FloatValue extends Value<Float> {
-	float get();
+	float getAsFloat();
 
 	interface Mutable extends FloatValue, Value.Mutable<Float> {
 		void set(float value);

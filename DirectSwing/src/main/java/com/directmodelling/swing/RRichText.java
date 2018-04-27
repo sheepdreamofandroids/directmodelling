@@ -44,7 +44,7 @@ public class RRichText extends JTextArea implements Receiver {
 
 	@Override
 	public void valuesChanged() {
-		setText(value.getValue());
+		setText(value.get());
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class RRichText extends JTextArea implements Receiver {
 
 	public void setValue(final Mutable<String> value) {
 		this.value = value;
-		setText(value.getValue());
+		setText(value.get());
 	}
 
 	public Mutable<String> getValue() {

@@ -9,8 +9,8 @@ public abstract class DoubleFunction extends Function<Double> implements
 	// TODO should be base for DoubleVar
 
 	@Override
-	public Double getValue() {
-		return get();
+	public Double get() {
+		return getAsDouble();
 	}
 
 	@Override

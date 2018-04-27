@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import com.directmodelling.collections.List.ListReplace;
 
-public interface List<Element> extends HasDeltas<ListReplace<Element>, java.util.List<Element>>, java.util.List<Element>
+public interface List<Element> extends HasListDeltas<Element>, java.util.List<Element>
 /* , RCollection<S> */ {
 
 	public static final class ListReplace<Element>

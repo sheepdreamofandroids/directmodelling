@@ -12,6 +12,6 @@ public abstract class AbstractMutable<T> implements Mutable<T>, Serializable {
 	public T value(final T newValue) {
 		if (newValue != null)
 			setValue(newValue);
-		return getValue();
+		return get();
 	};
 }

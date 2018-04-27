@@ -100,7 +100,7 @@ public class DirectDemo implements EntryPoint {
 			if (val != undefined) {
 				mut.setValue(val);
 			}
-			return mut.getValue();
+			return mut.get();
 		};
 	}-*/;
 
@@ -110,7 +110,7 @@ public class DirectDemo implements EntryPoint {
 			if (val != undefined) {
 				mut.setValue(val);
 			}
-			return mut.getValue();
+			return mut.get();
 		};
 	}-*/;
 

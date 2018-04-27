@@ -6,7 +6,7 @@ public abstract class AbstractValue<T> implements Value<T> {
 
 	// @Override
 	// public T value(final T newValue) {
-	// return getValue();
+	// return get();
 	// }
 
 }

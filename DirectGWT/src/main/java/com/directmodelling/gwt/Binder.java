@@ -57,9 +57,9 @@ public class Binder<WidgetDomain, VarDomain> implements Receiver,
 	public void valuesChanged() {
 		if (null != val) {
 			if (hasValue != null)
-				hasValue.setValue(toWidget.convert(val.getValue()), false);
+				hasValue.setValue(toWidget.convert(val.get()), false);
 			else
-				gwtValue.setValue(toWidget.convert(val.getValue()));
+				gwtValue.setValue(toWidget.convert(val.get()));
 		}
 	}
 

@@ -53,9 +53,9 @@ public class ListModelBinding<T> extends AbstractListModel implements ComboBoxMo
 	public void valuesChanged() {
 		// This is strange: combobox listens to changes in the listmodel but not
 		// in it's own ComboBoxModel...
-		comboBox.setSelectedItem(val.getValue());
+		comboBox.setSelectedItem(val.get());
 		// weird, this should not be necessary
-		comboBox.getEditor().setItem(val.getValue());
+		comboBox.getEditor().setItem(val.get());
 
 		// Quick check to see if anything changed. Unfortunately we don't know
 		// (yet) exactly WHAT changed.
@@ -86,7 +86,7 @@ public class ListModelBinding<T> extends AbstractListModel implements ComboBoxMo
 	@Override
 	public Object getSelectedItem() {
 		try {
-			return val.getValue();
+			return val.get();
 		} catch (final Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

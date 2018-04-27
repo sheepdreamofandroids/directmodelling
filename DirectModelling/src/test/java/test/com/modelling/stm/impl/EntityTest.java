@@ -48,6 +48,6 @@ public class EntityTest extends DirectTestBase {
 		Updates.tracker = new ExplicitUpdatesTracker();
 		final SimpleEntity se = new SimpleEntity();
 		se.inty().set(15);
-		assertEquals(15, se.inty().get());
+		assertEquals(15, se.inty().getAsInt());
 	}
 }

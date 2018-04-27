@@ -16,14 +16,15 @@
  *******************************************************************************/
 package com.directmodelling.demo.gwt.client;
 
-import com.directmodelling.api.IntValue;
+import java.util.function.IntSupplier;
+
 import com.directmodelling.impl.IntVar;
 
 public class MasterDetailModel<T> implements IMasterDetailModel<T> {
-	IntValue index = new IntVar();
+	IntSupplier index = new IntVar();
 	T detail;
 
-	public IntValue index() {
+	public IntSupplier index() {
 		return index;
 	}
 

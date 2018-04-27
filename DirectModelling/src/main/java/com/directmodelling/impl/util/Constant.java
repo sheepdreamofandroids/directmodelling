@@ -11,7 +11,7 @@ public class Constant<T> extends Function<T> {
 	}
 
 	@Override
-	public T getValue() {
+	public T get() {
 		return value;
 	}
 

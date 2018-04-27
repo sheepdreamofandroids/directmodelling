@@ -13,7 +13,7 @@ public class Adres2 implements Serializable {
 	public final ObjectFun<String> postcode = new ObjectFun<String>() {
 		@Override
 		public String get() {
-			return String.valueOf(digits.get()) + letters.get();
+			return String.valueOf(digits.getAsInt()) + letters.get();
 		};
 
 		@Override
@@ -36,9 +36,9 @@ public class Adres2 implements Serializable {
 	public final IntVar digits = new IntVar(1234) {
 		@Override
 		public Status status() {
-			if (get() < 1000)
+			if (getAsInt() < 1000)
 				return Status.Invalid.tooLow(1000);
-			else if (get() > 9999)
+			else if (getAsInt() > 9999)
 				return Status.Invalid.tooHigh(9999);
 			else
 				return super.status();

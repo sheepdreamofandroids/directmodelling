@@ -30,7 +30,7 @@ public class AngularAdapter {
 									return @com.directmodelling.demo.angular.client.AngularAdapter::get(Lcom/directmodelling/api/Value;)(m);
 								};
 							};
-							s.get = function(o) {return o.@com.directmodelling.api.Value::getValue()();};
+							s.get = function(o) {return o.@com.directmodelling.api.Value::get()();};
 							s.set = function(o,v) {return o.@com.directmodelling.api.Value.Mutable::setValue(Ljava/lang/Object;)(v);};
 						 	s.status = @com.directmodelling.demo.angular.client.AngularAdapter::status(Ljava/lang/Object;);
 							s.minimum = @com.directmodelling.demo.angular.client.AngularAdapter::getIntMin(Ljava/lang/Object;);
@@ -44,7 +44,7 @@ public class AngularAdapter {
 	}
 
 	public static int getInt(Value<Integer> m) {
-		return m.getValue();
+		return m.get();
 	}
 
 	public static double getIntMin(Object o) {
@@ -70,7 +70,7 @@ public class AngularAdapter {
 	}
 
 	public static Object get(Value<Object> v) {
-		return v.getValue();
+		return v.get();
 	}
 
 	public static Status status(Object o) {

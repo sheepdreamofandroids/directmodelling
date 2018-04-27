@@ -45,13 +45,13 @@ public class Range<T extends Comparable<? super T>> extends Variable<T>
 
 	@Override
 	public com.directmodelling.api.Status status() {
-		if (getValue() == null)
+		if (get() == null)
 			return new Status.Invalid.Missing();
 		else if (minimum != null
-				&& comparator.compare(minimum.getValue(), getValue()) > 0)
+				&& comparator.compare(minimum.get(), get()) > 0)
 			return new Status.Invalid.TooLow(minimum);
 		else if (maximum != null
-				&& comparator.compare(maximum.getValue(), getValue()) < 0)
+				&& comparator.compare(maximum.get(), get()) < 0)
 			return new Status.Invalid.TooHigh(minimum);
 		else
 			return super.status();
@@ -59,12 +59,12 @@ public class Range<T extends Comparable<? super T>> extends Variable<T>
 
 	@Override
 	public T getMaximum() {
-		return maximum.getValue();
+		return maximum.get();
 	}
 
 	@Override
 	public T getMinimum() {
-		return minimum.getValue();
+		return minimum.get();
 	}
 
 	@Override

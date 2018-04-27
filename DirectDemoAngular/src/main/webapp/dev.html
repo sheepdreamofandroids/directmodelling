@@ -82,9 +82,9 @@ app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
 				<dm-number model='model.digits()' label='Cijfers'></dm-number>
 				<dm-text model='model.letters()' label='Letters'></dm-text>
 				<dm-number model='model.houseNumber()' label='Huisnummer'></dm-number>
-				<dm-field model='model.postcode()' label='Postcode'>{{model.postcode().getValue()}}</dm-field>
-				<dm-field model='model.result().stad()' label='Stad'>{{model.result().stad().getValue()}}</dm-field>
-				<dm-field model='model.result().straat()' label='Straat'>{{model.result().straat().getValue()}}</dm-field>
+				<dm-field model='model.postcode()' label='Postcode'>{{model.postcode().get()}}</dm-field>
+				<dm-field model='model.result().stad()' label='Stad'>{{model.result().stad().get()}}</dm-field>
+				<dm-field model='model.result().straat()' label='Straat'>{{model.result().straat().get()}}</dm-field>
 			</form>
             </md-content>
         </div>

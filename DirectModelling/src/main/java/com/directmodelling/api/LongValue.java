@@ -16,8 +16,11 @@
  *******************************************************************************/
 package com.directmodelling.api;
 
-public interface LongValue extends Value<Long> {
-	long get();
+import java.util.function.LongSupplier;
+
+public interface LongValue extends Value<Long>, LongSupplier {
+	
+	default Long get() {return getAsLong();}
 
 	public interface Mutable extends LongValue, Value.Mutable<Long> {
 		void set(long value);

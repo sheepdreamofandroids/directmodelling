@@ -31,8 +31,8 @@ public class IntVar extends Variable<Integer> implements IntValue.Mutable {
 	}
 
 	@Override
-	public int get() {
-		return getValue();
+	public int getAsInt() {
+		return get();
 	}
 
 	public IntVar _(final Applicable<? super IntVar> a) {

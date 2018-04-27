@@ -86,7 +86,7 @@ public class ListRecorder<Element>
 	}
 
 	@Override
-	public List<Element> getValue() {
+	public List<Element> get() {
 		return this;
 	}
 

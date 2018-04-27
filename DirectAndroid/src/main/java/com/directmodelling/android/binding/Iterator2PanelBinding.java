@@ -48,7 +48,7 @@ public class Iterator2PanelBinding<T> implements Receiver {
 	@Override
 	public void valuesChanged() {
 		int index = 0;
-		final Iterator<T> vals = values.getValue().iterator();
+		final Iterator<T> vals = values.get().iterator();
 
 		while (vals.hasNext() && index < container.getChildCount()) {
 			final View newWidget = factory.apply(vals.next());
