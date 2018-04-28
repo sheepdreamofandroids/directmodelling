@@ -42,10 +42,10 @@ public class DirectAndroidApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		RoboGuice.setBaseApplicationInjector(
-				this,
-				RoboGuice.DEFAULT_STAGE,
-				Modules.override(RoboGuice.newDefaultRoboModule(this)).with(
-						new AndroidModule()));
+//		RoboGuice.setBaseApplicationInjector(
+//				this,
+//				RoboGuice.DEFAULT_STAGE,
+//				Modules.override(RoboGuice.newDefaultRoboModule(this)).with(
+//						new AndroidModule()));
 	}
 }
